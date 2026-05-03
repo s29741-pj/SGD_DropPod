@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://drp80lh3a56o2"]
+
+[ext_resource type="PackedScene" uid="uid://c603il6hrnfdt" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://bt1600e1spt7k" path="res://scenes/player.gd" id="2_0wfyh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
+size = Vector2(640, 32)
+
+[node name="Main" type="Node2D" unique_id=1137297608]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=168287678]
+
+[node name="Player" parent="." unique_id=1675319849 instance=ExtResource("1_o5qli")]
+script = ExtResource("2_0wfyh")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=985269263]
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=731115781]
+position = Vector2(0, 300)
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=1275495930]
+offset_left = -320.0
+offset_right = 320.0
+offset_bottom = 32.0
+color = Color(0.6789437, 0.6789437, 0.6789436, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1216102335]
+shape = SubResource("RectangleShape2D_0wfyh")
