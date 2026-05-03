@@ -21,6 +21,7 @@ var hp = 5
 var max_hp = 5
 var is_dead = false
 var invincible = false
+@onready var hud = get_parent().get_node("HUD")
 
 
 func _physics_process(delta):
@@ -49,10 +50,15 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("switch_weapon"):
 		current_weapon = (current_weapon + 1) % weapons.size()
 		print("Bron: ", weapons[current_weapon])
+	if hud:
+		hud.update_hp(hp, max_hp)
+		hud.update_fuel(fuel)
+		hud.update_weapon(weapons[current_weapon])
 
+		
 	move_and_slide()
 
-func shoot():
+func shoot():		
 	if not can_shoot:
 		return
 	match weapons[current_weapon]:
