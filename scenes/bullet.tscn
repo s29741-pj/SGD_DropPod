@@ -6,6 +6,8 @@
 radius = 3.0
 
 [node name="Bullet" type="Area2D" unique_id=1379702549]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_mkf8s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=495124126]
@@ -13,5 +15,5 @@ shape = SubResource("CircleShape2D_h1aey")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1820393424]
 custom_minimum_size = Vector2(6, 6)
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 6.0
+offset_bottom = 6.0
