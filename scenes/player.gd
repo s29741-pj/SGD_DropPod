@@ -5,6 +5,8 @@ const JUMP_VELOCITY = -380.0
 const GRAVITY = 900.0
 const FUEL_MAX = 100.0
 const FUEL_REFILL = 30.0
+const INVINCIBILITY_TIME = 1.0
+
 
 @export var bullet_scene: PackedScene
 @export var muzzle_flash_scene: PackedScene
@@ -14,6 +16,11 @@ var can_shoot = true
 var fuel = FUEL_MAX
 var current_weapon = 0
 var weapons = ["bolt_pistol", "bolter", "plasma", "melee"]
+
+var hp = 5
+var max_hp = 5
+var is_dead = false
+var invincible = false
 
 
 func _physics_process(delta):
@@ -102,3 +109,19 @@ func spawn_bullet(size_mult):
 		var flash = muzzle_flash_scene.instantiate()
 		flash.position = global_position
 		get_parent().add_child(flash)
+		
+func take_damage(amount):
+	if invincible or is_dead:
+		return
+	hp -= amount
+	invincible = true
+	if hp <= 0:
+		die()
+	await get_tree().create_timer(INVINCIBILITY_TIME).timeout
+	invincible = false
+
+func die():
+	is_dead = true
+	print("GRACZ MARTWY")
+	await get_tree().create_timer(1.0).timeout
+	get_tree().reload_current_scene()

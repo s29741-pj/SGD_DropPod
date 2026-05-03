@@ -5,6 +5,7 @@ const GRAVITY = 900.0
 var hp = 3
 var direction = 1.0
 var just_turned = false
+var damage_cooldown = false
 
 @onready var floor_detector = $FloorDetector
 
@@ -26,6 +27,16 @@ func _physics_process(delta):
 		just_turned = false
 
 	move_and_slide()
+	
+	# Sprawdź kolizję z graczem po move_and_slide
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider.has_method("take_damage") and not damage_cooldown:
+			collider.take_damage(1)
+			damage_cooldown = true
+			await get_tree().create_timer(1.0).timeout
+			damage_cooldown = false
 
 func take_damage(amount):
 	hp -= amount
