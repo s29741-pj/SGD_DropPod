@@ -8,6 +8,7 @@ const FUEL_REFILL = 30.0
 
 @export var bullet_scene: PackedScene
 @export var muzzle_flash_scene: PackedScene
+@export var melee_hitbox_scene: PackedScene
 
 var can_shoot = true
 var fuel = FUEL_MAX
@@ -77,10 +78,17 @@ func fire_plasma():
 	spawn_bullet(3.0)
 	await get_tree().create_timer(0.8).timeout
 	can_shoot = true
-
+	
 func fire_melee():
 	can_shoot = false
-	print("ATAK WRECZEM")
+	var hitbox = melee_hitbox_scene.instantiate()
+	var facing = 1.0
+	if velocity.x < 0:
+		facing = -1.0
+	hitbox.position = global_position + Vector2(20.0 * facing, 0)
+	hitbox.collision_layer = 3
+	hitbox.collision_mask = 2
+	get_parent().add_child(hitbox)
 	await get_tree().create_timer(0.4).timeout
 	can_shoot = true
 

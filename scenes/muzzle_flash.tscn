@@ -1,14 +1,13 @@
 [gd_scene format=3 uid="uid://dd3f308rvmq4n"]
 
-[ext_resource type="Script" uid="uid://bjy2n2jbk3epe" path="res://color_rect.gd" id="1_r2kf7"]
+[ext_resource type="Script" uid="uid://b8j18500th1ld" path="res://scenes/color_rect_muzzle.gd" id="1_r2kf7"]
 
 [node name="MuzzleFlash" type="Node2D" unique_id=597151771]
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1155456654]
-custom_minimum_size = Vector2(8, 8)
+[node name="ColorRect" type="ColorRect" parent="." unique_id=490891486]
 offset_left = -4.0
 offset_top = -4.0
-offset_right = 36.0
-offset_bottom = 36.0
+offset_right = 4.0
+offset_bottom = 4.0
 color = Color(1, 0.84313726, 0, 1)
 script = ExtResource("1_r2kf7")

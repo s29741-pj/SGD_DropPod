@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cqfeili5j8v5f"]
 
 [ext_resource type="Script" uid="uid://dxuy5xr5414bb" path="res://scenes/enemy.gd" id="1_md0e3"]
-[ext_resource type="Script" uid="uid://b8j18500th1ld" path="res://scenes/color_rect.gd" id="2_4ra3w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tegq"]
 size = Vector2(16, 32)
@@ -14,15 +13,13 @@ script = ExtResource("1_md0e3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=266948570]
 shape = SubResource("RectangleShape2D_8tegq")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1321816521]
-custom_minimum_size = Vector2(16, 32)
-offset_left = -8.0
-offset_top = -16.0
-offset_right = 32.0
-offset_bottom = 24.0
-color = Color(0.9918147, 0.06046655, 0.30888042, 1)
-script = ExtResource("2_4ra3w")
-
 [node name="FloorDetector" type="RayCast2D" parent="." unique_id=1484633901]
 position = Vector2(10, 0)
 target_position = Vector2(0, 40)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=102411570]
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+offset_bottom = 16.0
+color = Color(0.81239235, 0.21402696, 0.364407, 1)
