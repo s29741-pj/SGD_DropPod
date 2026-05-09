@@ -38,7 +38,11 @@ func _physics_process(delta):
 			await get_tree().create_timer(1.0).timeout
 			damage_cooldown = false
 
+func _ready():
+	GameManager.register_enemy()
+
 func take_damage(amount):
 	hp -= amount
 	if hp <= 0:
+		GameManager.enemy_died()
 		queue_free()
