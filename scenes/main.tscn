@@ -1,21 +1,30 @@
-[gd_scene format=3 uid="uid://drp80lh3a56o2"]
+[gd_scene format=4 uid="uid://drp80lh3a56o2"]
 
 [ext_resource type="PackedScene" uid="uid://c603il6hrnfdt" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://cq3wh07xvowlr" path="res://scenes/main.gd" id="1_tipki"]
 [ext_resource type="Script" uid="uid://bt1600e1spt7k" path="res://scenes/player.gd" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://sh0cab37e5ea" path="res://assets/sprites/tileset.png" id="2_85g3d"]
 [ext_resource type="PackedScene" uid="uid://dcfurxm5arnj1" path="res://scenes/bullet.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dd3f308rvmq4n" path="res://scenes/muzzle_flash.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cqfeili5j8v5f" path="res://scenes/enemy.tscn" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://duvx5bqv1gl4m" path="res://scenes/melee_hitbox.tscn" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="7_o6xl0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
-size = Vector2(640, 32)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
+texture = ExtResource("2_85g3d")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_ya4ey"]
+physics_layer_0/collision_layer = 1
+sources/2 = SubResource("TileSetAtlasSource_choun")
 
 [node name="Main" type="Node2D" unique_id=1137297608]
 script = ExtResource("1_tipki")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=168287678]
+tile_map_data = PackedByteArray("AAAUABAAAgAAAAAAAAAVABAAAgAAAAAAAAAWABAAAgAAAAAAAAAXABAAAgAAAAAAAAAYABAAAgAAAAAAAAAZABAAAgAAAAAAAAAaAA8AAgAAAAAAAAAbAA8AAgAAAAAAAAAcAA8AAgAAAAAAAAAdAA8AAgAAAAAAAAAeAA8AAgAAAAAAAAAfAA8AAgAAAAAAAAAgAA8AAgAAAAAAAADv/woAAgAAAAAAAADu/woAAgAAAAAAAADt/woAAgAAAAAAAADs/woAAgAAAAAAAADr/woAAgAAAAAAAADq/woAAgAAAAAAAADp/woAAgAAAAAAAADo/woAAgAAAAAAAADn/woAAgAAAAAAAADm/woAAgAAAAAAAADl/woAAgAAAAAAAADk/woAAgAAAAAAAADj/woAAgAAAAAAAADi/woAAgAAAAAAAADh/woAAgAAAAAAAADg/woAAgAAAAAAAADf/woAAgAAAAAAAAAIAAYAAgAAAAAAAAAJAAYAAgAAAAAAAAAKAAYAAgAAAAAAAAALAAYAAgAAAAAAAAAMAAYAAgAAAAAAAAANAAYAAgAAAAAAAAAOAAYAAgAAAAAAAAASABMAAgAAAAAAAAARABMAAgAAAAAAAAAQABMAAgAAAAAAAAAPABMAAgAAAAAAAAAOABMAAgAAAAAAAAANABMAAgAAAAAAAAAMABMAAgAAAAAAAAALABMAAgAAAAAAAAAKABMAAgAAAAAAAAAJABMAAgAAAAAAAAAIABMAAgAAAAAAAAAHABMAAgAAAAAAAAAGABMAAgAAAAAAAAAFABMAAgAAAAAAAAAEABMAAgAAAAAAAAADABMAAgAAAAAAAAACABMAAgAAAAAAAAABABMAAgAAAAAAAAAAABMAAgAAAAAAAAD//xMAAgAAAAAAAAD+/xMAAgAAAAAAAAD9/xMAAgAAAAAAAAD8/xMAAgAAAAAAAAD7/xMAAgAAAAAAAAD6/xMAAgAAAAAAAAD5/xMAAgAAAAAAAAD4/xMAAgAAAAAAAAD3/xMAAgAAAAAAAAD2/xMAAgAAAAAAAAD1/xMAAgAAAAAAAAD0/xMAAgAAAAAAAADz/xMAAgAAAAAAAADy/xMAAgAAAAAAAAA=")
+tile_set = SubResource("TileSet_ya4ey")
 
 [node name="Player" parent="." unique_id=1675319849 instance=ExtResource("1_o5qli")]
 collision_mask = 3
@@ -27,18 +36,6 @@ melee_hitbox_scene = ExtResource("5_tefeu")
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=985269263]
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=731115781]
-position = Vector2(0, 300)
-
-[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=1275495930]
-offset_left = -320.0
-offset_right = 320.0
-offset_bottom = 32.0
-color = Color(0.6789437, 0.6789437, 0.6789436, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1216102335]
-shape = SubResource("RectangleShape2D_0wfyh")
 
 [node name="Enemy" parent="." unique_id=623081516 instance=ExtResource("5_tbgi4")]
 position = Vector2(100, 284)

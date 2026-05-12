@@ -8,3 +8,4 @@ func _on_level_completed():
 	await get_tree().create_timer(2.0).timeout
 	# Tu później załadujesz następny poziom
 	get_tree().reload_current_scene()
+   

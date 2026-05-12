@@ -37,7 +37,7 @@ func _physics_process(delta):
 
 	if is_on_floor():
 		fuel = min(fuel + FUEL_REFILL * delta, FUEL_MAX)
-
+ 
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction != 0:
 		velocity.x = direction * SPEED
