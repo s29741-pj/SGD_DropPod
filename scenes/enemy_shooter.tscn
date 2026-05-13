@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bt4hcmhckyxwv"]
+
+[ext_resource type="Script" uid="uid://ygdxfc24bodb" path="res://enemy_shooter.gd" id="1_afvl6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_amqcw"]
+size = Vector2(16, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p4l84"]
+radius = 80.0
+
+[node name="EnemyShooter" type="CharacterBody2D" unique_id=1148068584]
+script = ExtResource("1_afvl6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1961880987]
+shape = SubResource("RectangleShape2D_amqcw")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=320145023]
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+offset_bottom = 16.0
+color = Color(1, 0.4, 0, 1)
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1150722995]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=2035799151]
+shape = SubResource("CircleShape2D_p4l84")

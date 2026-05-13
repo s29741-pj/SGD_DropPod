@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cqfeili5j8v5f" path="res://scenes/enemy.tscn" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://duvx5bqv1gl4m" path="res://scenes/melee_hitbox.tscn" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://bt4hcmhckyxwv" path="res://scenes/enemy_shooter.tscn" id="10_choun"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
 texture = ExtResource("2_85g3d")
@@ -42,3 +43,6 @@ position = Vector2(100, 284)
 collision_layer = 2
 
 [node name="HUD" parent="." unique_id=1620064913 instance=ExtResource("7_o6xl0")]
+
+[node name="EnemyShooter" parent="." unique_id=1148068584 instance=ExtResource("10_choun")]
+position = Vector2(-8, 288)
