@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://vthkrgfe8ct7"]
+
+[ext_resource type="Script" uid="uid://dut4mmmj5ajn3" path="res://ammo_box.gd" id="1_ye4hu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_00kdr"]
+size = Vector2(14, 14)
+
+[node name="AmmoBox" type="Area2D" unique_id=1866117795]
+collision_layer = 0
+script = ExtResource("1_ye4hu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2113512227]
+shape = SubResource("RectangleShape2D_00kdr")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=252290076]
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 7.0
+offset_bottom = 7.0
+color = Color(1, 0.84313726, 0, 1)

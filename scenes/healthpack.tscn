@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bagdyta4bx4cg"]
+
+[ext_resource type="Script" uid="uid://csfxdr8kqc23y" path="res://healthpack.gd" id="1_ggt5x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xcku"]
+size = Vector2(12, 12)
+
+[node name="Healthpack" type="Area2D" unique_id=794996231]
+collision_layer = 0
+script = ExtResource("1_ggt5x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1501074907]
+shape = SubResource("RectangleShape2D_0xcku")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=944695343]
+custom_minimum_size = Vector2(12, 12)
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+color = Color(0, 1, 0.26666668, 1)

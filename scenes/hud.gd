@@ -13,3 +13,9 @@ func update_fuel(value):
 
 func update_weapon(weapon_name):
 	weapon_label.text = weapon_name.to_upper()
+
+func update_ammo(current_ammo, weapon_name):
+	if weapon_name in ["bolter", "bolt_pistol", "plasma"]:
+		weapon_label.text = weapon_name.to_upper() + " | " + str(current_ammo)
+	else:
+		weapon_label.text = weapon_name.to_upper()
