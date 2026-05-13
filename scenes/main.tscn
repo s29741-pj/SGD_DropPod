@@ -9,8 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cqfeili5j8v5f" path="res://scenes/enemy.tscn" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://duvx5bqv1gl4m" path="res://scenes/melee_hitbox.tscn" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="7_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://bt4hcmhckyxwv" path="res://scenes/enemy_shooter.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://c8tarvkchy4i8" path="res://scenes/heavy_enemy.tscn" id="11_ya4ey"]
+[ext_resource type="PackedScene" uid="uid://7h5x2l2t1xg2" path="res://scenes/enemy_spawner.tscn" id="12_eb6dy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
 texture = ExtResource("2_85g3d")
@@ -39,14 +39,12 @@ melee_hitbox_scene = ExtResource("5_tefeu")
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
-[node name="Enemy" parent="." unique_id=623081516 instance=ExtResource("5_tbgi4")]
-position = Vector2(100, 284)
-collision_layer = 2
-
 [node name="HUD" parent="." unique_id=1620064913 instance=ExtResource("7_o6xl0")]
 
-[node name="EnemyShooter" parent="." unique_id=1148068584 instance=ExtResource("10_choun")]
-position = Vector2(-8, 288)
+[node name="EnemySpawner" parent="." unique_id=33120619 instance=ExtResource("12_eb6dy")]
+position = Vector2(232, 264)
+enemy_scene = ExtResource("5_tbgi4")
 
-[node name="HeavyEnemy" parent="." unique_id=257790617 instance=ExtResource("11_ya4ey")]
-position = Vector2(192, 272)
+[node name="EnemySpawner2" parent="." unique_id=11541836 instance=ExtResource("12_eb6dy")]
+position = Vector2(-496, 136)
+enemy_scene = ExtResource("11_ya4ey")

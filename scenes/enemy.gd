@@ -31,7 +31,11 @@ func _physics_process(delta):
 	# Sprawdź kolizję z graczem po move_and_slide
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
+		if collision == null:
+			continue
 		var collider = collision.get_collider()
+		if collider == null:
+			continue
 		if collider.has_method("take_damage") and not damage_cooldown:
 			collider.take_damage(1)
 			damage_cooldown = true

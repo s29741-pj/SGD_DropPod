@@ -110,6 +110,8 @@ func spawn_bullet(size_mult):
 	bullet.position = global_position
 	bullet.direction = (get_global_mouse_position() - global_position).normalized()
 	bullet.scale = Vector2(size_mult, size_mult)
+	bullet.collision_layer = 3
+	bullet.collision_mask = 2
 	get_parent().add_child(bullet)
 	if muzzle_flash_scene:
 		var flash = muzzle_flash_scene.instantiate()
