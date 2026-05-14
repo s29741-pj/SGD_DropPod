@@ -31,7 +31,11 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	for i in get_slide_collision_count():
+	var slide_count = get_slide_collision_count()
+	
+	for i in slide_count:
+		if i >= get_slide_collision_count():
+			break
 		var collision = get_slide_collision(i)
 		if collision == null:
 			continue

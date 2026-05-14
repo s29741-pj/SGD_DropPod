@@ -42,6 +42,8 @@ const OVERHEAT_COOLDOWN = 3.0
 
 var combo_count = 0
 var combo_timer = 0.0
+var bolter_mode = "burst"
+
 const COMBO_WINDOW = 0.8
 
 func _physics_process(delta):
@@ -67,19 +69,34 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("switch_weapon"):
 		current_weapon = (current_weapon + 1) % weapons.size()
 		print("Bron: ", weapons[current_weapon])
-		
+
+# Przełączanie trybu boltera
+	if Input.is_action_just_pressed("secondary_fire") and weapons[current_weapon] == "bolter":
+		if bolter_mode == "burst":
+			bolter_mode = "auto"
+		else:
+			bolter_mode = "burst"
+		print("Bolter: ", bolter_mode)
+
+	# Ogień ciągły boltera
 	if Input.is_action_pressed("ui_primary") and weapons[current_weapon] == "gatling":
 		shoot()
-	elif Input.is_action_just_pressed("ui_primary") and weapons[current_weapon] != "gatling":
+	elif Input.is_action_pressed("ui_primary") and weapons[current_weapon] == "bolter" and bolter_mode == "auto":
+		shoot()
+	elif Input.is_action_just_pressed("ui_primary") and weapons[current_weapon] == "bolter" and bolter_mode == "burst":
+		shoot()
+	elif Input.is_action_just_pressed("ui_primary") and weapons[current_weapon] == "knife":
 		shoot()
 		
 	if hud:
 		hud.update_hp(hp, max_hp)
 		hud.update_fuel(fuel)
-		hud.update_weapon(weapons[current_weapon])
 		hud.update_heat(heat)
 		var current_ammo = ammo.get(weapons[current_weapon], -1)
-		hud.update_ammo(current_ammo, weapons[current_weapon])
+		if weapons[current_weapon] == "bolter":
+			hud.update_weapon("bolter", bolter_mode, current_ammo)
+		else:
+			hud.update_weapon(weapons[current_weapon], "", current_ammo)
 
 	if weapons[current_weapon] != "gatling" or not Input.is_action_pressed("ui_primary"):
 		if not is_overheated:
@@ -98,7 +115,10 @@ func shoot():
 		return
 	match weapons[current_weapon]:
 		"bolter":
-			fire_bolter()
+			if bolter_mode == "burst":
+				fire_bolter()
+			else:
+				fire_bolter_auto()
 		"gatling":
 			fire_gatling()
 		"knife":
@@ -133,6 +153,18 @@ func fire_bolter():
 		spawn_bullet(1.0)
 		await get_tree().create_timer(0.1).timeout
 	await get_tree().create_timer(0.3).timeout
+	can_shoot = true
+	
+func fire_bolter_auto():
+	if ammo["bolter"] <= 0:
+		print("BRAK AMUNICJI")
+		return
+	if not can_shoot:
+		return
+	can_shoot = false
+	ammo["bolter"] -= 1
+	spawn_bullet(1.0)
+	await get_tree().create_timer(0.15).timeout
 	can_shoot = true
 
 	
