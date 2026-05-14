@@ -32,6 +32,14 @@ var max_ammo = {
 	"gatling": 100
 }
 
+var heat = 0.0
+var max_heat = 100.0
+var is_overheated = false
+var gatling_cooldown = false
+const HEAT_PER_SHOT = 8.0
+const HEAT_DISSIPATION = 15.0
+const OVERHEAT_COOLDOWN = 3.0
+
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -52,20 +60,27 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	if Input.is_action_just_pressed("ui_primary"):
-		shoot()
-
 	if Input.is_action_just_pressed("switch_weapon"):
 		current_weapon = (current_weapon + 1) % weapons.size()
 		print("Bron: ", weapons[current_weapon])
+		
+	if Input.is_action_pressed("ui_primary") and weapons[current_weapon] == "gatling":
+		shoot()
+	elif Input.is_action_just_pressed("ui_primary") and weapons[current_weapon] != "gatling":
+		shoot()
+		
 	if hud:
 		hud.update_hp(hp, max_hp)
 		hud.update_fuel(fuel)
 		hud.update_weapon(weapons[current_weapon])
+		hud.update_heat(heat)
 		var current_ammo = ammo.get(weapons[current_weapon], -1)
 		hud.update_ammo(current_ammo, weapons[current_weapon])
 
-		
+	if weapons[current_weapon] != "gatling" or not Input.is_action_pressed("ui_primary"):
+		if not is_overheated:
+			heat = max(heat - HEAT_DISSIPATION * delta, 0.0)
+			
 	move_and_slide()
 
 func shoot():
@@ -74,11 +89,29 @@ func shoot():
 	match weapons[current_weapon]:
 		"bolter":
 			fire_bolter()
-		#"gatling":
-			#fire_gatling()
+		"gatling":
+			fire_gatling()
 		"knife":
 			fire_melee()
 			
+
+func fire_gatling():
+	if is_overheated or ammo["gatling"] <= 0:
+		return
+	if gatling_cooldown:
+		return
+	gatling_cooldown = true
+	ammo["gatling"] -= 1
+	heat += HEAT_PER_SHOT
+	spawn_bullet(0.7)
+	if heat >= max_heat:
+		is_overheated = true
+		heat = max_heat
+		await get_tree().create_timer(OVERHEAT_COOLDOWN).timeout
+		is_overheated = false
+		heat = 0.0
+	await get_tree().create_timer(0.08).timeout
+	gatling_cooldown = false
 
 func fire_bolter():
 	if ammo["bolter"] < 3:

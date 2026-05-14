@@ -41,3 +41,14 @@ show_percentage = false
 [node name="WeaponLabel" type="Label" parent="VBoxContainer" unique_id=467456167]
 layout_mode = 2
 text = "BOLT PISTOL"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1170985847]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=834354510]
+layout_mode = 2
+text = "HEAT:"
+
+[node name="HeatBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer" unique_id=914569998]
+custom_minimum_size = Vector2(80, 10)
+layout_mode = 2

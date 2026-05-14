@@ -3,6 +3,11 @@ extends CanvasLayer
 @onready var hp_bar = $VBoxContainer/HBoxContainer_HP/HPBar
 @onready var fuel_bar = $VBoxContainer/HBoxContainer_JET/FuelBar
 @onready var weapon_label = $VBoxContainer/WeaponLabel
+@onready var heat_bar = $VBoxContainer/HBoxContainer/HeatBar
+
+func update_heat(value):
+	heat_bar.value = value
+	heat_bar.visible = value > 0
 
 func update_hp(value, max_value):
 	hp_bar.max_value = max_value
