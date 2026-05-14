@@ -40,6 +40,10 @@ const HEAT_PER_SHOT = 8.0
 const HEAT_DISSIPATION = 15.0
 const OVERHEAT_COOLDOWN = 3.0
 
+var combo_count = 0
+var combo_timer = 0.0
+const COMBO_WINDOW = 0.8
+
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -80,6 +84,12 @@ func _physics_process(delta):
 	if weapons[current_weapon] != "gatling" or not Input.is_action_pressed("ui_primary"):
 		if not is_overheated:
 			heat = max(heat - HEAT_DISSIPATION * delta, 0.0)
+	
+	# Combo timer
+	if combo_timer > 0:
+		combo_timer -= delta
+	if combo_timer <= 0 and combo_count > 0:
+		combo_count = 0
 			
 	move_and_slide()
 
@@ -128,15 +138,45 @@ func fire_bolter():
 	
 func fire_melee():
 	can_shoot = false
+	combo_count += 1
+	combo_timer = COMBO_WINDOW
+
 	var hitbox = melee_hitbox_scene.instantiate()
 	var facing = 1.0
 	if velocity.x < 0:
 		facing = -1.0
-	hitbox.position = global_position + Vector2(20.0 * facing, 0)
+
+	if combo_count == 1:
+		# Zwykły atak
+		hitbox.position = global_position + Vector2(20.0 * facing, 0)
+		hitbox.get_node("CollisionShape2D").shape.size = Vector2(24, 20)
+		print("ATAK 1")
+	elif combo_count == 2:
+		# Mocniejszy atak
+		hitbox.position = global_position + Vector2(24.0 * facing, 0)
+		hitbox.get_node("CollisionShape2D").shape.size = Vector2(28, 24)
+		print("ATAK 2")
+	elif combo_count >= 3:
+		# Finisher
+		hitbox.position = global_position + Vector2(28.0 * facing, -8)
+		hitbox.get_node("CollisionShape2D").shape.size = Vector2(32, 32)
+		combo_count = 0
+		combo_timer = 0.0
+		print("FINISHER!")
+
 	hitbox.collision_layer = 3
 	hitbox.collision_mask = 2
 	get_parent().add_child(hitbox)
-	await get_tree().create_timer(0.4).timeout
+
+	# Obrażenia rosną z combo
+	if combo_count == 0:
+		hitbox.damage = 4
+	elif combo_count == 2:
+		hitbox.damage = 2
+	else:
+		hitbox.damage = 1
+
+	await get_tree().create_timer(0.3).timeout
 	can_shoot = true
 
 func spawn_bullet(size_mult):
