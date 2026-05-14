@@ -1,3 +1,47 @@
 [gd_scene format=3 uid="uid://b52oka2dl7ad2"]
 
+[ext_resource type="Script" uid="uid://c72hsm5kskagn" path="res://game_over_screen.gd" id="1_gt22q"]
+
 [node name="GameOverScreen" type="CanvasLayer" unique_id=388643700]
+script = ExtResource("1_gt22q")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1468652086]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1517005701]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.003921569)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=903862853]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="MessageLabel" type="Label" parent="VBoxContainer" unique_id=2027787638]
+layout_mode = 2
+text = "MISSION FAILED"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=1496497285]
+layout_mode = 2
+text = "RESTART"
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer" unique_id=1501514911]
+layout_mode = 2
+text = "SCORE: 0"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

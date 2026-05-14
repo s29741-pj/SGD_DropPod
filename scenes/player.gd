@@ -89,6 +89,7 @@ func _physics_process(delta):
 		shoot()
 		
 	if hud:
+		hud.update_score(GameManager.score)
 		hud.update_hp(hp, max_hp)
 		hud.update_fuel(fuel)
 		hud.update_heat(heat)
@@ -109,6 +110,16 @@ func _physics_process(delta):
 		combo_count = 0
 			
 	move_and_slide()
+
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision == null:
+			continue
+		var collider = collision.get_collider()
+		if collider == null:
+			continue
+		if collider.is_in_group("enemy") and not invincible:
+			take_damage(1)
 
 func shoot():
 	if not can_shoot:
@@ -238,7 +249,7 @@ func die():
 	is_dead = true
 	print("GRACZ MARTWY")
 	await get_tree().create_timer(1.0).timeout
-	get_tree().reload_current_scene()
+	get_tree().get_root().get_node("Main/GameOverScreen").show_game_over()
 	
 func heal(amount):
 	hp = min(hp + amount, max_hp)

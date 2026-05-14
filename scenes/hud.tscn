@@ -52,3 +52,7 @@ text = "HEAT:"
 [node name="HeatBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer" unique_id=914569998]
 custom_minimum_size = Vector2(80, 10)
 layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer" unique_id=333813653]
+layout_mode = 2
+text = "SCORE:0"

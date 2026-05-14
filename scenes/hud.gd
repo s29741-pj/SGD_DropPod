@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var fuel_bar = $VBoxContainer/HBoxContainer_JET/FuelBar
 @onready var weapon_label = $VBoxContainer/WeaponLabel
 @onready var heat_bar = $VBoxContainer/HBoxContainer/HeatBar
+@onready var score_label = $VBoxContainer/ScoreLabel
 
 func update_heat(value):
 	heat_bar.value = value
@@ -23,3 +24,6 @@ func update_weapon(weapon_name, mode = "", current_ammo = -1):
 	if current_ammo >= 0:
 		text += " | " + str(current_ammo)
 	weapon_label.text = text
+
+func update_score(value):
+	score_label.text = "SCORE: " + str(value)

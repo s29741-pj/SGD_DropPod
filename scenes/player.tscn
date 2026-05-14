@@ -3,7 +3,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
 size = Vector2(16, 32)
 
-[node name="Player" type="CharacterBody2D" unique_id=1675319849]
+[node name="Player" type="CharacterBody2D" unique_id=1675319849 groups=["player"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=573643860]
 

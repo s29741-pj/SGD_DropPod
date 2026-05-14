@@ -39,21 +39,7 @@ func _physics_process(delta):
 		var collider = collision.get_collider()
 		if collider == null:
 			continue
-		if collider.has_method("take_damage") and not damage_cooldown:
-			collider.take_damage(1)
-			damage_cooldown = true
-			await get_tree().create_timer(1.0).timeout
-			damage_cooldown = false
-	for i in slide_count:
-		if i >= get_slide_collision_count():
-			break
-		var collision = get_slide_collision(i)
-		if collision == null:
-			continue
-		var collider = collision.get_collider()
-		if collider == null:
-			continue
-		if collider.has_method("take_damage") and not damage_cooldown:
+		if collider.has_method("take_damage") and not damage_cooldown and collider.is_in_group("player"):
 			collider.take_damage(1)
 			damage_cooldown = true
 			await get_tree().create_timer(1.0).timeout

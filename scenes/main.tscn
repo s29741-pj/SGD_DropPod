@@ -9,10 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://cqfeili5j8v5f" path="res://scenes/enemy.tscn" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://duvx5bqv1gl4m" path="res://scenes/melee_hitbox.tscn" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="7_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://c8tarvkchy4i8" path="res://scenes/heavy_enemy.tscn" id="11_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://7h5x2l2t1xg2" path="res://scenes/enemy_spawner.tscn" id="12_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://vthkrgfe8ct7" path="res://scenes/ammo_box.tscn" id="12_trceg"]
 [ext_resource type="PackedScene" uid="uid://bagdyta4bx4cg" path="res://scenes/healthpack.tscn" id="13_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://b52oka2dl7ad2" path="res://game_over_screen.tscn" id="14_a8y0u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
 texture = ExtResource("2_85g3d")
@@ -47,12 +47,10 @@ rotation_smoothing_enabled = true
 position = Vector2(232, 264)
 enemy_scene = ExtResource("5_tbgi4")
 
-[node name="EnemySpawner2" parent="." unique_id=11541836 instance=ExtResource("12_eb6dy")]
-position = Vector2(-496, 136)
-enemy_scene = ExtResource("11_ya4ey")
-
 [node name="AmmoBox" parent="." unique_id=1866117795 instance=ExtResource("12_trceg")]
 position = Vector2(-72, 296)
 
 [node name="Healthpack" parent="." unique_id=794996231 instance=ExtResource("13_a8y0u")]
 position = Vector2(-160, 296)
+
+[node name="GameOverScreen" parent="." unique_id=388643700 instance=ExtResource("14_a8y0u")]

@@ -21,7 +21,7 @@ offset_right = 8.0
 offset_bottom = 16.0
 color = Color(1, 0.4, 0, 1)
 
-[node name="DetectionArea" type="Area2D" parent="." unique_id=1150722995]
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1150722995 groups=["enemy"]]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=2035799151]
