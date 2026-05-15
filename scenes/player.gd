@@ -50,12 +50,19 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	# Zwykły skok
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	if Input.is_action_just_pressed("ui_accept") and not is_on_floor() and fuel > 30:
-		velocity.y = JUMP_VELOCITY * 0.7
+	# Jetpack / powerjump
+	if Input.is_action_just_pressed("jetpack") and not is_on_floor() and fuel > 30:
+		velocity.y = JUMP_VELOCITY * 0.9
 		fuel -= 30.0
+	
+	# Kucnięcie
+	if Input.is_action_pressed("crouch") and is_on_floor():
+		# Na razie tylko print, dodamy CollisionShape później
+		print("KUCANIE")
 
 	if is_on_floor():
 		fuel = min(fuel + FUEL_REFILL * delta, FUEL_MAX)

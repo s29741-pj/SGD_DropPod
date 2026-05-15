@@ -5,6 +5,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tegq"]
 size = Vector2(16, 32)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_7p1mj"]
+radius = 100.0
+
 [node name="Enemy" type="CharacterBody2D" unique_id=623081516 groups=["enemy"]]
 collision_layer = 2
 collision_mask = 3
@@ -25,3 +28,9 @@ offset_top = -16.0
 offset_right = 8.0
 offset_bottom = 16.0
 color = Color(0.81239235, 0.21402696, 0.364407, 1)
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=574881043]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=288214813]
+shape = SubResource("CircleShape2D_7p1mj")

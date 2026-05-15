@@ -5,6 +5,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fa70"]
 size = Vector2(24, 48)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_d57w6"]
+radius = 80.0
+
 [node name="HeavyEnemy" type="CharacterBody2D" unique_id=257790617]
 collision_layer = 2
 collision_mask = 3
@@ -22,3 +25,8 @@ color = Color(0.53333336, 0, 1, 1)
 
 [node name="FloorDetector" type="RayCast2D" parent="." unique_id=1717997346]
 target_position = Vector2(0, 60)
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=738229290]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=384221602]
+shape = SubResource("CircleShape2D_d57w6")
