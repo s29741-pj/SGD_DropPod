@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://vthkrgfe8ct7" path="res://scenes/ammo_box.tscn" id="12_trceg"]
 [ext_resource type="PackedScene" uid="uid://bagdyta4bx4cg" path="res://scenes/healthpack.tscn" id="13_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://b52oka2dl7ad2" path="res://game_over_screen.tscn" id="14_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://chvkrhlhiymbn" path="res://scenes/upgrade_screen.tscn" id="14_jkv2x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
 texture = ExtResource("2_85g3d")
@@ -54,3 +55,7 @@ position = Vector2(-72, 296)
 position = Vector2(-160, 296)
 
 [node name="GameOverScreen" parent="." unique_id=388643700 instance=ExtResource("14_a8y0u")]
+process_mode = 3
+
+[node name="UpgradeScreen" parent="." unique_id=1077591299 instance=ExtResource("14_jkv2x")]
+process_mode = 3

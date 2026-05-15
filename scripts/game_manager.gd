@@ -6,6 +6,17 @@ var enemies_remaining = 0
 var score = 0
 var mission_start_time = 0.0
 
+var upgrades = {
+	"bolter_damage": 0,
+	"bolter_fire_rate": 0,
+	"gatling_fire_rate": 0,
+	"gatling_heat": 0,
+	"max_hp": 0,
+	"max_ammo": 0
+}
+
+const UPGRADE_COST = 200
+
 func _ready():
 	mission_start_time = Time.get_ticks_msec()
 

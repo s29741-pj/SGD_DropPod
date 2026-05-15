@@ -143,7 +143,7 @@ func fire_gatling():
 		return
 	gatling_cooldown = true
 	ammo["gatling"] -= 1
-	heat += HEAT_PER_SHOT
+	heat += max(2.0, HEAT_PER_SHOT - GameManager.upgrades["gatling_heat"] * 1.5)
 	spawn_bullet(0.7)
 	if heat >= max_heat:
 		is_overheated = true
@@ -151,21 +151,22 @@ func fire_gatling():
 		await get_tree().create_timer(OVERHEAT_COOLDOWN).timeout
 		is_overheated = false
 		heat = 0.0
-	await get_tree().create_timer(0.08).timeout
+	await get_tree().create_timer(max(0.03, 0.08 - GameManager.upgrades["gatling_fire_rate"] * 0.01)).timeout
 	gatling_cooldown = false
 
 func fire_bolter():
-	if ammo["bolter"] < 3:
+	var cost = 3
+	if ammo["bolter"] < cost:
 		print("BRAK AMUNICJI")
 		return
 	can_shoot = false
 	for i in 3:
 		ammo["bolter"] -= 1
-		spawn_bullet(1.0)
-		await get_tree().create_timer(0.1).timeout
+		spawn_bullet(1.0 + GameManager.upgrades["bolter_damage"] * 0.5)
+		await get_tree().create_timer(0.1 - GameManager.upgrades["bolter_fire_rate"] * 0.015).timeout
 	await get_tree().create_timer(0.3).timeout
 	can_shoot = true
-	
+
 func fire_bolter_auto():
 	if ammo["bolter"] <= 0:
 		print("BRAK AMUNICJI")
@@ -174,10 +175,9 @@ func fire_bolter_auto():
 		return
 	can_shoot = false
 	ammo["bolter"] -= 1
-	spawn_bullet(1.0)
-	await get_tree().create_timer(0.15).timeout
+	spawn_bullet(1.0 + GameManager.upgrades["bolter_damage"] * 0.5)
+	await get_tree().create_timer(max(0.05, 0.15 - GameManager.upgrades["bolter_fire_rate"] * 0.02)).timeout
 	can_shoot = true
-
 	
 func fire_melee():
 	can_shoot = false
@@ -258,3 +258,15 @@ func pickup_ammo(amount):
 	var current = weapons[current_weapon]
 	if current in ammo:
 		ammo[current] = min(ammo[current] + amount, max_ammo[current])
+		
+		
+func apply_upgrades():
+	max_hp += GameManager.upgrades["max_hp"] * 2
+	hp = max_hp
+	max_ammo["bolter"] += GameManager.upgrades["max_ammo"] * 10
+	ammo["bolter"] = max_ammo["bolter"]
+	max_ammo["gatling"] += GameManager.upgrades["max_ammo"] * 20
+	ammo["gatling"] = max_ammo["gatling"]
+	
+func _ready():
+	apply_upgrades()

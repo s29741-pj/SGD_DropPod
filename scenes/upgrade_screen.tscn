@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://chvkrhlhiymbn"]
+
+[ext_resource type="Script" uid="uid://bymdyqyfp85wf" path="res://upgrade_screen.gd" id="1_mh8j6"]
+
+[node name="UpgradeScreen" type="CanvasLayer" unique_id=1077591299]
+script = ExtResource("1_mh8j6")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=279480516]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.003921569)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=509320287]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -43.0
+offset_right = 20.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1595874869]
+layout_mode = 2
+text = "CHOOSE UPGRADE:"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="VBoxContainer" unique_id=860125504]
+layout_mode = 2
+text = "POINTS: 0"
+
+[node name="Upgrade1" type="Button" parent="VBoxContainer" unique_id=1955782747]
+layout_mode = 2
+
+[node name="Upgrade2" type="Button" parent="VBoxContainer" unique_id=1217169298]
+layout_mode = 2
+
+[node name="Upgrade3" type="Button" parent="VBoxContainer" unique_id=269299621]
+layout_mode = 2
