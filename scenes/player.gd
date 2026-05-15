@@ -11,6 +11,10 @@ const INVINCIBILITY_TIME = 1.0
 @export var bullet_scene: PackedScene
 @export var muzzle_flash_scene: PackedScene
 @export var melee_hitbox_scene: PackedScene
+@onready var stand_shape = $CollisionShape2D
+@onready var crouch_shape = $CrouchShape
+
+var is_crouching = false
 
 var can_shoot = true
 var fuel = FUEL_MAX
@@ -76,6 +80,17 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("switch_weapon"):
 		current_weapon = (current_weapon + 1) % weapons.size()
 		print("Bron: ", weapons[current_weapon])
+		
+	# Kucnięcie
+	if Input.is_action_pressed("crouch") and is_on_floor():
+		is_crouching = true
+		stand_shape.disabled = true
+		crouch_shape.disabled = false
+		velocity.x *= 0.5
+	else:
+		is_crouching = false
+		stand_shape.disabled = false
+		crouch_shape.disabled = true
 
 # Przełączanie trybu boltera
 	if Input.is_action_just_pressed("secondary_fire") and weapons[current_weapon] == "bolter":
@@ -231,8 +246,9 @@ func fire_melee():
 
 func spawn_bullet(size_mult):
 	var bullet = bullet_scene.instantiate()
-	bullet.position = global_position
-	bullet.direction = (get_global_mouse_position() - global_position).normalized()
+	var shoot_direction = (get_global_mouse_position() - global_position).normalized()
+	bullet.position = global_position + shoot_direction * 30
+	bullet.direction = shoot_direction
 	bullet.scale = Vector2(size_mult, size_mult)
 	bullet.collision_layer = 3
 	bullet.collision_mask = 2
@@ -254,9 +270,8 @@ func take_damage(amount):
 
 func die():
 	is_dead = true
-	print("GRACZ MARTWY")
 	await get_tree().create_timer(1.0).timeout
-	get_tree().get_root().get_node("Main/GameOverScreen").show_game_over()
+	get_tree().get_root().get_child(0).get_node("GameOverScreen").show_game_over()
 	
 func heal(amount):
 	hp = min(hp + amount, max_hp)
@@ -277,3 +292,4 @@ func apply_upgrades():
 	
 func _ready():
 	apply_upgrades()
+	set_collision_layer_value(3, false)

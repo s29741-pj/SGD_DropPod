@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Droppod"
-run/main_scene="uid://drp80lh3a56o2"
+run/main_scene="uid://bua5630awdhul"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 

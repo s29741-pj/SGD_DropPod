@@ -27,14 +27,20 @@ func _physics_process(delta):
 	if is_chasing and player_ref:
 		var dist = global_position.distance_to(player_ref.global_position)
 		if dist > PREFERRED_DISTANCE:
-			# Zbliż się do gracza
 			direction = sign(player_ref.global_position.x - global_position.x)
 			velocity.x = SPEED_CHASE * direction
 		else:
-			# Stój i strzelaj
 			velocity.x = move_toward(velocity.x, 0, SPEED_CHASE)
 			if can_shoot:
 				shoot()
+				
+	elif is_chasing and not player_ref:
+		# Gracz wyszedł z zasięgu – idź w ostatnim kierunku
+		velocity.x = SPEED_PATROL * direction
+		floor_detector.position.x = 8 * direction
+		if is_on_wall() or (is_on_floor() and not floor_detector.is_colliding()):
+			is_chasing = false
+			direction *= -1
 	else:
 		velocity.x = SPEED_PATROL * direction
 		floor_detector.position.x = 8 * direction
@@ -54,16 +60,20 @@ func _on_body_entered(body):
 	if body.is_in_group("player"):
 		is_chasing = true
 		player_ref = body
+		# Zapamiętaj kierunek do gracza
+		direction = sign(player_ref.global_position.x - global_position.x)
+		add_collision_exception_with(body)
 
 func _on_body_exited(body):
 	if body.is_in_group("player"):
-		is_chasing = false
+		# Nie resetuj is_chasing – shooter pamięta kierunek
 		player_ref = null
+		remove_collision_exception_with(body)
 
 func shoot():
 	can_shoot = false
 	var bullet = load("res://scenes/bullet.tscn").instantiate()
-	var direction_to_player = (player_ref.dglobal_position - global_position).normalized()
+	var direction_to_player = (player_ref.global_position - global_position).normalized()
 	bullet.position = global_position + direction_to_player * 20
 	bullet.direction = direction_to_player
 	bullet.collision_layer = 3

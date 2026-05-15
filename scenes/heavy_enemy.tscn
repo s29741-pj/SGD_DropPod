@@ -27,6 +27,7 @@ color = Color(0.53333336, 0, 1, 1)
 target_position = Vector2(0, 60)
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=738229290]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=384221602]
 shape = SubResource("CircleShape2D_d57w6")

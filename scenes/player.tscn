@@ -3,9 +3,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
 size = Vector2(16, 32)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
+size = Vector2(16, 16)
+
 [node name="Player" type="CharacterBody2D" unique_id=1675319849 groups=["player"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=573643860]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1178967862]
 shape = SubResource("RectangleShape2D_u8vuu")
+
+[node name="CrouchShape" type="CollisionShape2D" parent="." unique_id=1957820931 groups=["player"]]
+shape = SubResource("RectangleShape2D_3vyb7")
+disabled = true

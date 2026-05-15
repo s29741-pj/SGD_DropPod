@@ -17,6 +17,7 @@ func _ready():
 	GameManager.register_enemy()
 	detection_area.body_entered.connect(_on_body_entered)
 	detection_area.body_exited.connect(_on_body_exited)
+	detection_area.body_entered.connect(func(b): print("HEAVY WYKRYL: ", b.name))
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -60,11 +61,13 @@ func _on_body_entered(body):
 	if body.is_in_group("player"):
 		is_chasing = true
 		player_ref = body
+		add_collision_exception_with(body)
 
 func _on_body_exited(body):
 	if body.is_in_group("player"):
 		is_chasing = false
 		player_ref = null
+		remove_collision_exception_with(body)
 
 func take_damage(amount):
 	hp -= amount
