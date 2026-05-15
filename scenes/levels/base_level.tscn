@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bqajeopgswq87"]
+
+[ext_resource type="Script" uid="uid://dnidqlnearqgf" path="res://base_level.gd" id="1_wwrw0"]
+[ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="2_o1chu"]
+[ext_resource type="PackedScene" uid="uid://b52oka2dl7ad2" path="res://game_over_screen.tscn" id="3_3rriw"]
+[ext_resource type="PackedScene" uid="uid://chvkrhlhiymbn" path="res://scenes/upgrade_screen.tscn" id="4_h4ce7"]
+
+[node name="BaseLevel" type="Node2D" unique_id=872262250]
+script = ExtResource("1_wwrw0")
+
+[node name="HUD" parent="." unique_id=1620064913 instance=ExtResource("2_o1chu")]
+
+[node name="GameOverScreen" parent="." unique_id=388643700 instance=ExtResource("3_3rriw")]
+
+[node name="UpgradeScreen" parent="." unique_id=1077591299 instance=ExtResource("4_h4ce7")]

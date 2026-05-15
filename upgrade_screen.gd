@@ -42,6 +42,7 @@ func apply_upgrade(index):
 	GameManager.upgrades[offered[index]["id"]] += 1
 	get_tree().paused = false
 	hide()
+	get_parent().go_to_next_level(GameManager.next_level)
 
 func _on_upgrade1_pressed():
 	apply_upgrade(0)

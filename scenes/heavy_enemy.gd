@@ -50,6 +50,11 @@ func _physics_process(delta):
 
 func take_damage(amount):
 	hp -= amount
+	# Flash
+	$ColorRect.color = Color.WHITE
+	await get_tree().create_timer(0.1).timeout
+	if is_inside_tree():
+		$ColorRect.color = Color(0.53, 0.0, 1.0) # oryginalny kolor
 	if hp <= 0:
 		GameManager.enemy_died()
 		queue_free()

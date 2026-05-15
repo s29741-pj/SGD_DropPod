@@ -50,6 +50,11 @@ func _ready():
 
 func take_damage(amount):
 	hp -= amount
+	# Flash
+	$ColorRect.color = Color.WHITE
+	await get_tree().create_timer(0.1).timeout
+	if is_inside_tree():
+		$ColorRect.color = Color(0.81, 0.21, 0.36) # oryginalny kolor
 	if hp <= 0:
 		GameManager.enemy_died()
 		queue_free()

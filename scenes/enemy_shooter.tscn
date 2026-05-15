@@ -9,6 +9,7 @@ size = Vector2(16, 32)
 radius = 80.0
 
 [node name="EnemyShooter" type="CharacterBody2D" unique_id=1148068584]
+collision_layer = 2
 script = ExtResource("1_afvl6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1961880987]
@@ -26,3 +27,6 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=2035799151]
 shape = SubResource("CircleShape2D_p4l84")
+
+[node name="FloorDetector" type="RayCast2D" parent="." unique_id=501145022]
+target_position = Vector2(0, 40)

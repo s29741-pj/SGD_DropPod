@@ -1,0 +1,50 @@
+[gd_scene format=4 uid="uid://bapiffgqcq3fk"]
+
+[ext_resource type="Script" uid="uid://dnidqlnearqgf" path="res://base_level.gd" id="1_72x3h"]
+[ext_resource type="Texture2D" uid="uid://sh0cab37e5ea" path="res://assets/sprites/tileset.png" id="2_wb0vq"]
+[ext_resource type="PackedScene" uid="uid://c603il6hrnfdt" path="res://scenes/player.tscn" id="3_ah4rv"]
+[ext_resource type="Script" uid="uid://bt1600e1spt7k" path="res://scenes/player.gd" id="4_522sc"]
+[ext_resource type="PackedScene" uid="uid://dcfurxm5arnj1" path="res://scenes/bullet.tscn" id="5_a82vw"]
+[ext_resource type="PackedScene" uid="uid://dd3f308rvmq4n" path="res://scenes/muzzle_flash.tscn" id="6_t14x3"]
+[ext_resource type="PackedScene" uid="uid://duvx5bqv1gl4m" path="res://scenes/melee_hitbox.tscn" id="7_ahaer"]
+[ext_resource type="PackedScene" uid="uid://7h5x2l2t1xg2" path="res://scenes/enemy_spawner.tscn" id="8_wt4k6"]
+[ext_resource type="PackedScene" uid="uid://cqfeili5j8v5f" path="res://scenes/enemy.tscn" id="9_wo5bm"]
+[ext_resource type="PackedScene" uid="uid://vthkrgfe8ct7" path="res://scenes/ammo_box.tscn" id="10_edoqj"]
+[ext_resource type="PackedScene" uid="uid://bagdyta4bx4cg" path="res://scenes/healthpack.tscn" id="11_022ip"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
+texture = ExtResource("2_wb0vq")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_ya4ey"]
+physics_layer_0/collision_layer = 1
+sources/2 = SubResource("TileSetAtlasSource_choun")
+
+[node name="Main" type="Node2D" unique_id=1137297608]
+script = ExtResource("1_72x3h")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=168287678]
+tile_map_data = PackedByteArray("AAAUABAAAgAAAAAAAAAVABAAAgAAAAAAAAAWABAAAgAAAAAAAAAXABAAAgAAAAAAAAAYABAAAgAAAAAAAAAZABAAAgAAAAAAAAAaAA8AAgAAAAAAAAAbAA8AAgAAAAAAAAAcAA8AAgAAAAAAAAAdAA8AAgAAAAAAAAAeAA8AAgAAAAAAAAAfAA8AAgAAAAAAAAAgAA8AAgAAAAAAAAASABMAAgAAAAAAAAARABMAAgAAAAAAAAAQABMAAgAAAAAAAAAPABMAAgAAAAAAAAAOABMAAgAAAAAAAAANABMAAgAAAAAAAAAMABMAAgAAAAAAAAALABMAAgAAAAAAAAAKABMAAgAAAAAAAAAJABMAAgAAAAAAAAAIABMAAgAAAAAAAAAHABMAAgAAAAAAAAAGABMAAgAAAAAAAAAFABMAAgAAAAAAAAAEABMAAgAAAAAAAAADABMAAgAAAAAAAAACABMAAgAAAAAAAAABABMAAgAAAAAAAAAAABMAAgAAAAAAAAD//xMAAgAAAAAAAAD+/xMAAgAAAAAAAAD9/xMAAgAAAAAAAAD8/xMAAgAAAAAAAAD7/xMAAgAAAAAAAAD6/xMAAgAAAAAAAAD5/xMAAgAAAAAAAAD4/xMAAgAAAAAAAAD3/xMAAgAAAAAAAAD2/xMAAgAAAAAAAAD1/xMAAgAAAAAAAAD0/xMAAgAAAAAAAADz/xMAAgAAAAAAAADy/xMAAgAAAAAAAADi/w8AAgAAAAAAAADj/w8AAgAAAAAAAADk/w8AAgAAAAAAAADl/w8AAgAAAAAAAADm/w8AAgAAAAAAAADn/w8AAgAAAAAAAADo/w8AAgAAAAAAAADp/w8AAgAAAAAAAADq/w8AAgAAAAAAAADr/w8AAgAAAAAAAADs/w8AAgAAAAAAAADt/w8AAgAAAAAAAADu/w8AAgAAAAAAAADv/w8AAgAAAAAAAADw/w8AAgAAAAAAAADx/w8AAgAAAAAAAADy/w8AAgAAAAAAAAAGAA0AAgAAAAAAAAAHAA0AAgAAAAAAAAAIAA0AAgAAAAAAAAAJAA0AAgAAAAAAAAAKAA0AAgAAAAAAAAALAA0AAgAAAAAAAAAMAA0AAgAAAAAAAAA=")
+tile_set = SubResource("TileSet_ya4ey")
+
+[node name="Player" parent="." unique_id=1675319849 instance=ExtResource("3_ah4rv")]
+collision_mask = 3
+script = ExtResource("4_522sc")
+bullet_scene = ExtResource("5_a82vw")
+muzzle_flash_scene = ExtResource("6_t14x3")
+melee_hitbox_scene = ExtResource("7_ahaer")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=985269263]
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[node name="EnemySpawner" parent="." unique_id=33120619 instance=ExtResource("8_wt4k6")]
+position = Vector2(232, 264)
+enemy_scene = ExtResource("9_wo5bm")
+
+[node name="AmmoBox" parent="." unique_id=1866117795 instance=ExtResource("10_edoqj")]
+position = Vector2(-72, 296)
+
+[node name="Healthpack" parent="." unique_id=794996231 instance=ExtResource("11_022ip")]
+position = Vector2(-160, 296)

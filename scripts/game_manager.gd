@@ -15,6 +15,19 @@ var upgrades = {
 	"max_ammo": 0
 }
 
+var next_level = "res://scenes/levels/level2.tscn"
+var current_level = 1
+
+func advance_level():
+	current_level += 1
+	match current_level:
+		2:
+			next_level = "res://scenes/levels/level2.tscn"
+		3:
+			next_level = "res://scenes/levels/level3.tscn"
+		4:
+			next_level = "res://scenes/levels/level4.tscn"
+
 const UPGRADE_COST = 200
 
 func _ready():
