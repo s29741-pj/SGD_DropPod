@@ -55,14 +55,14 @@ text = "FALA 1/5"
 
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=1139356946]
 
-[node name="Marker2D" type="Marker2D" parent="SpawnPoints" unique_id=1335293153]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1335293153]
 position = Vector2(840, 8)
 
-[node name="Marker2D2" type="Marker2D" parent="SpawnPoints" unique_id=946842261]
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=946842261]
 position = Vector2(1072, -112)
 
-[node name="Marker2D3" type="Marker2D" parent="SpawnPoints" unique_id=363255909]
+[node name="Marker2D3" type="Marker2D" parent="." unique_id=363255909]
 position = Vector2(-192, -64)
 
-[node name="Marker2D4" type="Marker2D" parent="SpawnPoints" unique_id=1761763941]
+[node name="Marker2D4" type="Marker2D" parent="." unique_id=1761763941]
 position = Vector2(-160, -64)

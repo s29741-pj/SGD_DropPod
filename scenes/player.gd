@@ -77,7 +77,7 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	if Input.is_action_just_pressed("switch_weapon"):
+	if Input.is_action_just_pressed("switch_weapon") and not GameManager.knife_only_mode:
 		current_weapon = (current_weapon + 1) % weapons.size()
 		print("Bron: ", weapons[current_weapon])
 		
@@ -134,7 +134,8 @@ func _physics_process(delta):
 			hud.update_weapon("bolter", bolter_mode, current_ammo)
 		else:
 			hud.update_weapon(weapons[current_weapon], "", current_ammo)
-
+		if GameManager.knife_only_mode:
+			hud.update_weapon("TYLKO NOZ", "", -1)
 	if weapons[current_weapon] != "gatling" or not Input.is_action_pressed("ui_primary"):
 		if not is_overheated:
 			heat = max(heat - HEAT_DISSIPATION * delta, 0.0)
@@ -159,6 +160,9 @@ func _physics_process(delta):
 
 func shoot():
 	if not can_shoot:
+		return
+	if GameManager.knife_only_mode:
+		fire_melee()
 		return
 	match weapons[current_weapon]:
 		"bolter":
@@ -221,9 +225,9 @@ func fire_melee():
 	combo_timer = COMBO_WINDOW
 
 	var hitbox = melee_hitbox_scene.instantiate()
-	var facing = 1.0
-	if velocity.x < 0:
-		facing = -1.0
+	var facing = sign(get_global_mouse_position().x - global_position.x)
+	if facing == 0:
+		facing = 1.0
 
 	if combo_count == 1:
 		# Zwykły atak

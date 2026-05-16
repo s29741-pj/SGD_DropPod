@@ -73,8 +73,8 @@ spawn_count = 2
 position = Vector2(2720, -48)
 enemy_scene = ExtResource("9_4eecq")
 
-[node name="Healthpack" parent="EnemySpawner4" unique_id=794996231 instance=ExtResource("11_bxuut")]
-position = Vector2(-1648, 72)
+[node name="Healthpack" parent="." unique_id=794996231 instance=ExtResource("11_bxuut")]
+position = Vector2(1072, 24)
 
-[node name="AmmoBox" parent="EnemySpawner4/Healthpack" unique_id=1866117795 instance=ExtResource("10_b3p8y")]
-position = Vector2(911.6675, -2.6115112)
+[node name="AmmoBox" parent="." unique_id=1866117795 instance=ExtResource("10_b3p8y")]
+position = Vector2(1983.6675, 21.388489)

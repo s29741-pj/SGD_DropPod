@@ -21,6 +21,7 @@ var current_level = 1
 var current_wave = 0
 var total_waves = 5
 var wave_in_progress = false
+var knife_only_mode = false
 
 signal wave_started(wave_number)
 signal wave_completed
