@@ -10,7 +10,7 @@ radius = 80.0
 
 [node name="HeavyEnemy" type="CharacterBody2D" unique_id=257790617]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 9
 script = ExtResource("1_d57w6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=73364436]

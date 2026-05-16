@@ -14,6 +14,7 @@ var player_ref = null
 
 @onready var floor_detector = $FloorDetector
 @onready var detection_area = $DetectionArea
+const JUMP_VELOCITY = -260.0
 
 func _ready():
 	GameManager.register_enemy()
@@ -25,27 +26,21 @@ func _physics_process(delta):
 		velocity.y += GRAVITY * delta
 
 	if is_chasing and player_ref:
-		var dist = global_position.distance_to(player_ref.global_position)
-		if dist > PREFERRED_DISTANCE:
-			direction = sign(player_ref.global_position.x - global_position.x)
-			velocity.x = SPEED_CHASE * direction
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED_CHASE)
-			if can_shoot:
-				shoot()
-				
-	elif is_chasing and not player_ref:
-		# Gracz wyszedł z zasięgu – idź w ostatnim kierunku
-		velocity.x = SPEED_PATROL * direction
-		floor_detector.position.x = 8 * direction
-		if is_on_wall() or (is_on_floor() and not floor_detector.is_colliding()):
-			is_chasing = false
-			direction *= -1
+		direction = sign(player_ref.global_position.x - global_position.x)
+		velocity.x = SPEED_CHASE * direction
+		# Skocz gdy gracz jest wyżej i wróg stoi na podłodze
+		var player_above = player_ref.global_position.y < global_position.y - 32
+		if player_above and is_on_floor():
+			velocity.y = JUMP_VELOCITY
+		# Skocz gdy napotka ścianę
+		if is_on_wall() and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 	else:
 		velocity.x = SPEED_PATROL * direction
 		floor_detector.position.x = 8 * direction
 		if not just_turned:
-			if is_on_wall():
+			if is_on_wall() and is_on_floor():
+				velocity.y = JUMP_VELOCITY
 				direction *= -1
 				just_turned = true
 			elif is_on_floor() and not floor_detector.is_colliding():
@@ -62,13 +57,12 @@ func _on_body_entered(body):
 		player_ref = body
 		# Zapamiętaj kierunek do gracza
 		direction = sign(player_ref.global_position.x - global_position.x)
-		add_collision_exception_with(body)
 
 func _on_body_exited(body):
 	if body.is_in_group("player"):
 		# Nie resetuj is_chasing – shooter pamięta kierunek
 		player_ref = null
-		remove_collision_exception_with(body)
+
 
 func shoot():
 	can_shoot = false

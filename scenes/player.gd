@@ -59,7 +59,7 @@ func _physics_process(delta):
 		velocity.y = JUMP_VELOCITY
 
 	# Jetpack / powerjump
-	if Input.is_action_just_pressed("jetpack") and not is_on_floor() and fuel > 30:
+	if Input.is_action_just_pressed("jetpack") and fuel > 30:
 		velocity.y = JUMP_VELOCITY * 0.9
 		fuel -= 30.0
 	
@@ -91,6 +91,20 @@ func _physics_process(delta):
 		is_crouching = false
 		stand_shape.disabled = false
 		crouch_shape.disabled = true
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision == null:
+			continue
+		var collider = collision.get_collider()
+		if collider == null:
+			continue
+		if collider.is_in_group("enemy"):
+			var enemy_above = collider.global_position.y < global_position.y - 10
+			if enemy_above:
+				add_collision_exception_with(collider)
+				await get_tree().create_timer(0.5).timeout
+				if is_instance_valid(collider):
+					remove_collision_exception_with(collider)
 
 # Przełączanie trybu boltera
 	if Input.is_action_just_pressed("secondary_fire") and weapons[current_weapon] == "bolter":
@@ -271,7 +285,7 @@ func take_damage(amount):
 func die():
 	is_dead = true
 	await get_tree().create_timer(1.0).timeout
-	get_tree().get_root().get_child(0).get_node("GameOverScreen").show_game_over()
+	get_tree().current_scene.get_node("GameOverScreen").show_game_over()
 	
 func heal(amount):
 	hp = min(hp + amount, max_hp)

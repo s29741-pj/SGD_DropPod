@@ -18,6 +18,14 @@ var upgrades = {
 var next_level = "res://scenes/levels/level2.tscn"
 var current_level = 1
 
+var current_wave = 0
+var total_waves = 5
+var wave_in_progress = false
+
+signal wave_started(wave_number)
+signal wave_completed
+signal all_waves_completed
+
 func advance_level():
 	current_level += 1
 	match current_level:
@@ -40,8 +48,18 @@ func enemy_died():
 	enemies_remaining -= 1
 	score += 100
 	if enemies_remaining <= 0:
-		_calculate_time_bonus()
-		level_completed.emit()
+		if wave_in_progress:
+			wave_in_progress = false
+			wave_completed.emit()
+		else:
+			_calculate_time_bonus()
+			level_completed.emit()
+
+func start_wave(wave_number):
+	current_wave = wave_number
+	wave_in_progress = true
+	enemies_remaining = 0
+	wave_started.emit(wave_number)
 
 func _calculate_time_bonus():
 	var elapsed = (Time.get_ticks_msec() - mission_start_time) / 1000.0
