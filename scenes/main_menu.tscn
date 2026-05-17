@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://capuxflqkvhpy"]
+
+[ext_resource type="Script" uid="uid://xbik7nkbejuq" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+
+[node name="MainMenu" type="Control" unique_id=1279773475]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=502646800]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1204871838]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.5
+offset_top = -64.0
+offset_right = 39.5
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=1345794261]
+layout_mode = 2
+text = "DROPPOD"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=16200684]
+layout_mode = 2
+text = "START"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1197158625]
+layout_mode = 2
+text = "QUIT"
+icon_alignment = 1
+
+[node name="CreditsButton" type="Button" parent="VBoxContainer" unique_id=566944902]
+layout_mode = 2
+text = "CREDITS
+"
+icon_alignment = 2
