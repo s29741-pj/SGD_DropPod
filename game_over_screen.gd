@@ -20,6 +20,7 @@ func show_mission_complete():
 
 func _on_button_pressed():
 	get_tree().paused = false
+	GameManager.delete_checkpoint()
 	GameManager.reset()
 	get_tree().reload_current_scene()
 	

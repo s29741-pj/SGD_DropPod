@@ -27,6 +27,47 @@ signal wave_started(wave_number)
 signal wave_completed
 signal all_waves_completed
 
+var checkpoint_data = {}
+
+
+func save_checkpoint(player_pos: Vector2, level_path: String):
+	checkpoint_data = {
+		"player_x": player_pos.x,
+		"player_y": player_pos.y,
+		"level": level_path,
+		"hp": checkpoint_data.get("hp", 5),
+		"ammo_bolter": checkpoint_data.get("ammo_bolter", 30),
+		"ammo_gatling": checkpoint_data.get("ammo_gatling", 100),
+		"score": score,
+		"upgrades": upgrades.duplicate()
+	}
+	_write_save()
+
+func _write_save():
+	var file = FileAccess.open("user://save.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify(checkpoint_data))
+	file.close()
+
+func load_checkpoint():
+	if not FileAccess.file_exists("user://save.json"):
+		return false
+	var file = FileAccess.open("user://save.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if data == null:
+		return false
+	checkpoint_data = data
+	score = data["score"]
+	upgrades = data["upgrades"]
+	return true
+
+func has_checkpoint():
+	return FileAccess.file_exists("user://save.json")
+
+func delete_checkpoint():
+	if FileAccess.file_exists("user://save.json"):
+		DirAccess.remove_absolute("user://save.json")
+
 func advance_level():
 	current_level += 1
 	match current_level:

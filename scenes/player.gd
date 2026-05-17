@@ -289,7 +289,11 @@ func take_damage(amount):
 func die():
 	is_dead = true
 	await get_tree().create_timer(1.0).timeout
-	get_tree().current_scene.get_node("GameOverScreen").show_game_over()
+	if GameManager.has_checkpoint():
+		var data = GameManager.checkpoint_data
+		get_tree().change_scene_to_file(data["level"])
+	else:
+		get_tree().current_scene.get_node("GameOverScreen").show_game_over()
 	
 func heal(amount):
 	hp = min(hp + amount, max_hp)
@@ -310,4 +314,9 @@ func apply_upgrades():
 	
 func _ready():
 	apply_upgrades()
-	set_collision_layer_value(3, false)
+	if GameManager.has_checkpoint():
+		var data = GameManager.checkpoint_data
+		hp = data.get("hp", max_hp)
+		ammo["bolter"] = data.get("ammo_bolter", max_ammo["bolter"])
+		ammo["gatling"] = data.get("ammo_gatling", max_ammo["gatling"])
+		global_position = Vector2(data["player_x"], data["player_y"])
