@@ -15,7 +15,7 @@ func _on_quit_pressed():
 	get_tree().quit()
 
 func _on_continue_pressed():
-	var data = GameManager.checkpoint_data
-	GameManager.load_checkpoint()
-	get_tree().change_scene_to_file(data["level"])
+	if GameManager.load_checkpoint():
+		var data = GameManager.checkpoint_data
+		get_tree().change_scene_to_file(data["level"])
 	

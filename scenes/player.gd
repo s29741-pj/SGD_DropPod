@@ -51,6 +51,10 @@ var bolter_mode = "burst"
 const COMBO_WINDOW = 0.8
 
 func _physics_process(delta):
+	
+	if global_position.y > 1000:
+		die()
+		
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
@@ -91,13 +95,19 @@ func _physics_process(delta):
 		is_crouching = false
 		stand_shape.disabled = false
 		crouch_shape.disabled = true
-	for i in get_slide_collision_count():
+		
+	var player_slide_count = get_slide_collision_count()
+	for i in player_slide_count:
+		if i >= get_slide_collision_count():
+			break
 		var collision = get_slide_collision(i)
 		if collision == null:
 			continue
 		var collider = collision.get_collider()
 		if collider == null:
 			continue
+		if collider.is_in_group("enemy") and not invincible:
+			take_damage(1)
 		if collider.is_in_group("enemy"):
 			var enemy_above = collider.global_position.y < global_position.y - 10
 			if enemy_above:
@@ -289,9 +299,8 @@ func take_damage(amount):
 func die():
 	is_dead = true
 	await get_tree().create_timer(1.0).timeout
-	if GameManager.has_checkpoint():
-		var data = GameManager.checkpoint_data
-		get_tree().change_scene_to_file(data["level"])
+	if GameManager.has_checkpoint() and GameManager.checkpoint_data.has("level"):
+		get_tree().change_scene_to_file(GameManager.checkpoint_data["level"])
 	else:
 		get_tree().current_scene.get_node("GameOverScreen").show_game_over()
 	
@@ -314,7 +323,7 @@ func apply_upgrades():
 	
 func _ready():
 	apply_upgrades()
-	if GameManager.has_checkpoint():
+	if GameManager.has_checkpoint() and GameManager.checkpoint_data.has("player_x"):
 		var data = GameManager.checkpoint_data
 		hp = data.get("hp", max_hp)
 		ammo["bolter"] = data.get("ammo_bolter", max_ammo["bolter"])

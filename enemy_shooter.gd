@@ -22,19 +22,29 @@ func _ready():
 	detection_area.body_exited.connect(_on_body_exited)
 
 func _physics_process(delta):
+				
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
 	if is_chasing and player_ref:
-		direction = sign(player_ref.global_position.x - global_position.x)
-		velocity.x = SPEED_CHASE * direction
-		# Skocz gdy gracz jest wyżej i wróg stoi na podłodze
+		var dist = global_position.distance_to(player_ref.global_position)
+		if dist > PREFERRED_DISTANCE:
+			direction = sign(player_ref.global_position.x - global_position.x)
+			velocity.x = SPEED_CHASE * direction
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED_CHASE)
+			if can_shoot:
+				shoot()
+		# Skocz tylko gdy gracz jest wyżej
 		var player_above = player_ref.global_position.y < global_position.y - 32
 		if player_above and is_on_floor():
 			velocity.y = JUMP_VELOCITY
-		# Skocz gdy napotka ścianę
+		# Skocz przy ścianie tylko gdy to nie jest gracz
 		if is_on_wall() and is_on_floor():
-			velocity.y = JUMP_VELOCITY
+			var wall_collision = get_slide_collision(0)
+			if wall_collision and not wall_collision.get_collider().is_in_group("player"):
+				velocity.y = JUMP_VELOCITY
+				
 	else:
 		velocity.x = SPEED_PATROL * direction
 		floor_detector.position.x = 8 * direction
@@ -50,6 +60,23 @@ func _physics_process(delta):
 			just_turned = false
 
 	move_and_slide()
+	
+		# Zapobiegaj wskakiwaniu na gracza
+	for i in get_slide_collision_count():
+		if i >= get_slide_collision_count():
+			break
+		var collision = get_slide_collision(i)
+		if collision == null:
+			continue
+		var collider = collision.get_collider()
+		if collider == null:
+			continue
+		if collider.is_in_group("player"):
+			# Odepchnij wroga w bok od gracza
+			var push_dir = sign(global_position.x - collider.global_position.x)
+			if push_dir == 0:
+				push_dir = 1
+			velocity.x = push_dir * SPEED_CHASE * 2
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):

@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="14_yhrca"]
 [ext_resource type="PackedScene" uid="uid://b52oka2dl7ad2" path="res://game_over_screen.tscn" id="15_4eecq"]
 [ext_resource type="PackedScene" uid="uid://chvkrhlhiymbn" path="res://scenes/upgrade_screen.tscn" id="16_b3p8y"]
+[ext_resource type="PackedScene" uid="uid://d4jimp1i1rckl" path="res://scenes/checkpoint.tscn" id="17_sqrei"]
+[ext_resource type="PackedScene" uid="uid://by0ovfwt4gnjp" path="res://scenes/extraction_zone.tscn" id="18_yhrca"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
 texture = ExtResource("2_8i1lk")
@@ -78,3 +80,12 @@ position = Vector2(1072, 24)
 
 [node name="AmmoBox" parent="." unique_id=1866117795 instance=ExtResource("10_b3p8y")]
 position = Vector2(1983.6675, 21.388489)
+
+[node name="Checkpoint" parent="." unique_id=416862586 instance=ExtResource("17_sqrei")]
+position = Vector2(222.28331, 22.912949)
+
+[node name="Checkpoint2" parent="." unique_id=51869375 instance=ExtResource("17_sqrei")]
+position = Vector2(2281.9897, 21.473816)
+
+[node name="ExtractionZone" parent="." unique_id=1189123331 instance=ExtResource("18_yhrca")]
+position = Vector2(3896, -56)

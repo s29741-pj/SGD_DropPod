@@ -77,6 +77,8 @@ func advance_level():
 			next_level = "res://scenes/levels/level3.tscn"
 		4:
 			next_level = "res://scenes/levels/level4.tscn"
+		_:
+			next_level = ""
 
 const UPGRADE_COST = 200
 
@@ -95,6 +97,7 @@ func enemy_died():
 			wave_completed.emit()
 		else:
 			_calculate_time_bonus()
+			advance_level()
 			level_completed.emit()
 
 func start_wave(wave_number):

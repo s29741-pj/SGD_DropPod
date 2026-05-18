@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://bagdyta4bx4cg" path="res://scenes/healthpack.tscn" id="11_qtppw"]
 [ext_resource type="PackedScene" uid="uid://bt4hcmhckyxwv" path="res://scenes/enemy_shooter.tscn" id="13_5sfmg"]
 [ext_resource type="PackedScene" uid="uid://c8tarvkchy4i8" path="res://scenes/heavy_enemy.tscn" id="14_tsmbm"]
+[ext_resource type="PackedScene" uid="uid://d4jimp1i1rckl" path="res://scenes/checkpoint.tscn" id="16_tsmbm"]
+[ext_resource type="PackedScene" uid="uid://by0ovfwt4gnjp" path="res://scenes/extraction_zone.tscn" id="17_y3vdi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_choun"]
 texture = ExtResource("2_xx6b8")
@@ -81,3 +83,18 @@ position = Vector2(1880, -352)
 
 [node name="Healthpack3" parent="." unique_id=37736845 instance=ExtResource("11_qtppw")]
 position = Vector2(961, -35)
+
+[node name="Checkpoint" parent="." unique_id=416862586 instance=ExtResource("16_tsmbm")]
+position = Vector2(1012, -88)
+
+[node name="Checkpoint2" parent="." unique_id=1097768263 instance=ExtResource("16_tsmbm")]
+position = Vector2(1792, -64)
+
+[node name="Checkpoint3" parent="." unique_id=1082423294 instance=ExtResource("16_tsmbm")]
+position = Vector2(1984, -344)
+
+[node name="Checkpoint4" parent="." unique_id=553528174 instance=ExtResource("16_tsmbm")]
+position = Vector2(3152, -80)
+
+[node name="ExtractionZone" parent="." unique_id=1189123331 instance=ExtResource("17_y3vdi")]
+position = Vector2(4000, -24)

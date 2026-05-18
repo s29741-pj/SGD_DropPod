@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://by0ovfwt4gnjp"]
+
+[ext_resource type="Script" uid="uid://dcwh06rrv417k" path="res://scenes/extraction_zone.gd" id="1_3al3o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xyt0k"]
+size = Vector2(32, 48)
+
+[node name="ExtractionZone" type="Area2D" unique_id=1189123331]
+collision_layer = 0
+script = ExtResource("1_3al3o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1370936892]
+shape = SubResource("RectangleShape2D_xyt0k")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1095877145]
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = 24.0
+color = Color(0, 1, 0.26666668, 1)

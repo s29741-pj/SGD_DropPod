@@ -20,7 +20,7 @@ func _ready():
 	detection_area.body_exited.connect(_on_body_exited)
 	detection_area.body_entered.connect(func(b): print("HEAVY WYKRYL: ", b.name))
 
-func _physics_process(delta):
+func _physics_process(delta):	
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
@@ -49,6 +49,23 @@ func _physics_process(delta):
 			just_turned = false
 
 	move_and_slide()
+	
+		# Zapobiegaj wskakiwaniu na gracza
+	for i in get_slide_collision_count():
+		if i >= get_slide_collision_count():
+			break
+		var collision = get_slide_collision(i)
+		if collision == null:
+			continue
+		var collider = collision.get_collider()
+		if collider == null:
+			continue
+		if collider.is_in_group("player"):
+			# Odepchnij wroga w bok od gracza
+			var push_dir = sign(global_position.x - collider.global_position.x)
+			if push_dir == 0:
+				push_dir = 1
+			velocity.x = push_dir * SPEED_CHASE * 2
 
 	var slide_count = get_slide_collision_count()
 	for i in slide_count:

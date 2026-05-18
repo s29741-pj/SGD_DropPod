@@ -40,6 +40,8 @@ func apply_upgrade(index):
 		return
 	GameManager.score -= GameManager.UPGRADE_COST
 	GameManager.upgrades[offered[index]["id"]] += 1
+	GameManager.checkpoint_data = {}
+	GameManager.delete_checkpoint()
 	get_tree().paused = false
 	hide()
 	get_parent().go_to_next_level(GameManager.next_level)
