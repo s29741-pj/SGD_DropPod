@@ -13,6 +13,8 @@ const INVINCIBILITY_TIME = 1.0
 @export var melee_hitbox_scene: PackedScene
 @onready var stand_shape = $CollisionShape2D
 @onready var crouch_shape = $CrouchShape
+@onready var lower_body = $LowerBody
+@onready var upper_body = $UpperBody
 
 var is_crouching = false
 
@@ -49,6 +51,60 @@ var combo_timer = 0.0
 var bolter_mode = "burst"
 
 const COMBO_WINDOW = 0.8
+
+func update_animation():
+	# Dolna część
+	if not is_on_floor():
+		lower_body.play("jump")
+	elif velocity.x != 0:
+		lower_body.play("run")
+	else:
+		lower_body.play("idle")
+
+# Górna część – animacja
+	if not can_shoot and weapons[current_weapon] == "bolter":
+		upper_body.play("shoot_bolter")
+	elif (not can_shoot or gatling_cooldown) and weapons[current_weapon] == "gatling":
+		upper_body.play("shoot_gatling")
+	elif weapons[current_weapon] == "gatling":
+		upper_body.play("gatling_idle")
+	elif velocity.x != 0:
+		upper_body.play("run")
+	else:
+		upper_body.play("idle")
+	
+
+	# Obrót za kursorem
+	var mouse_pos = get_global_mouse_position()
+	var looking_left = mouse_pos.x < global_position.x
+	
+	# Pozycja górnej części zależna od animacji
+	match upper_body.animation:
+		"idle":
+			upper_body.position = Vector2(0, -55)
+		"run":
+			upper_body.position = Vector2(0, -35)
+		"shoot_bolter":
+			if looking_left:
+				upper_body.position = Vector2(-25, -58)
+			else:
+				upper_body.position = Vector2(25, -58)
+		"shoot_gatling":
+			if looking_left:
+				upper_body.position = Vector2(-35, -45)
+			else:
+				upper_body.position = Vector2(35, -45)
+
+
+	upper_body.flip_h = looking_left
+	lower_body.flip_h = looking_left
+	
+	if looking_left:
+		upper_body.rotation = PI - (mouse_pos - global_position).angle()
+		upper_body.rotation = -upper_body.rotation
+	else:
+		upper_body.rotation = (mouse_pos - global_position).angle()
+
 
 func _physics_process(delta):
 	
@@ -157,17 +213,19 @@ func _physics_process(delta):
 		combo_count = 0
 			
 	move_and_slide()
+	update_animation()
+	
 
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		if collision == null:
-			continue
-		var collider = collision.get_collider()
-		if collider == null:
-			continue
-		if collider.is_in_group("enemy") and not invincible:
-			take_damage(1)
-
+	#for i in get_slide_collision_count():
+		#var collision = get_slide_collision(i)
+		#if collision == null:
+			#continue
+		#var collider = collision.get_collider()
+		#if collider == null:
+			#continue
+		#if collider.is_in_group("enemy") and not invincible:
+			#take_damage(1)
+			
 func shoot():
 	if not can_shoot:
 		return
