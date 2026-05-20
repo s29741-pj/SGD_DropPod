@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1qkcl3oek47"
-path="res://.godot/imported/lower_idle.png-83bf9e1e67be8a7dbcd0778772f9c236.ctex"
+uid="uid://b2qdg8uresvds"
+path="res://.godot/imported/bolter_head.png-efa9d3c61136535f916a434ffcce3753.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/lower_idle.png"
-dest_files=["res://.godot/imported/lower_idle.png-83bf9e1e67be8a7dbcd0778772f9c236.ctex"]
+source_file="res://assets/sprites/bolter_head.png"
+dest_files=["res://.godot/imported/bolter_head.png-efa9d3c61136535f916a434ffcce3753.ctex"]
 
 [params]
 

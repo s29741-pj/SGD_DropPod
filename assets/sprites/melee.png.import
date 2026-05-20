@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c58fyarpmrs23"
-path="res://.godot/imported/gatling_idle — kopia.png-ac64115a6dad72408a825e99699a1974.ctex"
+uid="uid://cerluotv661pm"
+path="res://.godot/imported/melee.png-580c20e87b11fc1a1a3c5b5aa6877a99.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/gatling_idle — kopia.png"
-dest_files=["res://.godot/imported/gatling_idle — kopia.png-ac64115a6dad72408a825e99699a1974.ctex"]
+source_file="res://assets/sprites/melee.png"
+dest_files=["res://.godot/imported/melee.png-580c20e87b11fc1a1a3c5b5aa6877a99.ctex"]
 
 [params]
 

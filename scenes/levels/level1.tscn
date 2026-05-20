@@ -72,6 +72,7 @@ position = Vector2(752, -80)
 position = Vector2(2192, 40)
 
 [node name="HUD" parent="." unique_id=1620064913 instance=ExtResource("14_sbmf2")]
+visible = false
 
 [node name="GameOverScreen" parent="." unique_id=388643700 instance=ExtResource("15_1xax6")]
 

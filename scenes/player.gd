@@ -15,6 +15,8 @@ const INVINCIBILITY_TIME = 1.0
 @onready var crouch_shape = $CrouchShape
 @onready var lower_body = $LowerBody
 @onready var upper_body = $UpperBody
+@onready var full_body = $FullBody
+#@onready var upper_body_head = $UpperBodyHead
 
 var is_crouching = false
 
@@ -30,11 +32,11 @@ var invincible = false
 @onready var hud = get_parent().get_node("HUD")
 
 var ammo = {
-	"bolter": 30,
+	"bolter": 9999,
 	"gatling": 100
 }
 var max_ammo = {
-	"bolter": 30,
+	"bolter": 9999,
 	"gatling": 100
 }
 
@@ -49,10 +51,40 @@ const OVERHEAT_COOLDOWN = 3.0
 var combo_count = 0
 var combo_timer = 0.0
 var bolter_mode = "burst"
+var is_finishing = false
 
 const COMBO_WINDOW = 0.8
 
 func update_animation():
+	var mouse_pos = get_global_mouse_position()
+	var looking_left = mouse_pos.x < global_position.x
+	
+## Głowa – statyczna, tylko odbicie lustrzane
+	#upper_body_head.flip_h = looking_left
+	#if not can_shoot and weapons[current_weapon] == "bolter":
+		#upper_body_head.play("bolter_head")
+		#upper_body_head.visible = true
+	#else:
+		#upper_body_head.visible = false
+		# Tryb walki wręcz - całościowy sprite
+		
+	if not can_shoot and weapons[current_weapon] == "knife":
+		full_body.visible = true
+		lower_body.visible = false
+		upper_body.visible = false
+		full_body.flip_h = looking_left
+		if is_finishing:
+			full_body.play("knife_combo")
+			full_body.position = Vector2(0, -55)
+		else:
+			full_body.play("knife_attack")
+			full_body.position = Vector2(0, -45)
+		return
+	else:
+		full_body.visible = false
+		lower_body.visible = true
+		upper_body.visible = true
+	
 	# Dolna część
 	if not is_on_floor():
 		lower_body.play("jump")
@@ -63,6 +95,7 @@ func update_animation():
 
 # Górna część – animacja
 	if not can_shoot and weapons[current_weapon] == "bolter":
+		#upper_body.play("bolter_head")
 		upper_body.play("shoot_bolter")
 	elif (not can_shoot or gatling_cooldown) and weapons[current_weapon] == "gatling":
 		upper_body.play("shoot_gatling")
@@ -75,25 +108,76 @@ func update_animation():
 	
 
 	# Obrót za kursorem
-	var mouse_pos = get_global_mouse_position()
-	var looking_left = mouse_pos.x < global_position.x
 	
 	# Pozycja górnej części zależna od animacji
 	match upper_body.animation:
 		"idle":
 			upper_body.position = Vector2(0, -55)
+			lower_body.position = Vector2(0, -15)
+		"gatling_idle":
+			if velocity.x != 0:
+				if looking_left:
+					upper_body.position = Vector2(-15, -60)
+				else:
+					upper_body.position = Vector2(15, -60)
+			else:
+				if looking_left:
+					upper_body.position = Vector2(5, -55)
+				else:
+					upper_body.position = Vector2(5, -55)
 		"run":
 			upper_body.position = Vector2(0, -35)
+			lower_body.position = Vector2(0, -10)
 		"shoot_bolter":
-			if looking_left:
-				upper_body.position = Vector2(-25, -58)
+			if velocity.x != 0:
+				if looking_left:
+					upper_body.position = Vector2(0, -70)
+					lower_body.position = Vector2(25, -15)
+				else:
+					upper_body.position = Vector2(0, -70)
+					lower_body.position = Vector2(-25, -15)
 			else:
-				upper_body.position = Vector2(25, -58)
+				if looking_left:
+					upper_body.position = Vector2(0, -75)
+					lower_body.position = Vector2(0, -15)
+				else:
+					upper_body.position = Vector2(0, -75)
+					lower_body.position = Vector2(0, -15)
+					
+		#"bolter_hands":
+			#if looking_left:
+				#upper_body_head.position = Vector2(10, -55)
+				#upper_body.position = Vector2(-35, -65)
+			#else:
+				#upper_body_head.position = Vector2(-10, -55)
+				#upper_body.position = Vector2(20, -55)
 		"shoot_gatling":
-			if looking_left:
-				upper_body.position = Vector2(-35, -45)
-			else:
-				upper_body.position = Vector2(35, -45)
+			if velocity.x != 0:	
+				if looking_left:
+					upper_body.position = Vector2(-35, -55)
+				else:
+					upper_body.position = Vector2(35, -55)
+			else:	
+				if looking_left:
+					upper_body.position = Vector2(-15, -55)
+				else:
+					upper_body.position = Vector2(15, -55)
+					
+		# Pivot obrotu boltera/gatlinga
+	if upper_body.animation == "shoot_bolter":
+		if looking_left:
+			upper_body.offset = Vector2(-40, 0)  # pivot po prawej
+		else:
+			upper_body.offset = Vector2(40, 0)  # pivot po lewej
+	elif upper_body.animation == "shoot_gatling":
+		if looking_left:
+			upper_body.offset = Vector2(-30, 0)  # pivot po prawej
+		else:
+			upper_body.offset = Vector2(30, 0)  # pivot po lewej
+	else:
+		upper_body.offset = Vector2(0, 0)
+
+
 
 
 	upper_body.flip_h = looking_left
@@ -291,43 +375,38 @@ func fire_melee():
 	can_shoot = false
 	combo_count += 1
 	combo_timer = COMBO_WINDOW
-
 	var hitbox = melee_hitbox_scene.instantiate()
 	var facing = sign(get_global_mouse_position().x - global_position.x)
 	if facing == 0:
 		facing = 1.0
-
 	if combo_count == 1:
-		# Zwykły atak
 		hitbox.position = global_position + Vector2(20.0 * facing, 0)
 		hitbox.get_node("CollisionShape2D").shape.size = Vector2(24, 20)
+		hitbox.damage = 1
 		print("ATAK 1")
 	elif combo_count == 2:
-		# Mocniejszy atak
 		hitbox.position = global_position + Vector2(24.0 * facing, 0)
 		hitbox.get_node("CollisionShape2D").shape.size = Vector2(28, 24)
+		hitbox.damage = 2
 		print("ATAK 2")
 	elif combo_count >= 3:
-		# Finisher
+		is_finishing = true
 		hitbox.position = global_position + Vector2(28.0 * facing, -8)
 		hitbox.get_node("CollisionShape2D").shape.size = Vector2(32, 32)
+		hitbox.damage = 4
 		combo_count = 0
 		combo_timer = 0.0
 		print("FINISHER!")
-
 	hitbox.collision_layer = 3
 	hitbox.collision_mask = 2
 	get_parent().add_child(hitbox)
-
-	# Obrażenia rosną z combo
-	if combo_count == 0:
-		hitbox.damage = 4
-	elif combo_count == 2:
-		hitbox.damage = 2
+	
+	# Różny czas dla finishera i zwykłego ataku
+	if is_finishing:
+		await get_tree().create_timer(0.8).timeout
 	else:
-		hitbox.damage = 1
-
-	await get_tree().create_timer(0.3).timeout
+		await get_tree().create_timer(0.3).timeout
+	is_finishing = false
 	can_shoot = true
 
 func spawn_bullet(size_mult):
