@@ -11,10 +11,35 @@ var just_turned = false
 var can_shoot = true
 var is_chasing = false
 var player_ref = null
+var is_hurt = false
+var is_dead_anim = false
+var is_attacking = false
+
+@onready var sprite = $Sprite
 
 @onready var floor_detector = $FloorDetector
 @onready var detection_area = $DetectionArea
 const JUMP_VELOCITY = -260.0
+
+func update_animation():
+	if is_dead_anim or is_hurt:
+		if player_ref:
+			sprite.flip_h = player_ref.global_position.x < global_position.x
+		return
+	if is_attacking:
+		if sprite.animation != "o3_shot":
+			sprite.play("o3_shot")
+		if player_ref:
+			sprite.flip_h = player_ref.global_position.x < global_position.x
+		return
+	if is_chasing and player_ref:
+		if sprite.animation != "o3_walk":
+			sprite.play("o3_walk")
+	else:
+		if sprite.animation != "o3_idle":
+			sprite.play("o3_idle")
+	if player_ref:
+		sprite.flip_h = player_ref.global_position.x < global_position.x
 
 func _ready():
 	GameManager.register_enemy()
@@ -60,6 +85,7 @@ func _physics_process(delta):
 			just_turned = false
 
 	move_and_slide()
+	update_animation()
 	
 		# Zapobiegaj wskakiwaniu na gracza
 	for i in get_slide_collision_count():
@@ -93,6 +119,7 @@ func _on_body_exited(body):
 
 func shoot():
 	can_shoot = false
+	is_attacking = true
 	var bullet = load("res://scenes/bullet.tscn").instantiate()
 	var direction_to_player = (player_ref.global_position - global_position).normalized()
 	bullet.position = global_position + direction_to_player * 20
@@ -100,15 +127,25 @@ func shoot():
 	bullet.collision_layer = 3
 	bullet.collision_mask = 1
 	get_parent().add_child(bullet)
+	sprite.play("o3_shot")
 	await get_tree().create_timer(SHOOT_COOLDOWN).timeout
+	is_attacking = false
 	can_shoot = true
 
 func take_damage(amount):
 	hp -= amount
-	$ColorRect.color = Color.WHITE
-	await get_tree().create_timer(0.1).timeout
-	if is_inside_tree():
-		$ColorRect.color = Color(1.0, 0.4, 0.0)
+	is_hurt = true
+	sprite.play("o3_hit")
 	if hp <= 0:
+		await get_tree().create_timer(0.15).timeout
+		if not is_inside_tree():
+			return
+		is_hurt = false
+		is_dead_anim = true
+		sprite.play("o3_death")
+		await get_tree().create_timer(0.8).timeout
 		GameManager.enemy_died()
 		queue_free()
+		return
+	await get_tree().create_timer(0.2).timeout
+	is_hurt = false
