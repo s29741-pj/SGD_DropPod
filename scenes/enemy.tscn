@@ -38,18 +38,6 @@ region = Rect2(1640, 0, 410, 350)
 atlas = ExtResource("2_nenq2")
 region = Rect2(0, 350, 410, 350)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1x4g4"]
-atlas = ExtResource("2_nenq2")
-region = Rect2(410, 350, 410, 350)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2pwtc"]
-atlas = ExtResource("2_nenq2")
-region = Rect2(820, 350, 410, 350)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rogs8"]
-atlas = ExtResource("2_nenq2")
-region = Rect2(1230, 350, 410, 350)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_wrm80"]
 atlas = ExtResource("3_md484")
 region = Rect2(0, 0, 535, 240)
@@ -258,15 +246,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ile5s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1x4g4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2pwtc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rogs8")
 }],
 "loop": true,
 "name": &"o1_atk",
@@ -462,4 +441,4 @@ shape = SubResource("CircleShape2D_7p1mj")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1869167043]
 sprite_frames = SubResource("SpriteFrames_ef2cb")
-animation = &"o1_atk"
+animation = &"o1_walk"

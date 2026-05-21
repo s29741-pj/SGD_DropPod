@@ -9,7 +9,11 @@ var just_turned = false
 var damage_cooldown = false
 var is_chasing = false
 var player_ref = null
+var is_hurt = false
+var is_dead_anim = false
+var is_attacking = false
 
+@onready var sprite = $Sprite
 @onready var floor_detector = $FloorDetector
 @onready var detection_area = $DetectionArea
 const JUMP_VELOCITY = -200.0
@@ -24,14 +28,14 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	if is_chasing and player_ref:
+	if is_attacking:
+		velocity.x = move_toward(velocity.x, 0, SPEED_CHASE)
+	elif is_chasing and player_ref:
 		direction = sign(player_ref.global_position.x - global_position.x)
 		velocity.x = SPEED_CHASE * direction
-		# Skocz gdy gracz jest wyżej i wróg stoi na podłodze
 		var player_above = player_ref.global_position.y < global_position.y - 32
 		if player_above and is_on_floor():
 			velocity.y = JUMP_VELOCITY
-		# Skocz gdy napotka ścianę
 		if is_on_wall() and is_on_floor():
 			velocity.y = JUMP_VELOCITY
 	else:
@@ -49,26 +53,10 @@ func _physics_process(delta):
 			just_turned = false
 
 	move_and_slide()
-	
+	update_animation()
+		
 		# Zapobiegaj wskakiwaniu na gracza
 	for i in get_slide_collision_count():
-		if i >= get_slide_collision_count():
-			break
-		var collision = get_slide_collision(i)
-		if collision == null:
-			continue
-		var collider = collision.get_collider()
-		if collider == null:
-			continue
-		if collider.is_in_group("player"):
-			# Odepchnij wroga w bok od gracza
-			var push_dir = sign(global_position.x - collider.global_position.x)
-			if push_dir == 0:
-				push_dir = 1
-			velocity.x = push_dir * SPEED_CHASE * 2
-
-	var slide_count = get_slide_collision_count()
-	for i in slide_count:
 		if i >= get_slide_collision_count():
 			break
 		var collision = get_slide_collision(i)
@@ -80,8 +68,10 @@ func _physics_process(delta):
 		if collider.has_method("take_damage") and not damage_cooldown and collider.is_in_group("player"):
 			collider.take_damage(2)
 			damage_cooldown = true
+			is_attacking = true
 			await get_tree().create_timer(1.5).timeout
 			damage_cooldown = false
+			is_attacking = false
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):
@@ -97,10 +87,36 @@ func _on_body_exited(body):
 
 func take_damage(amount):
 	hp -= amount
-	$ColorRect.color = Color.WHITE
-	await get_tree().create_timer(0.1).timeout
-	if is_inside_tree():
-		$ColorRect.color = Color(0.53, 0.0, 1.0)
+	is_hurt = true
+	sprite.play("o2_hit")
 	if hp <= 0:
+		await get_tree().create_timer(0.15).timeout
+		if not is_inside_tree():
+			return
+		is_hurt = false
+		is_dead_anim = true
+		sprite.play("o2_death")
+		await get_tree().create_timer(0.8).timeout
 		GameManager.enemy_died()
 		queue_free()
+		return
+	await get_tree().create_timer(0.2).timeout
+	is_hurt = false
+
+func update_animation():
+	if is_dead_anim or is_hurt:
+		return
+	if is_attacking:
+		if sprite.animation != "o2_atk":
+			sprite.play("o2_atk")
+		return
+	if is_chasing and player_ref:
+		if sprite.animation != "o2_wlk":
+			sprite.play("o2_wlk")
+		# Flip tylko gdy wystarczająco daleko
+		var dist = abs(player_ref.global_position.x - global_position.x)
+		if dist > 5:
+			sprite.flip_h = player_ref.global_position.x < global_position.x
+	else:
+		if sprite.animation != "o2_idle":
+			sprite.play("o2_idle")
