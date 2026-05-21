@@ -9,11 +9,28 @@ var just_turned = false
 var damage_cooldown = false
 var is_chasing = false
 var player_ref = null
+var is_hurt = false
+var is_dead_anim = false
+var is_attacking = false
 
 @onready var floor_detector = $FloorDetector
 @onready var detection_area = $DetectionArea
+@onready var sprite = $Sprite
 const JUMP_VELOCITY = -280.0
 
+
+func update_animation():
+	if is_dead_anim or is_hurt or is_attacking:
+		if player_ref:
+			sprite.flip_h = player_ref.global_position.x < global_position.x
+		return
+	if is_chasing and player_ref:
+		sprite.play("o1_walk")
+	else:
+		sprite.play("o1_idle")
+	if player_ref:
+		sprite.flip_h = player_ref.global_position.x < global_position.x
+		
 func _ready():
 	GameManager.register_enemy()
 	detection_area.body_entered.connect(_on_body_entered)
@@ -50,6 +67,7 @@ func _physics_process(delta):
 			just_turned = false
 
 	move_and_slide()
+	update_animation()
 	
 		# Zapobiegaj wskakiwaniu na gracza
 	for i in get_slide_collision_count():
@@ -81,8 +99,11 @@ func _physics_process(delta):
 		if collider.has_method("take_damage") and not damage_cooldown and collider.is_in_group("player"):
 			collider.take_damage(1)
 			damage_cooldown = true
+			is_attacking = true
+			sprite.play("o1_atk")
 			await get_tree().create_timer(1.0).timeout
 			damage_cooldown = false
+			is_attacking = false
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):
@@ -98,10 +119,15 @@ func _on_body_exited(body):
 
 func take_damage(amount):
 	hp -= amount
-	$ColorRect.color = Color.WHITE
-	await get_tree().create_timer(0.1).timeout
-	if is_inside_tree():
-		$ColorRect.color = Color(0.81, 0.21, 0.36)
+	is_hurt = true
+	sprite.play("o1_hit")
+	await get_tree().create_timer(0.15).timeout
+	is_hurt = false
+	if not is_inside_tree():
+		return
 	if hp <= 0:
+		is_dead_anim = true
+		sprite.play("o1_death")
+		await get_tree().create_timer(0.7).timeout
 		GameManager.enemy_died()
 		queue_free()

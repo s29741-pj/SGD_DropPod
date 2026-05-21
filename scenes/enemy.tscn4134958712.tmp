@@ -440,7 +440,7 @@ animations = [{
 }]
 
 [node name="Enemy" type="CharacterBody2D" unique_id=623081516 groups=["enemy"]]
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.5, 0.5)
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_md0e3")
@@ -461,5 +461,6 @@ collision_layer = 0
 shape = SubResource("CircleShape2D_7p1mj")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1869167043]
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ef2cb")
 animation = &"o1_atk"

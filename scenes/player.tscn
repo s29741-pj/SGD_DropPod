@@ -641,6 +641,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1675319849 groups=["player"]]
+scale = Vector2(0.4, 0.4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1178967862]
 shape = SubResource("RectangleShape2D_u8vuu")
@@ -662,6 +663,5 @@ sprite_frames = SubResource("SpriteFrames_487ah")
 animation = &"jump"
 
 [node name="FullBody" type="AnimatedSprite2D" parent="." unique_id=1854520504]
-scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_au8ao")
 animation = &"knife_combo"
