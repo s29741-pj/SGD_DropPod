@@ -12,7 +12,7 @@
 size = Vector2(16, 32)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7p1mj"]
-radius = 100.0
+radius = 300.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wtq4b"]
 atlas = ExtResource("2_nenq2")
@@ -437,6 +437,7 @@ target_position = Vector2(0, 40)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=288214813]
+position = Vector2(0, -100)
 shape = SubResource("CircleShape2D_7p1mj")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1869167043]

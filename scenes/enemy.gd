@@ -24,13 +24,33 @@ func update_animation():
 		if player_ref:
 			sprite.flip_h = player_ref.global_position.x < global_position.x
 		return
-	if is_chasing and player_ref:
-		sprite.play("o1_walk")
-	else:
-		sprite.play("o1_idle")
+	
+	sprite.play("o1_walk")
+	
 	if player_ref:
 		sprite.flip_h = player_ref.global_position.x < global_position.x
+	else:
+		sprite.flip_h = direction < 0
+	
+	sprite.position = Vector2(0, -90)
 		
+	#match sprite.animation:
+			#"o1_idle":
+				#sprite.position = Vector2(0, -90)
+			#"o1_walk":
+				#sprite.position = Vector2(0, 0)
+			#"o1_atk":
+				#if player_ref:
+					#if player_ref.global_position.x > global_position.x:d
+						#sprite.position = Vector2(10, 0)
+					#else:
+						#sprite.position = Vector2(-10, 0)
+			#"o1_hit":
+				#sprite.position = Vector2(0, 0)
+			#"o1_death":
+				#sprite.position = Vector2(0, 0)
+
+
 func _ready():
 	GameManager.register_enemy()
 	detection_area.body_entered.connect(_on_body_entered)
@@ -106,9 +126,11 @@ func _physics_process(delta):
 			is_attacking = false
 
 func _on_body_entered(body):
+	print("ENEMY WYKRYL: ", body.name, " grupa: ", body.get_groups())
 	if body.is_in_group("player"):
 		is_chasing = true
 		player_ref = body
+		print("IS_CHASING USTAWIONE NA TRUE")
 
 
 func _on_body_exited(body):

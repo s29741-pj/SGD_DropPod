@@ -110,13 +110,12 @@ func update_animation():
 		if sprite.animation != "o2_atk":
 			sprite.play("o2_atk")
 		return
-	if is_chasing and player_ref:
-		if sprite.animation != "o2_wlk":
-			sprite.play("o2_wlk")
-		# Flip tylko gdy wystarczająco daleko
+	
+	sprite.play("o2_wlk")
+	
+	if player_ref:
 		var dist = abs(player_ref.global_position.x - global_position.x)
 		if dist > 5:
 			sprite.flip_h = player_ref.global_position.x < global_position.x
 	else:
-		if sprite.animation != "o2_idle":
-			sprite.play("o2_idle")
+		sprite.flip_h = direction < 0

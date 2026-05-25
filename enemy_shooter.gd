@@ -32,14 +32,13 @@ func update_animation():
 		if player_ref:
 			sprite.flip_h = player_ref.global_position.x < global_position.x
 		return
-	if is_chasing and player_ref:
-		if sprite.animation != "o3_walk":
-			sprite.play("o3_walk")
-	else:
-		if sprite.animation != "o3_idle":
-			sprite.play("o3_idle")
+	
+	sprite.play("o3_walk")
+	
 	if player_ref:
 		sprite.flip_h = player_ref.global_position.x < global_position.x
+	else:
+		sprite.flip_h = direction < 0
 
 func _ready():
 	GameManager.register_enemy()

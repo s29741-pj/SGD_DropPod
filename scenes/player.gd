@@ -75,10 +75,10 @@ func update_animation():
 		full_body.flip_h = looking_left
 		if is_finishing:
 			full_body.play("knife_combo")
-			full_body.position = Vector2(0, -55)
+			full_body.position = Vector2(0, -15)
 		else:
 			full_body.play("knife_attack")
-			full_body.position = Vector2(0, -45)
+			full_body.position = Vector2(0, 0)
 		return
 	else:
 		full_body.visible = false
@@ -112,56 +112,55 @@ func update_animation():
 	# Pozycja górnej części zależna od animacji
 	match upper_body.animation:
 		"idle":
-			upper_body.position = Vector2(0, -55)
-			lower_body.position = Vector2(0, -15)
+			#upper_body.position = Vector2(0, -55)
+			#lower_body.position = Vector2(0, -15)
+			if looking_left:
+				upper_body.position = Vector2(6, -25)
+				lower_body.position = Vector2(0, 25)
+			else:
+				upper_body.position = Vector2(-6, -25)
+				
 		"gatling_idle":
 			if velocity.x != 0:
 				if looking_left:
-					upper_body.position = Vector2(-15, -60)
+					upper_body.position = Vector2(-20, -25)
 				else:
-					upper_body.position = Vector2(15, -60)
+					upper_body.position = Vector2(20, -25)
 			else:
 				if looking_left:
-					upper_body.position = Vector2(5, -55)
+					upper_body.position = Vector2(4, -25)
 				else:
-					upper_body.position = Vector2(5, -55)
+					upper_body.position = Vector2(4, -25)
+					
 		"run":
-			upper_body.position = Vector2(0, -35)
-			lower_body.position = Vector2(0, -10)
+			upper_body.position = Vector2(0, -10)
+			lower_body.position = Vector2(0, 25)
 		"shoot_bolter":
 			if velocity.x != 0:
 				if looking_left:
-					upper_body.position = Vector2(0, -70)
-					lower_body.position = Vector2(25, -15)
+					upper_body.position = Vector2(-20, -30)
+					lower_body.position = Vector2(0, 25)
 				else:
-					upper_body.position = Vector2(0, -70)
-					lower_body.position = Vector2(-25, -15)
+					upper_body.position = Vector2(20, -30)
+					lower_body.position = Vector2(0, 25)
 			else:
 				if looking_left:
-					upper_body.position = Vector2(0, -75)
-					lower_body.position = Vector2(0, -15)
+					upper_body.position = Vector2(6, -35)
+					lower_body.position = Vector2(0, 25)
 				else:
-					upper_body.position = Vector2(0, -75)
-					lower_body.position = Vector2(0, -15)
+					upper_body.position = Vector2(-6, -35)
 					
-		#"bolter_hands":
-			#if looking_left:
-				#upper_body_head.position = Vector2(10, -55)
-				#upper_body.position = Vector2(-35, -65)
-			#else:
-				#upper_body_head.position = Vector2(-10, -55)
-				#upper_body.position = Vector2(20, -55)
 		"shoot_gatling":
 			if velocity.x != 0:	
 				if looking_left:
-					upper_body.position = Vector2(-35, -55)
+					upper_body.position = Vector2(-35, -25)
 				else:
-					upper_body.position = Vector2(35, -55)
+					upper_body.position = Vector2(35, -25)
 			else:	
 				if looking_left:
-					upper_body.position = Vector2(-15, -55)
+					upper_body.position = Vector2(-15, -25)
 				else:
-					upper_body.position = Vector2(15, -55)
+					upper_body.position = Vector2(15, -25)
 					
 		# Pivot obrotu boltera/gatlinga
 	if upper_body.animation == "shoot_bolter":
