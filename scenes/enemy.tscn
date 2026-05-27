@@ -9,10 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://cyw6n30o6fn6k" path="res://assets/sprites/o1/o1_walk.png" id="7_otmr2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tegq"]
-size = Vector2(16, 32)
+size = Vector2(70, 180)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7p1mj"]
-radius = 300.0
+radius = 602.54
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wtq4b"]
 atlas = ExtResource("2_nenq2")
@@ -424,9 +424,8 @@ collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_md0e3")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1849680943]
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=266948570]
+position = Vector2(0, -60)
 shape = SubResource("RectangleShape2D_8tegq")
 
 [node name="FloorDetector" type="RayCast2D" parent="." unique_id=1484633901]
@@ -437,7 +436,6 @@ target_position = Vector2(0, 40)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=288214813]
-position = Vector2(0, -100)
 shape = SubResource("CircleShape2D_7p1mj")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1869167043]

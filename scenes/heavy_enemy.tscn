@@ -8,10 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://btuf3d5iyxp0" path="res://assets/sprites/o3/o2_wlk.png" id="6_r8rn3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fa70"]
-size = Vector2(24, 48)
+size = Vector2(40, 80)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d57w6"]
-radius = 80.0
+radius = 308.37
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wj0i0"]
 atlas = ExtResource("2_3hswp")
