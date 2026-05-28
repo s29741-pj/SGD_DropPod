@@ -16,8 +16,16 @@ var is_attacking = false
 @onready var floor_detector = $FloorDetector
 @onready var detection_area = $DetectionArea
 @onready var sprite = $Sprite
+@onready var sfx_player = $SFXPlayer
+@export var sfx_death: AudioStream
+@export var sfx_roar: AudioStream
 const JUMP_VELOCITY = -280.0
 
+
+func play_sfx(stream: AudioStream):
+	if stream:
+		sfx_player.stream = stream
+		sfx_player.play()
 
 func update_animation():
 	if is_dead_anim or is_hurt or is_attacking:
@@ -128,6 +136,7 @@ func _physics_process(delta):
 func _on_body_entered(body):
 	print("ENEMY WYKRYL: ", body.name, " grupa: ", body.get_groups())
 	if body.is_in_group("player"):
+		play_sfx(sfx_roar)
 		is_chasing = true
 		player_ref = body
 		print("IS_CHASING USTAWIONE NA TRUE")
@@ -142,6 +151,7 @@ func _on_body_exited(body):
 func take_damage(amount):
 	hp -= amount
 	is_hurt = true
+	play_sfx(sfx_death)
 	sprite.play("o1_hit")
 	await get_tree().create_timer(0.15).timeout
 	is_hurt = false

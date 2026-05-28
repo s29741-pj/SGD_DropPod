@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://cqfeili5j8v5f"]
 
 [ext_resource type="Script" uid="uid://dxuy5xr5414bb" path="res://scenes/enemy.gd" id="1_md0e3"]
+[ext_resource type="AudioStream" uid="uid://djv6ytsya3qkf" path="res://assets/audio/sfx/ork_death.wav" id="2_ipns3"]
 [ext_resource type="Texture2D" uid="uid://cs0u1s37tdosm" path="res://assets/sprites/o1/o1_atk.png" id="2_nenq2"]
+[ext_resource type="AudioStream" uid="uid://crgl765illolf" path="res://assets/audio/sfx/ork_roar_1.wav" id="3_8qclf"]
 [ext_resource type="Texture2D" uid="uid://tql3wsgocdrd" path="res://assets/sprites/o1/o1_death.png" id="3_md484"]
 [ext_resource type="Texture2D" uid="uid://cdt65825fnbc2" path="res://assets/sprites/o1/o1_hit.png" id="4_ipns3"]
 [ext_resource type="Texture2D" uid="uid://bmhqhgvvh1tqv" path="res://assets/sprites/o1/o1_idle.png" id="5_8qclf"]
@@ -423,6 +425,8 @@ scale = Vector2(0.2, 0.2)
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_md0e3")
+sfx_death = ExtResource("2_ipns3")
+sfx_roar = ExtResource("3_8qclf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=266948570]
 position = Vector2(0, -60)
@@ -441,3 +445,5 @@ shape = SubResource("CircleShape2D_7p1mj")
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1869167043]
 sprite_frames = SubResource("SpriteFrames_ef2cb")
 animation = &"o1_walk"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=861904567]

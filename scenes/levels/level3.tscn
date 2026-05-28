@@ -6,10 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://pfax3mj833j" path="res://assets/tilesets/tiles/lvl3/1 Tiles/Tileset.png" id="3_522sc"]
 [ext_resource type="Texture2D" uid="uid://dvx7bhnksteld" path="res://assets/background/Background 1/Day/3.png" id="3_a82vw"]
 [ext_resource type="PackedScene" uid="uid://c603il6hrnfdt" path="res://scenes/player.tscn" id="3_ah4rv"]
-[ext_resource type="Script" uid="uid://bt1600e1spt7k" path="res://scenes/player.gd" id="4_522sc"]
-[ext_resource type="PackedScene" uid="uid://dcfurxm5arnj1" path="res://scenes/bullet.tscn" id="5_a82vw"]
-[ext_resource type="PackedScene" uid="uid://dd3f308rvmq4n" path="res://scenes/muzzle_flash.tscn" id="6_t14x3"]
-[ext_resource type="PackedScene" uid="uid://duvx5bqv1gl4m" path="res://scenes/melee_hitbox.tscn" id="7_ahaer"]
+[ext_resource type="AudioStream" uid="uid://dk4ka71c6jqlx" path="res://assets/audio/music/lvl3.mp3" id="10_hadiw"]
 [ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="14_wt4k6"]
 [ext_resource type="PackedScene" uid="uid://b52oka2dl7ad2" path="res://game_over_screen.tscn" id="15_wo5bm"]
 [ext_resource type="PackedScene" uid="uid://chvkrhlhiymbn" path="res://scenes/upgrade_screen.tscn" id="16_edoqj"]
@@ -623,10 +620,6 @@ tile_set = SubResource("TileSet_ya4ey")
 
 [node name="Player" parent="." unique_id=1675319849 instance=ExtResource("3_ah4rv")]
 collision_mask = 3
-script = ExtResource("4_522sc")
-bullet_scene = ExtResource("5_a82vw")
-muzzle_flash_scene = ExtResource("6_t14x3")
-melee_hitbox_scene = ExtResource("7_ahaer")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=985269263]
 limit_left = -700
@@ -662,3 +655,8 @@ position = Vector2(-192, -64)
 
 [node name="Marker2D4" type="Marker2D" parent="SpawnPoints" unique_id=761883207]
 position = Vector2(-160, -64)
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=780713237]
+stream = ExtResource("10_hadiw")
+autoplay = true
+parameters/looping = true

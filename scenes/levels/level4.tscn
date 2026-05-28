@@ -5,10 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://dpahijgtuhhvi" path="res://assets/tilesets/tiles/lvl4/1 Tiles/Tileset.png" id="2_irrt8"]
 [ext_resource type="PackedScene" uid="uid://c603il6hrnfdt" path="res://scenes/player.tscn" id="3_f62st"]
 [ext_resource type="Texture2D" uid="uid://b3q1pydw5qjtr" path="res://assets/background/Background 3/4.png" id="3_q6dln"]
-[ext_resource type="Script" uid="uid://bt1600e1spt7k" path="res://scenes/player.gd" id="4_w24lh"]
-[ext_resource type="PackedScene" uid="uid://dcfurxm5arnj1" path="res://scenes/bullet.tscn" id="5_5sfmg"]
-[ext_resource type="PackedScene" uid="uid://dd3f308rvmq4n" path="res://scenes/muzzle_flash.tscn" id="6_tsmbm"]
-[ext_resource type="PackedScene" uid="uid://duvx5bqv1gl4m" path="res://scenes/melee_hitbox.tscn" id="7_y3vdi"]
 [ext_resource type="PackedScene" uid="uid://7h5x2l2t1xg2" path="res://scenes/enemy_spawner.tscn" id="8_irrt8"]
 [ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="8_t7v7a"]
 [ext_resource type="PackedScene" uid="uid://cqfeili5j8v5f" path="res://scenes/enemy.tscn" id="9_ev8xs"]
@@ -18,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bt4hcmhckyxwv" path="res://scenes/enemy_shooter.tscn" id="13_5sfmg"]
 [ext_resource type="PackedScene" uid="uid://c8tarvkchy4i8" path="res://scenes/heavy_enemy.tscn" id="14_tsmbm"]
 [ext_resource type="PackedScene" uid="uid://d4jimp1i1rckl" path="res://scenes/checkpoint.tscn" id="16_tsmbm"]
+[ext_resource type="AudioStream" uid="uid://b4pmabbbn6lwr" path="res://assets/audio/music/lvl4.mp3" id="16_y3vdi"]
 [ext_resource type="PackedScene" uid="uid://by0ovfwt4gnjp" path="res://scenes/extraction_zone.tscn" id="17_y3vdi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ev8xs"]
@@ -297,10 +294,6 @@ tile_set = SubResource("TileSet_ya4ey")
 
 [node name="Player" parent="." unique_id=1675319849 instance=ExtResource("3_f62st")]
 collision_mask = 3
-script = ExtResource("4_w24lh")
-bullet_scene = ExtResource("5_5sfmg")
-muzzle_flash_scene = ExtResource("6_tsmbm")
-melee_hitbox_scene = ExtResource("7_y3vdi")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=985269263]
 limit_left = -700
@@ -359,3 +352,8 @@ position = Vector2(3152, -80)
 
 [node name="ExtractionZone" parent="." unique_id=1189123331 instance=ExtResource("17_y3vdi")]
 position = Vector2(4000, -24)
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1602166136]
+stream = ExtResource("16_y3vdi")
+autoplay = true
+parameters/looping = true
