@@ -16,6 +16,17 @@ const INVINCIBILITY_TIME = 1.0
 @onready var lower_body = $LowerBody
 @onready var upper_body = $UpperBody
 @onready var full_body = $FullBody
+@onready var sfx_player = $SFXPlayer
+@onready var sfx_player2 = $SFXPlayer2
+
+@export var sfx_bolter: AudioStream
+@export var sfx_gatling: AudioStream
+@export var sfx_knife: AudioStream
+@export var sfx_jump: AudioStream
+@export var sfx_jetpack: AudioStream
+@export var sfx_medpack: AudioStream
+@export var sfx_ammo: AudioStream
+@export var sfx_weapon_change: AudioStream
 #@onready var upper_body_head = $UpperBodyHead
 
 var is_crouching = false
@@ -54,6 +65,11 @@ var bolter_mode = "burst"
 var is_finishing = false
 
 const COMBO_WINDOW = 0.8
+
+func play_sfx(stream: AudioStream):
+	if stream:
+		sfx_player.stream = stream
+		sfx_player.play()
 
 func update_animation():
 	var mouse_pos = get_global_mouse_position()
@@ -200,6 +216,7 @@ func _physics_process(delta):
 	# Zwykły skok
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		play_sfx(sfx_jump)
 
 	# Jetpack / powerjump
 	if Input.is_action_just_pressed("jetpack") and fuel > 30:
@@ -222,7 +239,7 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("switch_weapon") and not GameManager.knife_only_mode:
 		current_weapon = (current_weapon + 1) % weapons.size()
-		print("Bron: ", weapons[current_weapon])
+		play_sfx(sfx_weapon_change)
 		
 	# Kucnięcie
 	if Input.is_action_pressed("crouch") and is_on_floor():
@@ -332,6 +349,7 @@ func fire_gatling():
 		return
 	if gatling_cooldown:
 		return
+	play_sfx(sfx_gatling)
 	gatling_cooldown = true
 	ammo["gatling"] -= 1
 	heat += max(2.0, HEAT_PER_SHOT - GameManager.upgrades["gatling_heat"] * 1.5)
@@ -344,12 +362,14 @@ func fire_gatling():
 		heat = 0.0
 	await get_tree().create_timer(max(0.03, 0.08 - GameManager.upgrades["gatling_fire_rate"] * 0.01)).timeout
 	gatling_cooldown = false
-
+	
+	
 func fire_bolter():
 	var cost = 3
 	if ammo["bolter"] < cost:
 		print("BRAK AMUNICJI")
 		return
+	play_sfx(sfx_bolter)
 	can_shoot = false
 	for i in 3:
 		ammo["bolter"] -= 1
@@ -364,6 +384,7 @@ func fire_bolter_auto():
 		return
 	if not can_shoot:
 		return
+	play_sfx(sfx_bolter)
 	can_shoot = false
 	ammo["bolter"] -= 1
 	spawn_bullet(1.0 + GameManager.upgrades["bolter_damage"] * 0.5)
@@ -379,16 +400,19 @@ func fire_melee():
 	if facing == 0:
 		facing = 1.0
 	if combo_count == 1:
+		play_sfx(sfx_knife)
 		hitbox.position = global_position + Vector2(20.0 * facing, 0)
 		hitbox.get_node("CollisionShape2D").shape.size = Vector2(24, 20)
 		hitbox.damage = 1
 		print("ATAK 1")
 	elif combo_count == 2:
+		play_sfx(sfx_knife)
 		hitbox.position = global_position + Vector2(24.0 * facing, 0)
 		hitbox.get_node("CollisionShape2D").shape.size = Vector2(28, 24)
 		hitbox.damage = 2
 		print("ATAK 2")
 	elif combo_count >= 3:
+		play_sfx(sfx_knife)
 		is_finishing = true
 		hitbox.position = global_position + Vector2(28.0 * facing, -8)
 		hitbox.get_node("CollisionShape2D").shape.size = Vector2(32, 32)

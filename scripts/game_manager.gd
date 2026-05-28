@@ -29,6 +29,13 @@ signal all_waves_completed
 
 var checkpoint_data = {}
 
+var music_player: AudioStreamPlayer
+
+
+func play_music(stream: AudioStream):
+	if music_player:
+		music_player.stream = stream
+		music_player.play()
 
 func save_checkpoint(player_pos: Vector2, level_path: String):
 	checkpoint_data = {

@@ -1,16 +1,27 @@
 [gd_scene format=3 uid="uid://c603il6hrnfdt"]
 
+[ext_resource type="Script" uid="uid://bt1600e1spt7k" path="res://scenes/player.gd" id="1_a38lo"]
 [ext_resource type="Texture2D" uid="uid://d34fxj5uv3iu8" path="res://assets/sprites/gatling_idle.png" id="1_smehm"]
 [ext_resource type="Texture2D" uid="uid://86xo4f3dekt2" path="res://assets/sprites/bolter_hands.png" id="1_y4r1p"]
+[ext_resource type="PackedScene" uid="uid://dcfurxm5arnj1" path="res://scenes/bullet.tscn" id="2_4ni07"]
 [ext_resource type="Texture2D" uid="uid://c5gnrwsp3b27o" path="res://assets/sprites/lower_jump.png" id="2_fjrip"]
 [ext_resource type="Texture2D" uid="uid://db2f6mb62x4xr" path="res://assets/sprites/run_upper.png" id="2_smehm"]
+[ext_resource type="PackedScene" uid="uid://dd3f308rvmq4n" path="res://scenes/muzzle_flash.tscn" id="3_l71n6"]
+[ext_resource type="PackedScene" uid="uid://duvx5bqv1gl4m" path="res://scenes/melee_hitbox.tscn" id="4_ke2ow"]
 [ext_resource type="Texture2D" uid="uid://b3htj6w82ea0t" path="res://assets/sprites/upper_idle.png" id="4_ur7pv"]
+[ext_resource type="AudioStream" uid="uid://c3sw6rqqmuo4d" path="res://assets/audio/sfx/bolter.wav" id="5_ujl30"]
 [ext_resource type="Texture2D" uid="uid://d2ijjeyjk2bqx" path="res://assets/sprites/upper_shoot_bolter.png" id="5_y4r1p"]
+[ext_resource type="AudioStream" uid="uid://bqgrd777yqtxe" path="res://assets/audio/sfx/gatling.wav" id="6_31cv2"]
 [ext_resource type="Texture2D" uid="uid://nvlpyevtt7qn" path="res://assets/sprites/upper_shoot_gatling.png" id="6_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://mnb1bj4fer7e" path="res://assets/sprites/lower_idle (2).png" id="6_smehm"]
+[ext_resource type="AudioStream" uid="uid://7dh5ae8c2jwc" path="res://assets/audio/sfx/Punch.wav" id="7_pf23h"]
+[ext_resource type="AudioStream" uid="uid://bp6eo4huwdjn2" path="res://assets/audio/sfx/jump.wav" id="8_dt7fs"]
 [ext_resource type="Texture2D" uid="uid://bg1hkfbivuxli" path="res://assets/sprites/lower_run_2.png" id="8_smehm"]
+[ext_resource type="AudioStream" uid="uid://danwyjt72chxc" path="res://assets/audio/sfx/medpack.wav" id="9_wqfne"]
 [ext_resource type="Texture2D" uid="uid://ce652dk6v5g06" path="res://assets/sprites/armihit.png" id="10_d2wvv"]
+[ext_resource type="AudioStream" uid="uid://3tlooh6kww43" path="res://assets/audio/sfx/ammo.wav" id="10_wnwbv"]
 [ext_resource type="Texture2D" uid="uid://cerluotv661pm" path="res://assets/sprites/melee.png" id="11_3v2ag"]
+[ext_resource type="AudioStream" uid="uid://dp0u7f6dhd2vf" path="res://assets/audio/sfx/Change _weapons.wav" id="11_gl8cc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
 size = Vector2(100, 110)
@@ -642,6 +653,17 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" unique_id=1675319849 groups=["player"]]
 scale = Vector2(0.4, 0.4)
+script = ExtResource("1_a38lo")
+bullet_scene = ExtResource("2_4ni07")
+muzzle_flash_scene = ExtResource("3_l71n6")
+melee_hitbox_scene = ExtResource("4_ke2ow")
+sfx_bolter = ExtResource("5_ujl30")
+sfx_gatling = ExtResource("6_31cv2")
+sfx_knife = ExtResource("7_pf23h")
+sfx_jump = ExtResource("8_dt7fs")
+sfx_medpack = ExtResource("9_wqfne")
+sfx_ammo = ExtResource("10_wnwbv")
+sfx_weapon_change = ExtResource("11_gl8cc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1178967862]
 shape = SubResource("RectangleShape2D_u8vuu")
@@ -666,3 +688,7 @@ animation = &"jump"
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_au8ao")
 animation = &"knife_combo"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=795893877]
+
+[node name="SFXPlayer2" type="AudioStreamPlayer" parent="." unique_id=1939697871]

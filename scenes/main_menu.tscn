@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://capuxflqkvhpy"]
 
 [ext_resource type="Script" uid="uid://xbik7nkbejuq" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="AudioStream" uid="uid://daqgydfxo3suq" path="res://assets/audio/music/menu.mp3" id="2_ekxnf"]
 
 [node name="MainMenu" type="Control" unique_id=1279773475]
 layout_mode = 3
@@ -58,3 +59,7 @@ icon_alignment = 2
 [node name="ContinueButton" type="Button" parent="VBoxContainer" unique_id=1378165440]
 layout_mode = 2
 text = "LAST CHECKPOINT"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=438906633]
+stream = ExtResource("2_ekxnf")
+autoplay = true
