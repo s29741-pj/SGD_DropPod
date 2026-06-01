@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bifs8mbagfvsw"
+path="res://.godot/imported/jci21-rocket-launch-sfx-253937 (1).mp3-12420ec5234b58836eadcf38286382be.mp3str"
+
+[deps]
+
+source_file="res://assets/sprites/droppod/jci21-rocket-launch-sfx-253937 (1).mp3"
+dest_files=["res://.godot/imported/jci21-rocket-launch-sfx-253937 (1).mp3-12420ec5234b58836eadcf38286382be.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

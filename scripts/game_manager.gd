@@ -79,11 +79,11 @@ func advance_level():
 	current_level += 1
 	match current_level:
 		2:
-			next_level = "res://scenes/levels/level2.tscn"
-		3:
 			next_level = "res://scenes/levels/level3.tscn"
-		4:
+		3:
 			next_level = "res://scenes/levels/level4.tscn"
+		4:
+			next_level = ""
 		_:
 			next_level = ""
 
@@ -105,6 +105,7 @@ func enemy_died():
 		else:
 			_calculate_time_bonus()
 			advance_level()
+			print("ADVANCE LEVEL wywołane, current_level: ", current_level, " next_level: ", next_level)
 			level_completed.emit()
 
 func start_wave(wave_number):
@@ -128,4 +129,8 @@ func _calculate_time_bonus():
 func reset():
 	enemies_remaining = 0
 	score = 0
+	current_level = 1
+	next_level = "res://scenes/levels/level2.tscn"
+	current_wave = 0
+	wave_in_progress = false
 	mission_start_time = Time.get_ticks_msec()

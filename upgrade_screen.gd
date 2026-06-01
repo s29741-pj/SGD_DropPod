@@ -35,6 +35,8 @@ func _ready():
 	upgrade3.pressed.connect(_on_upgrade3_pressed)
 
 func apply_upgrade(index):
+	print("Następny poziom: ", GameManager.next_level)
+	print("Aktualny poziom: ", GameManager.current_level)
 	if GameManager.score < GameManager.UPGRADE_COST:
 		print("ZA MALO PUNKTOW")
 		return

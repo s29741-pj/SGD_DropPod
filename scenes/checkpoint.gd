@@ -6,14 +6,14 @@ var activated = false
 
 func _ready():
 	var err = body_entered.connect(_on_body_entered)
-	print("CHECKPOINT PODPIECIE: ", err)
+	#print("CHECKPOINT PODPIECIE: ", err)
 	$Sprite.play("idle")
 	body_entered.connect(_on_body_entered)
 	$Sprite.play("idle")
-	print("CHECKPOINT GOTOWY, maska: ", collision_mask)
+	#print("CHECKPOINT GOTOWY, maska: ", collision_mask)
 
 func _on_body_entered(body):
-	print("CHECKPOINT WYKRYL: ", body.name)
+	#print("CHECKPOINT WYKRYL: ", body.name)
 	if body.is_in_group("player") and not activated:
 		activated = true
 		$Sprite.play("checked")
@@ -29,4 +29,4 @@ func _on_body_entered(body):
 		GameManager.checkpoint_data["ammo_gatling"] = body.ammo.get("gatling", 0)
 		GameManager.checkpoint_data["has_gatling"] = body.has_gatling
 		GameManager._write_save()
-		print("CHECKPOINT ZAPISANY")
+		#print("CHECKPOINT ZAPISANY")

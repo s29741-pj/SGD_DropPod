@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dnidqlnearqgf" path="res://base_level.gd" id="1_gycjm"]
 [ext_resource type="Texture2D" uid="uid://pfax3mj833j" path="res://assets/tilesets/tiles/lvl3/1 Tiles/Tileset.png" id="2_4eecq"]
 [ext_resource type="Texture2D" uid="uid://cce7bxkvyx8wh" path="res://assets/background/Background 2/Night/1.png" id="2_4wmb1"]
+[ext_resource type="PackedScene" uid="uid://5gr5v4v3msky" path="res://scenes/droppod.tscn" id="2_g04qb"]
 [ext_resource type="Texture2D" uid="uid://cfenykp51nkci" path="res://assets/background/Background 2/Night/2.png" id="3_4wmb1"]
 [ext_resource type="Texture2D" uid="uid://dpahijgtuhhvi" path="res://assets/tilesets/tiles/lvl4/1 Tiles/Tileset.png" id="3_b3p8y"]
 [ext_resource type="PackedScene" uid="uid://c603il6hrnfdt" path="res://scenes/player.tscn" id="3_hgky1"]
@@ -800,6 +801,8 @@ sources/8 = SubResource("TileSetAtlasSource_8kpy5")
 
 [node name="Main" type="Node2D" unique_id=1137297608]
 script = ExtResource("1_gycjm")
+droppod_scene = ExtResource("2_g04qb")
+droppod_spawn = Vector2(-250, -300)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=340124152]
 

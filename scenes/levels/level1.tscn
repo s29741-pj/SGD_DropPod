@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dnidqlnearqgf" path="res://base_level.gd" id="1_nkeig"]
 [ext_resource type="Texture2D" uid="uid://dnq8mrbao4ewc" path="res://assets/tilesets/tiles/lvl1/1 Tiles/Tileset.png" id="2_4fww7"]
 [ext_resource type="Texture2D" uid="uid://br71hkarv1ajx" path="res://assets/background/Background 1/Day/1.png" id="2_gvm5i"]
+[ext_resource type="PackedScene" uid="uid://5gr5v4v3msky" path="res://scenes/droppod.tscn" id="2_jrfo0"]
 [ext_resource type="Texture2D" uid="uid://gx706aww67xk" path="res://assets/background/Background 1/Day/2.png" id="3_jrfo0"]
 [ext_resource type="PackedScene" uid="uid://c603il6hrnfdt" path="res://scenes/player.tscn" id="3_lgguw"]
 [ext_resource type="PackedScene" uid="uid://7h5x2l2t1xg2" path="res://scenes/enemy_spawner.tscn" id="8_g7tkf"]
@@ -376,6 +377,8 @@ sources/0 = SubResource("TileSetAtlasSource_gvm5i")
 
 [node name="Main" type="Node2D" unique_id=1137297608]
 script = ExtResource("1_nkeig")
+droppod_scene = ExtResource("2_jrfo0")
+droppod_spawn = Vector2(-280, -330)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=267192485]
 
@@ -470,6 +473,3 @@ position = Vector2(-164.3409, 26.026329)
 [node name="GatlingPickup" parent="." unique_id=681819917 instance=ExtResource("18_4fww7")]
 position = Vector2(1408, 32)
 scale = Vector2(0.15, 0.15)
-
-[node name="Checkpoint3" parent="." unique_id=1465533943 instance=ExtResource("17_1xax6")]
-position = Vector2(-128, 40)

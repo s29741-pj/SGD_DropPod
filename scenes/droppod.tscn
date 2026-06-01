@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://5gr5v4v3msky"]
+
+[ext_resource type="Texture2D" uid="uid://dt6y8e8xm71i7" path="res://assets/sprites/droppod/pod_spritesheet_alpha.png" id="1_afvyh"]
+[ext_resource type="Script" uid="uid://ddmh2o5u68x0k" path="res://scenes/droppod.gd" id="1_ojt3d"]
+[ext_resource type="AudioStream" uid="uid://bifs8mbagfvsw" path="res://assets/sprites/droppod/jci21-rocket-launch-sfx-253937 (1).mp3" id="2_6pd0h"]
+[ext_resource type="AudioStream" uid="uid://dkdi8pu43kuok" path="res://assets/sprites/droppod/yodguard-giant-axe-impact-striking-into-dirt-4-450258.mp3" id="3_lmnf2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmnf2"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(0, 0, 663, 1073)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00e77"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(663, 0, 663, 1073)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tthl"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(1326, 0, 663, 1073)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk2tx"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(1989, 0, 663, 1073)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6bcr"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(2652, 0, 663, 1073)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gki6r"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(3315, 0, 663, 1073)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cr36v"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(3978, 0, 663, 1073)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ex8l"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(4641, 0, 663, 1073)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7il4h"]
+atlas = ExtResource("1_afvyh")
+region = Rect2(5304, 0, 663, 1073)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ex8l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmnf2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_00e77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tthl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk2tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h6bcr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gki6r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cr36v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ex8l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7il4h")
+}],
+"loop": false,
+"name": &"land",
+"speed": 5.0
+}]
+
+[node name="Droppod" type="Node2D" unique_id=1264783415]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_ojt3d")
+sfx_land = ExtResource("2_6pd0h")
+sfx_impact_sound = ExtResource("3_lmnf2")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1959670946]
+z_index = 2
+sprite_frames = SubResource("SpriteFrames_6ex8l")
+animation = &"land"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=1719077479]
+
+[node name="SFXPlayerImpact" type="AudioStreamPlayer" parent="." unique_id=698781647]
