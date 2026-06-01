@@ -34,7 +34,8 @@ var is_crouching = false
 var can_shoot = true
 var fuel = FUEL_MAX
 var current_weapon = 0
-var weapons = ["bolter", "gatling", "knife"]
+var weapons = ["bolter", "knife"]
+var has_gatling = false
 
 var hp = 5
 var max_hp = 5
@@ -44,11 +45,9 @@ var invincible = false
 
 var ammo = {
 	"bolter": 9999,
-	"gatling": 100
 }
 var max_ammo = {
 	"bolter": 9999,
-	"gatling": 100
 }
 
 var heat = 0.0
@@ -472,14 +471,22 @@ func pickup_ammo(amount):
 	if current in ammo:
 		ammo[current] = min(ammo[current] + amount, max_ammo[current])
 		
-		
+
+func pickup_gatling():
+	has_gatling = true
+	weapons = ["bolter", "gatling", "knife"]
+	ammo["gatling"] = 100
+	max_ammo["gatling"] = 100
+	
+	
 func apply_upgrades():
 	max_hp += GameManager.upgrades["max_hp"] * 2
 	hp = max_hp
 	max_ammo["bolter"] += GameManager.upgrades["max_ammo"] * 10
 	ammo["bolter"] = max_ammo["bolter"]
-	max_ammo["gatling"] += GameManager.upgrades["max_ammo"] * 20
-	ammo["gatling"] = max_ammo["gatling"]
+	if has_gatling:
+		max_ammo["gatling"] += GameManager.upgrades["max_ammo"] * 20
+		ammo["gatling"] = max_ammo["gatling"]
 	
 func _ready():
 	apply_upgrades()
@@ -487,5 +494,7 @@ func _ready():
 		var data = GameManager.checkpoint_data
 		hp = data.get("hp", max_hp)
 		ammo["bolter"] = data.get("ammo_bolter", max_ammo["bolter"])
-		ammo["gatling"] = data.get("ammo_gatling", max_ammo["gatling"])
+		if data.get("has_gatling", false):
+			pickup_gatling()
+			ammo["gatling"] = data.get("ammo_gatling", 100)
 		global_position = Vector2(data["player_x"], data["player_y"])

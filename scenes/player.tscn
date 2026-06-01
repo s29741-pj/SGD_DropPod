@@ -12,7 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://6eir1qi6qnfj" path="res://assets/audio/sfx/bolter2.mp3" id="5_a38lo"]
 [ext_resource type="Texture2D" uid="uid://d2ijjeyjk2bqx" path="res://assets/sprites/upper_shoot_bolter.png" id="5_y4r1p"]
 [ext_resource type="AudioStream" uid="uid://cpf8vaabk1qfl" path="res://assets/audio/sfx/gatling2.mp3" id="6_a38lo"]
-[ext_resource type="Texture2D" uid="uid://nvlpyevtt7qn" path="res://assets/sprites/upper_shoot_gatling.png" id="6_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://mnb1bj4fer7e" path="res://assets/sprites/lower_idle (2).png" id="6_smehm"]
 [ext_resource type="AudioStream" uid="uid://7dh5ae8c2jwc" path="res://assets/audio/sfx/Punch.wav" id="7_pf23h"]
 [ext_resource type="AudioStream" uid="uid://bp6eo4huwdjn2" path="res://assets/audio/sfx/jump.wav" id="8_dt7fs"]
@@ -22,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://3tlooh6kww43" path="res://assets/audio/sfx/ammo.wav" id="10_wnwbv"]
 [ext_resource type="Texture2D" uid="uid://cerluotv661pm" path="res://assets/sprites/melee.png" id="11_3v2ag"]
 [ext_resource type="AudioStream" uid="uid://dp0u7f6dhd2vf" path="res://assets/audio/sfx/Change _weapons.wav" id="11_gl8cc"]
+[ext_resource type="Texture2D" uid="uid://dssbd5baxouur" path="res://assets/sprites/upper_shoot_gatling — kopia.png" id="17_a38lo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
 size = Vector2(100, 110)
@@ -157,13 +157,13 @@ region = Rect2(0, 153, 368, 153)
 atlas = ExtResource("5_y4r1p")
 region = Rect2(368, 153, 368, 153)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6e8lb"]
-atlas = ExtResource("6_d2wvv")
-region = Rect2(349, 0, 349, 192)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_u2ulf"]
-atlas = ExtResource("6_d2wvv")
+atlas = ExtResource("17_a38lo")
 region = Rect2(0, 0, 349, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6e8lb"]
+atlas = ExtResource("17_a38lo")
+region = Rect2(349, 0, 349, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2gdjj"]
 animations = [{
@@ -290,10 +290,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6e8lb")
+"texture": SubResource("AtlasTexture_u2ulf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u2ulf")
+"texture": SubResource("AtlasTexture_6e8lb")
 }],
 "loop": true,
 "name": &"shoot_gatling",
@@ -677,7 +677,7 @@ z_index = 1
 position = Vector2(0, -55)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2gdjj")
-animation = &"gatling_idle"
+animation = &"shoot_gatling"
 
 [node name="LowerBody" type="AnimatedSprite2D" parent="." unique_id=1332666876]
 scale = Vector2(0.5, 0.5)

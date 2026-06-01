@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nvlpyevtt7qn"
-path="res://.godot/imported/upper_shoot_gatling.png-b9a0e8c27095898d77b2c2af22768917.ctex"
+uid="uid://ckendbsxlotr5"
+path="res://.godot/imported/gatling_pickup.png-ba8b290128bcfb8771c95127a97f388c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/upper_shoot_gatling.png"
-dest_files=["res://.godot/imported/upper_shoot_gatling.png-b9a0e8c27095898d77b2c2af22768917.ctex"]
+source_file="res://assets/sprites/gatling_pickup.png"
+dest_files=["res://.godot/imported/gatling_pickup.png-ba8b290128bcfb8771c95127a97f388c.ctex"]
 
 [params]
 

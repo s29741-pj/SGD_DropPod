@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://bahqouvrmtmor"]
+
+[ext_resource type="Script" uid="uid://g4la2cksk0lj" path="res://gatling_pickup.gd" id="1_qj7f5"]
+[ext_resource type="AudioStream" uid="uid://ilyx4td2j3wo" path="res://assets/audio/sfx/Take_a_weapon.wav" id="2_2ywi5"]
+[ext_resource type="Texture2D" uid="uid://ckendbsxlotr5" path="res://assets/sprites/gatling_pickup.png" id="2_bg0pd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bg0pd"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ywi5"]
+atlas = ExtResource("2_bg0pd")
+region = Rect2(0, 0, 322, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmvq1"]
+atlas = ExtResource("2_bg0pd")
+region = Rect2(322, 0, 322, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7qdo"]
+atlas = ExtResource("2_bg0pd")
+region = Rect2(644, 0, 322, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf7hj"]
+atlas = ExtResource("2_bg0pd")
+region = Rect2(966, 0, 322, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3rrr"]
+atlas = ExtResource("2_bg0pd")
+region = Rect2(1288, 0, 322, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqya5"]
+atlas = ExtResource("2_bg0pd")
+region = Rect2(644, 0, 322, 184)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2ywi5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ywi5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nmvq1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7qdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf7hj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l3rrr")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqya5")
+}],
+"loop": false,
+"name": &"pickup",
+"speed": 5.0
+}]
+
+[node name="GatlingPickup" type="Area2D" unique_id=681819917]
+script = ExtResource("1_qj7f5")
+sfx_pickup = ExtResource("2_2ywi5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1760565255]
+shape = SubResource("RectangleShape2D_bg0pd")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=509846708]
+sprite_frames = SubResource("SpriteFrames_2ywi5")
+animation = &"pickup"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=772040144]

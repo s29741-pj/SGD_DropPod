@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://chvkrhlhiymbn" path="res://scenes/upgrade_screen.tscn" id="16_g7tkf"]
 [ext_resource type="PackedScene" uid="uid://d4jimp1i1rckl" path="res://scenes/checkpoint.tscn" id="17_1xax6"]
 [ext_resource type="AudioStream" uid="uid://bh0gd7mj6ahev" path="res://assets/audio/music/lvl2.mp3" id="17_g7tkf"]
+[ext_resource type="PackedScene" uid="uid://bahqouvrmtmor" path="res://scenes/gatling_pickup.tscn" id="18_4fww7"]
 [ext_resource type="PackedScene" uid="uid://by0ovfwt4gnjp" path="res://scenes/extraction_zone.tscn" id="18_g7tkf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gvm5i"]
@@ -428,7 +429,7 @@ enemy_scene = ExtResource("11_jprdt")
 spawn_count = 1
 
 [node name="Healthpack" parent="." unique_id=794996231 instance=ExtResource("11_jrfo0")]
-position = Vector2(752, -80)
+position = Vector2(752, -96)
 
 [node name="AmmoBox" parent="." unique_id=1866117795 instance=ExtResource("10_gvm5i")]
 position = Vector2(2192, 40)
@@ -465,3 +466,10 @@ parameters/looping = true
 
 [node name="AmmoBox" parent="MusicPlayer" unique_id=367895562 instance=ExtResource("10_gvm5i")]
 position = Vector2(-164.3409, 26.026329)
+
+[node name="GatlingPickup" parent="." unique_id=681819917 instance=ExtResource("18_4fww7")]
+position = Vector2(1408, 32)
+scale = Vector2(0.15, 0.15)
+
+[node name="Checkpoint3" parent="." unique_id=1465533943 instance=ExtResource("17_1xax6")]
+position = Vector2(-128, 40)

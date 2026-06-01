@@ -1,9 +1,53 @@
 [gd_scene format=3 uid="uid://d4jimp1i1rckl"]
 
 [ext_resource type="Script" uid="uid://clgakpbma7nbu" path="res://scenes/checkpoint.gd" id="1_yyywg"]
+[ext_resource type="Texture2D" uid="uid://bgon382hccmys" path="res://assets/sprites/checkpoint/checkpoint_active.png" id="2_yqsag"]
+[ext_resource type="Texture2D" uid="uid://dlj6db3mltl6d" path="res://assets/sprites/checkpoint/checkpoint_idle.png" id="3_yqsag"]
+[ext_resource type="AudioStream" uid="uid://c1wgm02v35575" path="res://assets/audio/sfx/checkpoint.wav" id="4_yqsag"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xam77"]
 size = Vector2(16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c45tw"]
+atlas = ExtResource("2_yqsag")
+region = Rect2(0, 0, 32, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55jpe"]
+atlas = ExtResource("2_yqsag")
+region = Rect2(32, 0, 32, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vc08m"]
+atlas = ExtResource("2_yqsag")
+region = Rect2(64, 0, 32, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ok2sx"]
+atlas = ExtResource("3_yqsag")
+region = Rect2(0, 0, 22, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yyywg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c45tw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55jpe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vc08m")
+}],
+"loop": true,
+"name": &"checked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ok2sx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="Checkpoint" type="Area2D" unique_id=416862586]
 collision_layer = 0
@@ -12,9 +56,9 @@ script = ExtResource("1_yyywg")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1116500711]
 shape = SubResource("RectangleShape2D_xam77")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1579327129]
-offset_left = -4.0
-offset_top = -24.0
-offset_right = 4.0
-offset_bottom = 24.0
-color = Color(1, 0.84313726, 0, 1)
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2102262589]
+sprite_frames = SubResource("SpriteFrames_yyywg")
+animation = &"checked"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=2103814437]
+stream = ExtResource("4_yqsag")
