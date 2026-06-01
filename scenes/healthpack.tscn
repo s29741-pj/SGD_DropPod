@@ -1,21 +1,78 @@
 [gd_scene format=3 uid="uid://bagdyta4bx4cg"]
 
 [ext_resource type="Script" uid="uid://csfxdr8kqc23y" path="res://healthpack.gd" id="1_ggt5x"]
+[ext_resource type="AudioStream" uid="uid://danwyjt72chxc" path="res://assets/audio/sfx/medpack.wav" id="2_oa20r"]
+[ext_resource type="Texture2D" uid="uid://boskt7tof3rat" path="res://assets/sprites/healthpack/Chest.png" id="3_c8kjg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xcku"]
 size = Vector2(12, 12)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kyn6"]
+atlas = ExtResource("3_c8kjg")
+region = Rect2(0, 0, 32, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa20r"]
+atlas = ExtResource("3_c8kjg")
+region = Rect2(32, 0, 32, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8kjg"]
+atlas = ExtResource("3_c8kjg")
+region = Rect2(64, 0, 32, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ljgp"]
+atlas = ExtResource("3_c8kjg")
+region = Rect2(96, 0, 32, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1t73"]
+atlas = ExtResource("3_c8kjg")
+region = Rect2(128, 0, 32, 55)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xspqo"]
+atlas = ExtResource("3_c8kjg")
+region = Rect2(160, 0, 32, 55)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mlwh6"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kyn6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oa20r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8kjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ljgp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1t73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xspqo")
+}],
+"loop": false,
+"name": &"pickup",
+"speed": 5.0
+}]
+
 [node name="Healthpack" type="Area2D" unique_id=794996231]
 collision_layer = 0
 script = ExtResource("1_ggt5x")
+sfx_pickup = ExtResource("2_oa20r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1501074907]
 shape = SubResource("RectangleShape2D_0xcku")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=944695343]
-custom_minimum_size = Vector2(12, 12)
-offset_left = -6.0
-offset_top = -6.0
-offset_right = 6.0
-offset_bottom = 6.0
-color = Color(0, 1, 0.26666668, 1)
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=758349387]
+sprite_frames = SubResource("SpriteFrames_mlwh6")
+animation = &"idle"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=1707179476]

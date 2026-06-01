@@ -1,20 +1,91 @@
 [gd_scene format=3 uid="uid://vthkrgfe8ct7"]
 
 [ext_resource type="Script" uid="uid://dut4mmmj5ajn3" path="res://ammo_box.gd" id="1_ye4hu"]
+[ext_resource type="Texture2D" uid="uid://bntw3bv6w1cw4" path="res://assets/sprites/ammo/Chest.png" id="2_00kdr"]
+[ext_resource type="AudioStream" uid="uid://3tlooh6kww43" path="res://assets/audio/sfx/ammo.wav" id="2_1r4qa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_00kdr"]
 size = Vector2(14, 14)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1r4qa"]
+atlas = ExtResource("2_00kdr")
+region = Rect2(0, 0, 32, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcnyc"]
+atlas = ExtResource("2_00kdr")
+region = Rect2(32, 0, 32, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbrh7"]
+atlas = ExtResource("2_00kdr")
+region = Rect2(128, 0, 32, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oaxg3"]
+atlas = ExtResource("2_00kdr")
+region = Rect2(160, 0, 32, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ishaw"]
+atlas = ExtResource("2_00kdr")
+region = Rect2(192, 0, 32, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2a3t3"]
+atlas = ExtResource("2_00kdr")
+region = Rect2(224, 0, 32, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wrfj"]
+atlas = ExtResource("2_00kdr")
+region = Rect2(256, 0, 32, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4pue"]
+atlas = ExtResource("2_00kdr")
+region = Rect2(288, 0, 32, 62)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lttc4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1r4qa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcnyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jbrh7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oaxg3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ishaw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2a3t3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wrfj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4pue")
+}],
+"loop": false,
+"name": &"pickup",
+"speed": 5.0
+}]
+
 [node name="AmmoBox" type="Area2D" unique_id=1866117795]
 collision_layer = 0
 script = ExtResource("1_ye4hu")
+sfx_pickup = ExtResource("2_1r4qa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2113512227]
 shape = SubResource("RectangleShape2D_00kdr")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=252290076]
-offset_left = -7.0
-offset_top = -7.0
-offset_right = 7.0
-offset_bottom = 7.0
-color = Color(1, 0.84313726, 0, 1)
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1462963981]
+sprite_frames = SubResource("SpriteFrames_lttc4")
+animation = &"pickup"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=480592879]
