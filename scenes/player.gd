@@ -450,8 +450,8 @@ func take_damage(amount):
 		return
 	hp -= amount
 	invincible = true
-	if hp <= 0:
-		die()
+	#if hp <= 0:
+		#die()
 	await get_tree().create_timer(INVINCIBILITY_TIME).timeout
 	invincible = false
 

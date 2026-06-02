@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 const GRAVITY = 900.0
-const SHOOT_COOLDOWN = 0.8
+const SHOOT_COOLDOWN = 0.2
+const BARREL_OFFSET = 15.0
 const BOB_SPEED = 1.5
 const BOB_AMPLITUDE = 30.0
 var hp = 16
@@ -57,17 +58,40 @@ func _on_body_exited(body):
 	if body.is_in_group("player"):
 		player_ref = null
 
+
+
 func shoot():
+	if not player_ref:
+		return
 	can_shoot = false
-	var bullet = load("res://scenes/bullet.tscn").instantiate()
+	if sfx_shoot:
+		sfx_player.stream = sfx_shoot
+		sfx_player.play()
+	
 	var direction = (player_ref.global_position - upper_body.global_position).normalized()
-	bullet.direction = direction
-	bullet.collision_layer = 3
-	bullet.collision_mask = 1
-	bullet.set_collision_mask_value(1, true)
-	bullet.set_collision_mask_value(2, false)
-	get_parent().add_child(bullet)
-	bullet.global_position = upper_body.global_position + direction * 40
+	var perpendicular = Vector2(-direction.y, direction.x)
+	
+	# Pierwszy pocisk - lewa lufa
+	var bullet1 = load("res://scenes/bullet.tscn").instantiate()
+	bullet1.direction = direction
+	bullet1.collision_layer = 3
+	bullet1.set_collision_mask_value(1, true)
+	bullet1.set_collision_mask_value(2, false)
+	get_parent().add_child(bullet1)
+	bullet1.global_position = upper_body.global_position + perpendicular * BARREL_OFFSET + direction * 40
+	
+	# Krótkie opóźnienie między lufami
+	await get_tree().create_timer(0.1).timeout
+	
+	# Drugi pocisk - prawa lufa
+	var bullet2 = load("res://scenes/bullet.tscn").instantiate()
+	bullet2.direction = direction
+	bullet2.collision_layer = 3
+	bullet2.set_collision_mask_value(1, true)
+	bullet2.set_collision_mask_value(2, false)
+	get_parent().add_child(bullet2)
+	bullet2.global_position = upper_body.global_position - perpendicular * BARREL_OFFSET + direction * 40
+	
 	await get_tree().create_timer(SHOOT_COOLDOWN).timeout
 	can_shoot = true
 
@@ -82,5 +106,8 @@ func take_damage(amount):
 		lower_body.modulate = Color(1, 1, 1, 1)
 		is_hurt = false
 	if hp <= 0:
+		var explosion = load("res://scenes/boss_explosion.tscn").instantiate()
+		explosion.global_position = global_position
+		get_parent().add_child(explosion)
 		GameManager.enemy_died()
 		queue_free()
