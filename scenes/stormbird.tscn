@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://c3c0qjey171rd"]
+
+[ext_resource type="Script" uid="uid://bu6naarugh3vb" path="res://scenes/stormbird.gd" id="1_ise47"]
+[ext_resource type="Texture2D" uid="uid://bm4kd5s78hlye" path="res://assets/sprites/stormbird/spritesheet_5x.png" id="2_l7upw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scf3j"]
+atlas = ExtResource("2_l7upw")
+region = Rect2(0, 0, 480, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpnnb"]
+atlas = ExtResource("2_l7upw")
+region = Rect2(480, 0, 480, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fiud5"]
+atlas = ExtResource("2_l7upw")
+region = Rect2(960, 0, 480, 260)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42cl5"]
+atlas = ExtResource("2_l7upw")
+region = Rect2(1440, 0, 480, 260)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pt7uf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scf3j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpnnb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fiud5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42cl5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mmbgl"]
+
+[node name="Stormbird" type="Area2D" unique_id=359823357]
+collision_layer = 0
+script = ExtResource("1_ise47")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1832785377]
+sprite_frames = SubResource("SpriteFrames_pt7uf")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1888366038]
+shape = SubResource("RectangleShape2D_mmbgl")
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=1661200602]

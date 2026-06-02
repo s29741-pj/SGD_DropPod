@@ -6,8 +6,8 @@
 radius = 3.0
 
 [node name="Bullet" type="Area2D" unique_id=854879388]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_mkf8s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=495124126]
@@ -17,6 +17,3 @@ shape = SubResource("CircleShape2D_h1aey")
 custom_minimum_size = Vector2(6, 6)
 offset_right = 6.0
 offset_bottom = 6.0
-
-[node name="RayCast2D" type="RayCast2D" parent="." unique_id=2121858061]
-target_position = Vector2(16, 0)

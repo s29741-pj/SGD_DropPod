@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://by0ovfwt4gnjp"]
 
 [ext_resource type="Script" uid="uid://dcwh06rrv417k" path="res://scenes/extraction_zone.gd" id="1_3al3o"]
+[ext_resource type="Texture2D" uid="uid://b0kep083h6q5j" path="res://assets/sprites/extraction_zone/Flag.png" id="2_fu8gg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyt0k"]
 size = Vector2(32, 48)
@@ -12,9 +13,7 @@ script = ExtResource("1_3al3o")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1370936892]
 shape = SubResource("RectangleShape2D_xyt0k")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1095877145]
-offset_left = -16.0
-offset_top = -24.0
-offset_right = 16.0
-offset_bottom = 24.0
-color = Color(0, 1, 0.26666668, 1)
+[node name="Node2D" type="Node2D" parent="." unique_id=764823855]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D" unique_id=1843033386]
+texture = ExtResource("2_fu8gg")

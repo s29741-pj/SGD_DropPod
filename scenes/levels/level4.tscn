@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://c8tarvkchy4i8" path="res://scenes/heavy_enemy.tscn" id="14_tsmbm"]
 [ext_resource type="PackedScene" uid="uid://d4jimp1i1rckl" path="res://scenes/checkpoint.tscn" id="16_tsmbm"]
 [ext_resource type="AudioStream" uid="uid://b4pmabbbn6lwr" path="res://assets/audio/music/lvl4.mp3" id="16_y3vdi"]
+[ext_resource type="PackedScene" uid="uid://c3c0qjey171rd" path="res://scenes/stormbird.tscn" id="17_irrt8"]
 [ext_resource type="PackedScene" uid="uid://by0ovfwt4gnjp" path="res://scenes/extraction_zone.tscn" id="17_y3vdi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ev8xs"]
@@ -357,3 +358,6 @@ position = Vector2(4000, -24)
 stream = ExtResource("16_y3vdi")
 autoplay = true
 parameters/looping = true
+
+[node name="Stormbird" parent="." unique_id=359823357 instance=ExtResource("17_irrt8")]
+position = Vector2(3968, -168)
