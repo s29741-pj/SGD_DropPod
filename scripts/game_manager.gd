@@ -5,6 +5,7 @@ signal level_completed
 var enemies_remaining = 0
 var score = 0
 var mission_start_time = 0.0
+var kill_all_to_complete = false
 
 var upgrades = {
 	"bolter_damage": 0,
@@ -102,10 +103,9 @@ func enemy_died():
 		if wave_in_progress:
 			wave_in_progress = false
 			wave_completed.emit()
-		else:
+		elif kill_all_to_complete:
 			_calculate_time_bonus()
 			advance_level()
-			print("ADVANCE LEVEL wywołane, current_level: ", current_level, " next_level: ", next_level)
 			level_completed.emit()
 
 func start_wave(wave_number):
@@ -127,6 +127,7 @@ func _calculate_time_bonus():
 		print("CZAS BONUS: +100")
 
 func reset():
+	kill_all_to_complete = false
 	enemies_remaining = 0
 	score = 0
 	current_level = 1

@@ -5,7 +5,7 @@ extends Area2D
 var activated = false
 
 func _ready():
-	var err = body_entered.connect(_on_body_entered)
+	#var err = body_entered.connect(_on_body_entered)
 	#print("CHECKPOINT PODPIECIE: ", err)
 	$Sprite.play("idle")
 	body_entered.connect(_on_body_entered)

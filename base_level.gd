@@ -8,6 +8,7 @@ extends Node2D
 
 func _ready():
 	GameManager.level_completed.connect(_on_level_completed)
+	GameManager.kill_all_to_complete = false
 	if droppod_scene:
 		var droppod = droppod_scene.instantiate()
 		droppod.position = droppod_spawn

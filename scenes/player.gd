@@ -30,6 +30,7 @@ const INVINCIBILITY_TIME = 1.0
 #@onready var upper_body_head = $UpperBodyHead
 
 var is_crouching = false
+var is_hit = false
 
 var can_shoot = true
 var fuel = FUEL_MAX
@@ -54,6 +55,11 @@ var heat = 0.0
 var max_heat = 100.0
 var is_overheated = false
 var gatling_cooldown = false
+
+var bolter_magazine = 10
+var bolter_magazine_max = 10
+var is_reloading = false
+
 const HEAT_PER_SHOT = 8.0
 const HEAT_DISSIPATION = 15.0
 const OVERHEAT_COOLDOWN = 3.0
@@ -62,8 +68,34 @@ var combo_count = 0
 var combo_timer = 0.0
 var bolter_mode = "burst"
 var is_finishing = false
+var is_victory = false
 
 const COMBO_WINDOW = 0.8
+
+func play_victory():
+	is_victory = true
+	full_body.visible = true
+	lower_body.visible = false
+	upper_body.visible = false
+	full_body.play("victory")
+
+func reload_bolter():
+	if is_reloading or ammo["bolter"] <= 0 or bolter_magazine == bolter_magazine_max:
+		return
+	is_reloading = true
+	full_body.visible = true
+	lower_body.visible = false
+	upper_body.visible = false
+	full_body.play("reload")
+	await full_body.animation_finished
+	var needed = bolter_magazine_max - bolter_magazine
+	var available = min(needed, ammo["bolter"])
+	bolter_magazine += available
+	ammo["bolter"] -= available
+	full_body.visible = false
+	lower_body.visible = true
+	upper_body.visible = true
+	is_reloading = false
 
 func play_sfx(stream: AudioStream):
 	if stream:
@@ -71,6 +103,8 @@ func play_sfx(stream: AudioStream):
 		sfx_player.play()
 
 func update_animation():
+	if is_hit or is_dead or is_reloading or is_victory:
+		return
 	var mouse_pos = get_global_mouse_position()
 	var looking_left = mouse_pos.x < global_position.x
 	
@@ -90,10 +124,10 @@ func update_animation():
 		full_body.flip_h = looking_left
 		if is_finishing:
 			full_body.play("knife_combo")
-			full_body.position = Vector2(0, -15)
+			full_body.position = Vector2(0, -25)
 		else:
 			full_body.play("knife_attack")
-			full_body.position = Vector2(0, 0)
+			full_body.position = Vector2(0, -25)
 		return
 	else:
 		full_body.visible = false
@@ -116,6 +150,8 @@ func update_animation():
 		upper_body.play("shoot_gatling")
 	elif weapons[current_weapon] == "gatling":
 		upper_body.play("gatling_idle")
+	elif weapons[current_weapon] == "knife":
+		upper_body.play("knife_idle")
 	elif velocity.x != 0:
 		upper_body.play("run")
 	else:
@@ -146,7 +182,19 @@ func update_animation():
 					upper_body.position = Vector2(4, -25)
 				else:
 					upper_body.position = Vector2(4, -25)
-					
+		
+		"knife_idle":
+			if velocity.x != 0:
+				if looking_left:
+					upper_body.position = Vector2(-5, -8)
+				else:
+					upper_body.position = Vector2(5, -8)
+			else:
+				if looking_left:
+					upper_body.position = Vector2(10, -11)
+				else:
+					upper_body.position = Vector2(-10, -11)
+		
 		"run":
 			upper_body.position = Vector2(0, -10)
 			lower_body.position = Vector2(0, 25)
@@ -212,6 +260,9 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
+	# Przeładownie
+	if Input.is_action_just_pressed("reload") and weapons[current_weapon] == "bolter":
+		reload_bolter()
 	# Zwykły skok
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -364,29 +415,32 @@ func fire_gatling():
 	
 	
 func fire_bolter():
-	var cost = 3
-	if ammo["bolter"] < cost:
-		print("BRAK AMUNICJI")
+	if bolter_magazine < 3:
+		reload_bolter()
 		return
 	play_sfx(sfx_bolter)
 	can_shoot = false
 	for i in 3:
-		ammo["bolter"] -= 1
+		bolter_magazine -= 1
 		spawn_bullet(1.0 + GameManager.upgrades["bolter_damage"] * 0.5)
 		await get_tree().create_timer(0.1 - GameManager.upgrades["bolter_fire_rate"] * 0.015).timeout
+	if bolter_magazine == 0:
+		reload_bolter()
 	await get_tree().create_timer(0.3).timeout
 	can_shoot = true
 
 func fire_bolter_auto():
-	if ammo["bolter"] <= 0:
-		print("BRAK AMUNICJI")
+	if bolter_magazine <= 0:
+		reload_bolter()
 		return
 	if not can_shoot:
 		return
 	play_sfx(sfx_bolter)
 	can_shoot = false
-	ammo["bolter"] -= 1
+	bolter_magazine -= 1
 	spawn_bullet(1.0 + GameManager.upgrades["bolter_damage"] * 0.5)
+	if bolter_magazine == 0:
+		reload_bolter()
 	await get_tree().create_timer(max(0.05, 0.15 - GameManager.upgrades["bolter_fire_rate"] * 0.02)).timeout
 	can_shoot = true
 	
@@ -449,15 +503,32 @@ func take_damage(amount):
 	if invincible or is_dead:
 		return
 	hp -= amount
+	is_hit = true
 	invincible = true
-	#if hp <= 0:
-		#die()
+	full_body.visible = true
+	lower_body.visible = false
+	upper_body.visible = false
+	full_body.play("hit")
+	#play_sfx(sfx_punch)
+	if hp <= 0:
+		die()
+		return
+	await get_tree().create_timer(0.3).timeout
+	is_hit = false
+	full_body.visible = false
+	lower_body.visible = true
+	upper_body.visible = true
 	await get_tree().create_timer(INVINCIBILITY_TIME).timeout
 	invincible = false
 
 func die():
 	is_dead = true
-	await get_tree().create_timer(1.0).timeout
+	full_body.visible = true
+	lower_body.visible = false
+	upper_body.visible = false
+	full_body.play("death")
+	await full_body.animation_finished
+	await get_tree().create_timer(0.5).timeout
 	if GameManager.has_checkpoint() and GameManager.checkpoint_data.has("level"):
 		get_tree().change_scene_to_file(GameManager.checkpoint_data["level"])
 	else:

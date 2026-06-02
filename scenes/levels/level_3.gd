@@ -18,6 +18,7 @@ var spawn_points = []
 func _ready():
 	GameManager.wave_completed.connect(_on_wave_completed)
 	GameManager.level_completed.connect(_on_level_completed)
+	GameManager.kill_all_to_complete = false
 	spawn_points = $SpawnPoints.get_children()
 	await get_tree().create_timer(2.0).timeout
 	start_next_wave()
