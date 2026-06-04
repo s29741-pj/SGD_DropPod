@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var healthpack_scene: PackedScene
+@export var ammo_scene: PackedScene
+
 @onready var game_over_screen = $GameOverScreen
 @onready var upgrade_screen = $UpgradeScreen
 @onready var hud = $HUD
@@ -22,6 +25,18 @@ func _ready():
 	spawn_points = $SpawnPoints.get_children()
 	await get_tree().create_timer(2.0).timeout
 	start_next_wave()
+
+func spawn_pickups():
+	if healthpack_scene:
+		for node in get_tree().get_nodes_in_group("healthpack_spawn"):
+			var hp = healthpack_scene.instantiate()
+			hp.position = node.position
+			add_child(hp)
+	if ammo_scene:
+		for node in get_tree().get_nodes_in_group("ammo_spawn"):
+			var ammo = ammo_scene.instantiate()
+			ammo.position = node.position
+			add_child(ammo)
 
 func start_next_wave():
 	var wave_index = GameManager.current_wave

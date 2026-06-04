@@ -18,6 +18,7 @@ const INVINCIBILITY_TIME = 1.0
 @onready var full_body = $FullBody
 @onready var sfx_player = $SFXPlayer
 @onready var sfx_player2 = $SFXPlayer2
+@onready var camera = $Camera2D
 
 @export var sfx_bolter: AudioStream
 @export var sfx_gatling: AudioStream
@@ -28,6 +29,9 @@ const INVINCIBILITY_TIME = 1.0
 @export var sfx_ammo: AudioStream
 @export var sfx_weapon_change: AudioStream
 #@onready var upper_body_head = $UpperBodyHead
+
+
+var in_water = false
 
 var is_crouching = false
 var is_hit = false
@@ -83,6 +87,7 @@ func reload_bolter():
 	if is_reloading or ammo["bolter"] <= 0 or bolter_magazine == bolter_magazine_max:
 		return
 	is_reloading = true
+	can_shoot = false
 	full_body.visible = true
 	lower_body.visible = false
 	upper_body.visible = false
@@ -96,6 +101,7 @@ func reload_bolter():
 	lower_body.visible = true
 	upper_body.visible = true
 	is_reloading = false
+	can_shoot = true
 
 func play_sfx(stream: AudioStream):
 	if stream:
@@ -103,10 +109,53 @@ func play_sfx(stream: AudioStream):
 		sfx_player.play()
 
 func update_animation():
-	if is_hit or is_dead or is_reloading or is_victory:
-		return
 	var mouse_pos = get_global_mouse_position()
 	var looking_left = mouse_pos.x < global_position.x
+	
+	if is_hit or is_dead or is_reloading or is_victory:
+		return
+	
+	if GameManager.knife_only_mode:
+		full_body.visible = false
+		lower_body.visible = true
+		upper_body.visible = true
+		upper_body.flip_h = looking_left
+		lower_body.flip_h = looking_left
+	
+	# Pozycje takie same jak dla knife_idle na innych levelach
+		if velocity.x != 0:
+			if looking_left:
+				upper_body.position = Vector2(-5, -8)
+			else:
+				upper_body.position = Vector2(5, -8)
+		else:
+			if looking_left:
+				upper_body.position = Vector2(10, -11)
+			else:
+				upper_body.position = Vector2(-10, -11)
+		lower_body.position = Vector2(0, 25)
+	
+		if not can_shoot:
+			full_body.visible = true
+			lower_body.visible = false
+			upper_body.visible = false
+			full_body.flip_h = looking_left
+			if is_finishing:
+				full_body.play("knife_combo")
+				full_body.position = Vector2(0, -25)
+			else:
+				full_body.play("knife_attack")
+				full_body.position = Vector2(0, -25)
+			return
+		upper_body.play("knife_idle")
+		if not is_on_floor():
+			lower_body.play("jump")
+		elif velocity.x != 0:
+			lower_body.play("run")
+		else:
+			lower_body.play("idle")
+		return
+		
 	
 ## Głowa – statyczna, tylko odbicie lustrzane
 	#upper_body_head.flip_h = looking_left
@@ -253,7 +302,7 @@ func update_animation():
 
 
 func _physics_process(delta):
-	
+
 	if global_position.y > 1000:
 		die()
 		
@@ -274,16 +323,17 @@ func _physics_process(delta):
 		fuel -= 30.0
 	
 	# Kucnięcie
-	if Input.is_action_pressed("crouch") and is_on_floor():
-		# Na razie tylko print, dodamy CollisionShape później
-		print("KUCANIE")
+	#if Input.is_action_pressed("crouch") and is_on_floor():
+		## Na razie tylko print, dodamy CollisionShape później
+		#print("KUCANIE")
 
 	if is_on_floor():
 		fuel = min(fuel + FUEL_REFILL * delta, FUEL_MAX)
  
 	var direction = Input.get_axis("ui_left", "ui_right")
+	var speed_mult = 0.5 if in_water else 1.0
 	if direction != 0:
-		velocity.x = direction * SPEED
+		velocity.x = direction * SPEED * speed_mult
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
@@ -379,6 +429,8 @@ func _physics_process(delta):
 func shoot():
 	if not can_shoot:
 		return
+	if is_reloading:
+		return
 	if GameManager.knife_only_mode:
 		fire_melee()
 		return
@@ -386,10 +438,14 @@ func shoot():
 		"bolter":
 			if bolter_mode == "burst":
 				fire_bolter()
+				camera.shake(3.0)
 			else:
 				fire_bolter_auto()
+				camera.shake(3.0)
+				
 		"gatling":
 			fire_gatling()
+			camera.shake(2.0)
 		"knife":
 			fire_melee()
 			
@@ -445,7 +501,9 @@ func fire_bolter_auto():
 	can_shoot = true
 	
 func fire_melee():
+	#print("FIRE MELEE, can_shoot przed: ", can_shoot)
 	can_shoot = false
+	#print("FIRE MELEE, can_shoot po: ", can_shoot)
 	combo_count += 1
 	combo_timer = COMBO_WINDOW
 	var hitbox = melee_hitbox_scene.instantiate()
@@ -500,11 +558,14 @@ func spawn_bullet(size_mult):
 		get_parent().add_child(flash)
 		
 func take_damage(amount):
+	camera.shake(8.0)
 	if invincible or is_dead:
 		return
 	hp -= amount
 	is_hit = true
 	invincible = true
+	can_shoot = true
+	is_reloading = false
 	full_body.visible = true
 	lower_body.visible = false
 	upper_body.visible = false
@@ -561,6 +622,9 @@ func apply_upgrades():
 	
 func _ready():
 	apply_upgrades()
+	if GameManager.knife_only_mode:
+		#current_weapon = weapons.find("knife")
+		current_weapon = 1
 	if GameManager.has_checkpoint() and GameManager.checkpoint_data.has("player_x"):
 		var data = GameManager.checkpoint_data
 		hp = data.get("hp", max_hp)

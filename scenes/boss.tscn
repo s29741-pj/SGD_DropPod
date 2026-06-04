@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cxqkxokxikfpr" path="res://assets/sprites/boss/up_isra-maraver-more-dakka-2kopia-ezgif.com-gif-to-sprite-converter — kopia.png" id="2_jncid"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qnbj4"]
+size = Vector2(90, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r3bxh"]
 atlas = ExtResource("1_neq0i")
@@ -72,6 +73,7 @@ collision_layer = 2
 script = ExtResource("1_jncid")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719865832]
+position = Vector2(35, 49)
 shape = SubResource("RectangleShape2D_qnbj4")
 
 [node name="LowerBody" type="AnimatedSprite2D" parent="." unique_id=1852699054]

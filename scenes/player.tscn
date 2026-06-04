@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://c386sf4onudv" path="res://assets/sprites/hit.png" id="23_ke2ow"]
 [ext_resource type="Texture2D" uid="uid://cd23vannkpr08" path="res://assets/sprites/reload.png" id="25_ke2ow"]
 [ext_resource type="Texture2D" uid="uid://b46cj2r8u3y6w" path="res://assets/sprites/victory.png" id="26_ujl30"]
+[ext_resource type="Script" uid="uid://d1n4ni27qa3ba" path="res://scenes/camera_shake.gd" id="27_31cv2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
 size = Vector2(100, 110)
@@ -1054,8 +1055,11 @@ animation = &"jump"
 position = Vector2(0, -20)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_au8ao")
-animation = &"victory"
+animation = &"knife_attack"
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=795893877]
 
 [node name="SFXPlayer2" type="AudioStreamPlayer" parent="." unique_id=1939697871]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1978501541]
+script = ExtResource("27_31cv2")

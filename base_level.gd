@@ -7,6 +7,8 @@ extends Node2D
 
 
 func _ready():
+	if GameManager.knife_only_mode:
+		get_node("Player").current_weapon = get_node("Player").weapons.find("knife")	
 	GameManager.level_completed.connect(_on_level_completed)
 	GameManager.kill_all_to_complete = false
 	if droppod_scene:

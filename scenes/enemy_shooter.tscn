@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://18mpkv0cb72p" path="res://assets/sprites/o2/o3_walk.png" id="7_vvc6k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amqcw"]
-size = Vector2(16, 32)
+size = Vector2(16, 61)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p4l84"]
 radius = 337.84
