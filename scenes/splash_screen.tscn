@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://10c2qu5q1qt3"]
+
+[ext_resource type="Script" uid="uid://chwfcvybbqfxy" path="res://splash_screen.gd" id="1_hsxvm"]
+[ext_resource type="Texture2D" uid="uid://8a2olyinb7o5" path="res://assets/sprites/menu/spalsh.png" id="2_4gp4q"]
+
+[node name="SplashScreen" type="CanvasLayer" unique_id=1137902653]
+script = ExtResource("1_hsxvm")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1866628851]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2130117113]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_4gp4q")
+expand_mode = 3

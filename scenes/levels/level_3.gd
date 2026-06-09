@@ -10,21 +10,27 @@ extends Node2D
 
 var wave_configs = [
 	{"enemy": "res://scenes/enemy.tscn", "count": 3},
-	{"enemy": "res://scenes/enemy.tscn", "count": 5},
-	{"enemy": "res://scenes/enemy_shooter.tscn", "count": 3},
-	{"enemy": "res://scenes/heavy_enemy.tscn", "count": 2},
-	{"enemy": "res://scenes/enemy.tscn", "count": 8}
+	#{"enemy": "res://scenes/enemy.tscn", "count": 5},
+	#{"enemy": "res://scenes/enemy_shooter.tscn", "count": 3},
+	#{"enemy": "res://scenes/heavy_enemy.tscn", "count": 2},
+	#{"enemy": "res://scenes/enemy.tscn", "count": 8}
 ]
 
 var spawn_points = []
 
 func _ready():
+	GameManager.current_wave = 0
 	GameManager.wave_completed.connect(_on_wave_completed)
 	GameManager.level_completed.connect(_on_level_completed)
 	GameManager.kill_all_to_complete = false
 	spawn_points = $SpawnPoints.get_children()
 	await get_tree().create_timer(2.0).timeout
 	start_next_wave()
+	
+func go_to_next_level(path):
+	get_tree().paused = false
+	GameManager.enemies_remaining = 0
+	get_tree().change_scene_to_file(path)
 
 func spawn_pickups():
 	if healthpack_scene:
@@ -60,5 +66,6 @@ func _on_wave_completed():
 	start_next_wave()
 
 func _on_level_completed():
+	GameManager.advance_level()
 	await get_tree().create_timer(1.5).timeout
 	upgrade_screen.show_upgrades()

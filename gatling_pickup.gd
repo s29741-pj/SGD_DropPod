@@ -13,7 +13,7 @@ func _on_body_entered(body):
 			sfx_player.stream = sfx_pickup
 			sfx_player.play()
 		body.pickup_gatling()
-		$CollisionShape2D.disabled = true
+		$CollisionShape2D.set_deferred("disabled", true)
 		$Sprite.play("pickup")
 		await $Sprite.animation_finished
 		await get_tree().create_timer(0.5).timeout

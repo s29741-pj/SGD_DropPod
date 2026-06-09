@@ -12,13 +12,12 @@ const INVINCIBILITY_TIME = 1.0
 @export var muzzle_flash_scene: PackedScene
 @export var melee_hitbox_scene: PackedScene
 @onready var stand_shape = $CollisionShape2D
-@onready var crouch_shape = $CrouchShape
 @onready var lower_body = $LowerBody
 @onready var upper_body = $UpperBody
 @onready var full_body = $FullBody
 @onready var sfx_player = $SFXPlayer
 @onready var sfx_player2 = $SFXPlayer2
-@onready var camera = $Camera2D
+@onready var camera = $PlayerCamera
 
 @export var sfx_bolter: AudioStream
 @export var sfx_gatling: AudioStream
@@ -345,12 +344,10 @@ func _physics_process(delta):
 	if Input.is_action_pressed("crouch") and is_on_floor():
 		is_crouching = true
 		stand_shape.disabled = true
-		crouch_shape.disabled = false
 		velocity.x *= 0.5
 	else:
 		is_crouching = false
 		stand_shape.disabled = false
-		crouch_shape.disabled = true
 		
 	var player_slide_count = get_slide_collision_count()
 	for i in player_slide_count:

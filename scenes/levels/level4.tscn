@@ -34,10 +34,6 @@ region = Rect2(707, 0, 707, 368)
 atlas = ExtResource("20_q6dln")
 region = Rect2(0, 368, 707, 368)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1gbu"]
-atlas = ExtResource("20_q6dln")
-region = Rect2(707, 368, 707, 368)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_yw4fb"]
 animations = [{
 "frames": [{
@@ -49,9 +45,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7kkoh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m1gbu")
 }],
 "loop": true,
 "name": &"default",
@@ -148,7 +141,7 @@ position = Vector2(-304.00003, 16)
 rotation = -0.09250246
 scale = Vector2(0.657355, 0.5869565)
 sprite_frames = SubResource("SpriteFrames_yw4fb")
-frame = 3
+frame = 2
 frame_progress = 1.0
 script = ExtResource("21_qtppw")
 
@@ -160,17 +153,17 @@ spawn_count = 1
 [node name="EnemySpawner2" parent="." unique_id=941080407 instance=ExtResource("8_irrt8")]
 position = Vector2(2160, -16)
 enemy_scene = ExtResource("13_5sfmg")
-spawn_count = 1
+spawn_count = 0
 
 [node name="EnemySpawner3" parent="." unique_id=186066613 instance=ExtResource("8_irrt8")]
 position = Vector2(1569.9586, -127.735535)
 enemy_scene = ExtResource("14_tsmbm")
-spawn_count = 2
+spawn_count = 0
 
 [node name="EnemySpawner4" parent="." unique_id=252867238 instance=ExtResource("8_irrt8")]
 position = Vector2(3631.5, -31.113281)
 enemy_scene = ExtResource("9_ev8xs")
-spawn_count = 6
+spawn_count = 0
 
 [node name="Healthpack" parent="." unique_id=794996231 instance=ExtResource("11_qtppw")]
 position = Vector2(2712, -40)

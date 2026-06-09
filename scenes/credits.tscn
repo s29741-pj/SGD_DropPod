@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://d16pnkdrqk78t"]
+
+[ext_resource type="Script" uid="uid://bwngnnkipipeu" path="res://credits.gd" id="1_0bpdh"]
+[ext_resource type="Texture2D" uid="uid://0x4aqo0og1xh" path="res://assets/sprites/credits/credits.png" id="2_2ckv8"]
+
+[node name="Credits" type="Control" unique_id=1846193432]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_0bpdh")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=217918314]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2ckv8")
+expand_mode = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=98511588]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1675194056]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1230481897]
+layout_mode = 2
+text = "Credits"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/VBoxContainer" unique_id=1933469254]
+custom_minimum_size = Vector2(500, 300)
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]GRAFIKA:[/b]
+
+[url=https://craftpix.net/freebies/free-swamp-game-tileset-pixel-art/?num=15&count=344&sq=tlleset%20platform&pos=10]Free Swamp Game Tileset - CraftPix[/url]
+
+[url=https://craftpix.net/freebies/free-animated-explosion-sprite-pack/?srsltid=AfmBOopkG7dLX2k8Difd6vvSN7piN4o0rwaEG4VHeYFZFqCFkf_JE-4g]Free Animated Explosion Sprite Pack - CraftPix[/url]
+
+[url=https://craftpix.net/freebies/power-station-free-tileset-pixel-art/?num=5&count=344&sq=tlleset%20platform&pos=10]Power Station Free Tileset - CraftPix[/url]
+
+[url=https://craftpix.net/freebies/free-industrial-zone-tileset-pixel-art/]Free Industrial Zone Tileset - CraftPix[/url]
+
+[url=https://craftpix.net/freebies/free-exclusion-zone-tileset-pixel-art/]Free Exclusion Zone Tileset - CraftPix[/url]
+
+[b]DŹWIĘK:[/b]
+
+[url=https://archive.org/details/lp_the-planets_gustav-holst-bernard-herrmann-the-london-p/disc1/01.01.+The+Planets+(Suite+For+Large+Orchestra)%3A+Mars%2C+The+Bringer+Of+War.mp3]Gustav Holst - The Planets: Mars - Internet Archive[/url]
+
+[url=https://craftpix.net/freebies/free-cyberpunk-audio-pack-4-for-pixel-games/]Free Cyberpunk Audio Pack 4 - CraftPix[/url]
+
+[url=https://www.myinstants.com/en/instant/transformers-fuson-cannon-2-56/]Transformers Fusion Cannon - MyInstants[/url]
+
+[b]SILNIK:[/b]
+Godot Engine 4"
+
+[node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1370423555]
+layout_mode = 2
+text = "Powrót"

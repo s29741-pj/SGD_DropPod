@@ -20,7 +20,7 @@ var next_level = "res://scenes/levels/level2.tscn"
 var current_level = 1
 
 var current_wave = 0
-var total_waves = 5
+var total_waves = 1
 var wave_in_progress = false
 var knife_only_mode = false
 
@@ -77,16 +77,24 @@ func delete_checkpoint():
 		DirAccess.remove_absolute("user://save.json")
 
 func advance_level():
-	current_level += 1
+	print("ADVANCE LEVEL wywołane, current_level: ", current_level)
+	print(get_stack())
 	match current_level:
+
+		1:
+			next_level = "res://scenes/levels/level2.tscn"
+			current_level += 1
 		2:
 			next_level = "res://scenes/levels/level3.tscn"
+			current_level += 1
 		3:
 			next_level = "res://scenes/levels/level4.tscn"
+			current_level += 1
 		4:
 			next_level = ""
 		_:
 			next_level = ""
+	
 
 const UPGRADE_COST = 200
 

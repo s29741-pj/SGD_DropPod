@@ -5,8 +5,8 @@ func _ready():
 	$VBoxContainer/QuitButton.pressed.connect(_on_quit_pressed)
 	$VBoxContainer/ContinueButton.visible = GameManager.has_checkpoint()
 	$VBoxContainer/ContinueButton.pressed.connect(_on_continue_pressed)
-	
-	
+	$VBoxContainer/CreditsButton.pressed.connect(_on_credits_pressed)
+
 func _on_start_pressed():
 	GameManager.reset()
 	get_tree().change_scene_to_file("res://scenes/levels/level1.tscn")
@@ -18,4 +18,6 @@ func _on_continue_pressed():
 	if GameManager.load_checkpoint():
 		var data = GameManager.checkpoint_data
 		get_tree().change_scene_to_file(data["level"])
-	
+
+func _on_credits_pressed():
+	get_tree().change_scene_to_file("res://scenes/credits.tscn")
