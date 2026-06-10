@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://clmfhpyoa7lvw" path="res://scenes/levels/water_zone.gd" id="18_irrt8"]
 [ext_resource type="Texture2D" uid="uid://be7io0s28pdo0" path="res://assets/vehicles/stormrider_down_alpha.png" id="20_q6dln"]
 [ext_resource type="Script" uid="uid://cbaqamj53qek3" path="res://scenes/levels/stormraider_down.gd" id="21_qtppw"]
+[ext_resource type="PackedScene" uid="uid://dnm7vtey2ghso" path="res://scenes/pause_menu.tscn" id="22_atlnk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qtppw"]
 atlas = ExtResource("20_q6dln")
@@ -227,3 +228,5 @@ script = ExtResource("18_irrt8")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterZone3" unique_id=866007078]
 position = Vector2(1952, 88)
 shape = SubResource("RectangleShape2D_ev8xs")
+
+[node name="PauseMenu" parent="." unique_id=1662754290 instance=ExtResource("22_atlnk")]

@@ -7,6 +7,11 @@ extends Node2D
 @onready var upgrade_screen = $UpgradeScreen
 @onready var hud = $HUD
 @onready var wave_label = $WaveLabel
+@onready var pause_menu = $PauseMenu
+
+func _input(event):
+	if event is InputEventKey and event.is_action_just_pressed("ui_cancel"):
+		pause_menu.toggle_pause()
 
 var wave_configs = [
 	{"enemy": "res://scenes/enemy.tscn", "count": 3},

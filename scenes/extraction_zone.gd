@@ -8,4 +8,4 @@ func _on_body_entered(body):
 		body.play_victory()
 		await get_tree().create_timer(1.5).timeout
 		GameManager.advance_level()
-		get_tree().change_scene_to_file("res://scenes/end_screen.tscn")
+		GameManager.level_completed.emit()

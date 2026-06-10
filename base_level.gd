@@ -4,7 +4,11 @@ extends Node2D
 @onready var upgrade_screen = $UpgradeScreen
 @export var droppod_scene: PackedScene
 @export var droppod_spawn: Vector2 = Vector2(100, 200)
+@onready var pause_menu = $PauseMenu
 
+func _input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		pause_menu.toggle_pause()
 
 func _ready():
 	if GameManager.knife_only_mode:

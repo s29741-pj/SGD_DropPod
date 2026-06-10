@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://bahqouvrmtmor" path="res://scenes/gatling_pickup.tscn" id="23_4wmb1"]
 [ext_resource type="PackedScene" uid="uid://c3c0qjey171rd" path="res://scenes/stormbird.tscn" id="23_ida7w"]
 [ext_resource type="PackedScene" uid="uid://b48tfh1neb1ts" path="res://scenes/boss.tscn" id="24_4wmb1"]
+[ext_resource type="PackedScene" uid="uid://dnm7vtey2ghso" path="res://scenes/pause_menu.tscn" id="24_5qtw0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ida7w"]
 texture = ExtResource("20_bxuut")
@@ -236,3 +237,5 @@ position = Vector2(2896, -16)
 [node name="GatlingPickup" parent="." unique_id=681819917 instance=ExtResource("23_4wmb1")]
 position = Vector2(2552.6746, -367.7353)
 scale = Vector2(0.15, 0.15)
+
+[node name="PauseMenu" parent="." unique_id=1662754290 instance=ExtResource("24_5qtw0")]

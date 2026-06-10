@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dk4ka71c6jqlx" path="res://assets/audio/music/lvl3.mp3" id="10_hadiw"]
 [ext_resource type="PackedScene" uid="uid://bagdyta4bx4cg" path="res://scenes/healthpack.tscn" id="11_wb0vq"]
 [ext_resource type="PackedScene" uid="uid://vthkrgfe8ct7" path="res://scenes/ammo_box.tscn" id="12_ah4rv"]
+[ext_resource type="PackedScene" uid="uid://dnm7vtey2ghso" path="res://scenes/pause_menu.tscn" id="13_ah4rv"]
 [ext_resource type="PackedScene" uid="uid://b6ahva1ja3a1c" path="res://scenes/hud.tscn" id="14_wt4k6"]
 [ext_resource type="PackedScene" uid="uid://b52oka2dl7ad2" path="res://game_over_screen.tscn" id="15_wo5bm"]
 [ext_resource type="PackedScene" uid="uid://chvkrhlhiymbn" path="res://scenes/upgrade_screen.tscn" id="16_edoqj"]
@@ -225,3 +226,5 @@ position = Vector2(-304, -144)
 
 [node name="AmmoSpawn4" type="Marker2D" parent="." unique_id=1237424337]
 position = Vector2(992, -128)
+
+[node name="PauseMenu" parent="." unique_id=1662754290 instance=ExtResource("13_ah4rv")]

@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://dnm7vtey2ghso"]
+
+[ext_resource type="Script" uid="uid://u4pqlx2q4b4s" path="res://pause.gd" id="1_n87rw"]
+[ext_resource type="Texture2D" uid="uid://c5flmm6i08n6o" path="res://assets/sprites/manual/sterowanie.png" id="2_myx47"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1662754290]
+process_mode = 3
+script = ExtResource("1_n87rw")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=557164535]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.702)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1363773453]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -29.5
+offset_right = 20.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=57795265]
+layout_mode = 2
+text = "Pauza"
+
+[node name="ResumeButton" type="Button" parent="VBoxContainer" unique_id=339617743]
+layout_mode = 2
+text = "Wróć do gry"
+
+[node name="ControlsButton" type="Button" parent="VBoxContainer" unique_id=688527721]
+layout_mode = 2
+text = "Sterowanie"
+
+[node name="MenuButton" type="Button" parent="VBoxContainer" unique_id=115254773]
+layout_mode = 2
+text = "Menu główne"
+
+[node name="ControlsPanel" type="TextureRect" parent="." unique_id=679230907]
+visible = false
+z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_myx47")
+expand_mode = 3
+
+[node name="Label" type="Label" parent="ControlsPanel" unique_id=2050363443]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.5
+offset_top = -11.5
+offset_right = 80.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Wciśnij Esc by wrócić"
+horizontal_alignment = 1
+vertical_alignment = 1

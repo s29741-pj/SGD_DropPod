@@ -31,6 +31,8 @@ signal all_waves_completed
 var checkpoint_data = {}
 
 var music_player: AudioStreamPlayer
+var paused_level = ""
+
 
 
 func play_music(stream: AudioStream):
