@@ -48,19 +48,20 @@ var step_timer = 0.0
 const STEP_INTERVAL = 0.35
 
 var ammo = {
-	"bolter": 9999,
+	"bolter": 150,
 }
 var max_ammo = {
-	"bolter": 9999,
+	"bolter": 150,
 }
+var bolter_magazine = 30
+var bolter_magazine_max = 30
 
 var heat = 0.0
 var max_heat = 100.0
 var is_overheated = false
 var gatling_cooldown = false
 
-var bolter_magazine = 10
-var bolter_magazine_max = 10
+
 var is_reloading = false
 
 const HEAT_PER_SHOT = 8.0
@@ -238,7 +239,6 @@ func update_animation():
 
 # Górna część – animacja
 	if not can_shoot and weapons[current_weapon] == "bolter":
-		#upper_body.play("bolter_head")
 		upper_body.play("shoot_bolter")
 	elif (not can_shoot or gatling_cooldown) and weapons[current_weapon] == "gatling":
 		upper_body.play("shoot_gatling")
@@ -432,7 +432,7 @@ func _physics_process(delta):
 		hud.update_upgrades()
 		var current_ammo = ammo.get(weapons[current_weapon], -1)
 		if weapons[current_weapon] == "bolter":
-			hud.update_weapon("bolter", bolter_mode, current_ammo)
+			hud.update_weapon("bolter", bolter_mode, ammo["bolter"], bolter_magazine, bolter_magazine_max)
 		else:
 			hud.update_weapon(weapons[current_weapon], "", current_ammo)
 		if GameManager.knife_only_mode:

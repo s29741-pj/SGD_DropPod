@@ -48,11 +48,23 @@ func update_hp(value, max_value):
 func update_fuel(value):
 	fuel_bar.value = value
 
-func update_weapon(weapon_name, mode = "", current_ammo = -1):
+#func update_weapon(weapon_name, mode = "", current_ammo = -1):
+	#var text = weapon_name.to_upper()
+	#if mode != "":
+		#text += " [" + mode.to_upper() + "]"
+	#if current_ammo >= 0:
+		#text += " | " + str(current_ammo)
+	#weapon_label.text = text
+	
+func update_weapon(weapon_name, mode = "", current_ammo = -1, magazine = -1, magazine_max = -1):
 	var text = weapon_name.to_upper()
 	if mode != "":
 		text += " [" + mode.to_upper() + "]"
-	if current_ammo >= 0:
+	if magazine >= 0 and magazine_max >= 0:
+		text += " | " + str(magazine) + "/" + str(magazine_max)
+		if current_ammo >= 0:
+			text += " (" + str(current_ammo) + ")"
+	elif current_ammo >= 0:
 		text += " | " + str(current_ammo)
 	weapon_label.text = text
 
