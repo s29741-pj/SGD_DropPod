@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://kn6u744hvdp5" path="res://scenes/boss.gd" id="1_jncid"]
 [ext_resource type="Texture2D" uid="uid://bvh47bg2g86hn" path="res://assets/sprites/boss/down_isra-maraver-more-dakka-2kopia-ezgif.com-gif-to-sprite-converter.png" id="1_neq0i"]
 [ext_resource type="Texture2D" uid="uid://cxqkxokxikfpr" path="res://assets/sprites/boss/up_isra-maraver-more-dakka-2kopia-ezgif.com-gif-to-sprite-converter — kopia.png" id="2_jncid"]
+[ext_resource type="AudioStream" uid="uid://cpf8vaabk1qfl" path="res://assets/audio/sfx/gatling2.mp3" id="2_qnbj4"]
+[ext_resource type="AudioStream" uid="uid://beccxif0gb3fp" path="res://assets/audio/sfx/ork_roar_2.wav" id="3_r3bxh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qnbj4"]
 size = Vector2(90, 96)
@@ -71,6 +73,8 @@ radius = 310.5
 [node name="Boss" type="CharacterBody2D" unique_id=167341348 groups=["enemy"]]
 collision_layer = 2
 script = ExtResource("1_jncid")
+sfx_shoot = ExtResource("2_qnbj4")
+sfx_death = ExtResource("3_r3bxh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719865832]
 position = Vector2(35, 49)

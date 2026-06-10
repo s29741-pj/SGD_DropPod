@@ -402,7 +402,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3thuw")
 }],
-"loop": true,
+"loop": false,
 "name": &"reload_upper",
 "speed": 12.0
 }, {

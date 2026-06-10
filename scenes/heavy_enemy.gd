@@ -32,7 +32,7 @@ func _ready():
 	GameManager.register_enemy()
 	detection_area.body_entered.connect(_on_body_entered)
 	detection_area.body_exited.connect(_on_body_exited)
-	detection_area.body_entered.connect(func(b): print("HEAVY WYKRYL: ", b.name))
+	#detection_area.body_entered.connect(func(b): print("HEAVY WYKRYL: ", b.name))
 
 func _physics_process(delta):	
 	if not is_on_floor():

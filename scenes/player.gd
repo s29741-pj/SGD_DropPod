@@ -412,7 +412,7 @@ func _physics_process(delta):
 			bolter_mode = "auto"
 		else:
 			bolter_mode = "burst"
-		print("Bolter: ", bolter_mode)
+		#print("Bolter: ", bolter_mode)
 
 	# Ogień ciągły boltera
 	if Input.is_action_pressed("ui_primary") and weapons[current_weapon] == "gatling":
@@ -548,13 +548,13 @@ func fire_melee():
 		hitbox.position = global_position + Vector2(20.0 * facing, 0)
 		hitbox.get_node("CollisionShape2D").shape.size = Vector2(24, 20)
 		hitbox.damage = 1
-		print("ATAK 1")
+		#print("ATAK 1")
 	elif combo_count == 2:
 		play_sfx(sfx_knife)
 		hitbox.position = global_position + Vector2(24.0 * facing, 0)
 		hitbox.get_node("CollisionShape2D").shape.size = Vector2(28, 24)
 		hitbox.damage = 2
-		print("ATAK 2")
+		#print("ATAK 2")
 	elif combo_count >= 3:
 		play_sfx(sfx_knife)
 		is_finishing = true
@@ -563,7 +563,7 @@ func fire_melee():
 		hitbox.damage = 4
 		combo_count = 0
 		combo_timer = 0.0
-		print("FINISHER!")
+		#print("FINISHER!")
 	hitbox.collision_layer = 3
 	hitbox.collision_mask = 2
 	get_parent().add_child(hitbox)

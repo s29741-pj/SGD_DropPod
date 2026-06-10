@@ -134,12 +134,12 @@ func _physics_process(delta):
 			is_attacking = false
 
 func _on_body_entered(body):
-	print("ENEMY WYKRYL: ", body.name, " grupa: ", body.get_groups())
+	#print("ENEMY WYKRYL: ", body.name, " grupa: ", body.get_groups())
 	if body.is_in_group("player"):
 		play_sfx(sfx_roar)
 		is_chasing = true
 		player_ref = body
-		print("IS_CHASING USTAWIONE NA TRUE")
+		#print("IS_CHASING USTAWIONE NA TRUE")
 
 
 func _on_body_exited(body):

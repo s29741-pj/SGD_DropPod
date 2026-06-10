@@ -17,6 +17,7 @@ var time = 0.0
 @onready var sfx_player = $SFXPlayer
 
 @export var sfx_shoot: AudioStream
+@export var sfx_death: AudioStream
 
 func _ready():
 	GameManager.register_enemy()
@@ -106,8 +107,12 @@ func take_damage(amount):
 		lower_body.modulate = Color(1, 1, 1, 1)
 		is_hurt = false
 	if hp <= 0:
+		if sfx_death:
+			sfx_player.stream = sfx_death
+			sfx_player.play()
 		var explosion = load("res://scenes/boss_explosion.tscn").instantiate()
 		explosion.global_position = global_position
 		get_parent().add_child(explosion)
 		GameManager.enemy_died()
+		await get_tree().create_timer(0.5).timeout
 		queue_free()

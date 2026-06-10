@@ -79,8 +79,8 @@ func delete_checkpoint():
 		DirAccess.remove_absolute("user://save.json")
 
 func advance_level():
-	print("ADVANCE LEVEL wywołane, current_level: ", current_level)
-	print(get_stack())
+	#print("ADVANCE LEVEL wywołane, current_level: ", current_level)
+	#print(get_stack())
 	match current_level:
 
 		1:
@@ -128,13 +128,13 @@ func _calculate_time_bonus():
 	var elapsed = (Time.get_ticks_msec() - mission_start_time) / 1000.0
 	if elapsed < 30.0:
 		score += 500
-		print("CZAS BONUS: +500")
+		#print("CZAS BONUS: +500")
 	elif elapsed < 60.0:
 		score += 250
-		print("CZAS BONUS: +250")
+		#print("CZAS BONUS: +250")
 	elif elapsed < 120.0:
 		score += 100
-		print("CZAS BONUS: +100")
+		#print("CZAS BONUS: +100")
 
 func reset():
 	kill_all_to_complete = false
