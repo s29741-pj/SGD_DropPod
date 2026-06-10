@@ -10,7 +10,7 @@ extends Node2D
 @onready var pause_menu = $PauseMenu
 
 func _input(event):
-	if event is InputEventKey and event.is_action_just_pressed("ui_cancel"):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		pause_menu.toggle_pause()
 
 var wave_configs = [

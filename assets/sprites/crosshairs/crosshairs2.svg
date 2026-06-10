@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <g fill="#E60000" shape-rendering="crispEdges">
+    <path d="M30 4 h4 v16 h-4 z" />
+    <path d="M28 20 h8 v2 h-8 z" />
+    
+    <path d="M30 44 h4 v16 h-4 z" />
+    <path d="M28 42 h8 v2 h-8 z" />
+
+    <path d="M4 30 h16 v4 h-16 z" />
+    <path d="M20 28 h2 v8 h-2 z" />
+
+    <path d="M44 30 h16 v4 h-16 z" />
+    <path d="M42 28 h2 v8 h-2 z" />
+    
+    <rect x="31" y="31" width="2" height="2" />
+  </g>
+</svg>

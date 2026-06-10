@@ -87,3 +87,31 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_047uy")
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.95468724, 0.85430586, 1)
 text = "SCORE:0"
+
+[node name="UpgradesPanel" type="VBoxContainer" parent="." unique_id=1576595573]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -158.0
+offset_right = 1.0
+grow_vertical = 0
+size_flags_horizontal = 2
+size_flags_vertical = 10
+
+[node name="BolterDmgLabel" type="Label" parent="UpgradesPanel" unique_id=964715927]
+layout_mode = 2
+
+[node name="BolterRateLabel" type="Label" parent="UpgradesPanel" unique_id=2117307285]
+layout_mode = 2
+
+[node name="GatlingRateLabel" type="Label" parent="UpgradesPanel" unique_id=1324144480]
+layout_mode = 2
+
+[node name="GatlingHeatLabel" type="Label" parent="UpgradesPanel" unique_id=226296248]
+layout_mode = 2
+
+[node name="MaxHPLabel" type="Label" parent="UpgradesPanel" unique_id=85676681]
+layout_mode = 2
+
+[node name="MaxAmmoLabel" type="Label" parent="UpgradesPanel" unique_id=1202742451]
+layout_mode = 2

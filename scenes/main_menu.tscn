@@ -64,5 +64,8 @@ text = "LAST CHECKPOINT"
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=438906633]
 stream = ExtResource("2_ekxnf")
+volume_db = 1.455
+pitch_scale = 1.18
 autoplay = true
+mix_target = 1
 parameters/looping = true

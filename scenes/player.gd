@@ -23,29 +23,29 @@ const INVINCIBILITY_TIME = 1.0
 @export var sfx_gatling: AudioStream
 @export var sfx_knife: AudioStream
 @export var sfx_jump: AudioStream
-@export var sfx_jetpack: AudioStream
 @export var sfx_medpack: AudioStream
 @export var sfx_ammo: AudioStream
 @export var sfx_weapon_change: AudioStream
+@export var sfx_punch: AudioStream
+@export var sfx_step: AudioStream
+@export var sfx_reload: AudioStream
+@onready var hud = get_parent().get_node("HUD")
 #@onready var upper_body_head = $UpperBodyHead
 
 
 var in_water = false
-
-var is_crouching = false
 var is_hit = false
-
 var can_shoot = true
 var fuel = FUEL_MAX
 var current_weapon = 0
 var weapons = ["bolter", "knife"]
 var has_gatling = false
-
 var hp = 5
 var max_hp = 5
 var is_dead = false
 var invincible = false
-@onready var hud = get_parent().get_node("HUD")
+var step_timer = 0.0
+const STEP_INTERVAL = 0.35
 
 var ammo = {
 	"bolter": 9999,
@@ -85,18 +85,21 @@ func play_victory():
 func reload_bolter():
 	if is_reloading or ammo["bolter"] <= 0 or bolter_magazine == bolter_magazine_max:
 		return
+	play_sfx(sfx_reload)
 	is_reloading = true
 	can_shoot = false
-	full_body.visible = true
-	lower_body.visible = false
-	upper_body.visible = false
-	full_body.play("reload")
-	await full_body.animation_finished
+	#full_body.visible = true
+	lower_body.visible = true
+	upper_body.visible = true
+	#full_body.play("reload")
+	upper_body.play("reload_upper")
+	#await full_body.animation_finished
+	await upper_body.animation_finished
 	var needed = bolter_magazine_max - bolter_magazine
 	var available = min(needed, ammo["bolter"])
 	bolter_magazine += available
 	ammo["bolter"] -= available
-	full_body.visible = false
+	#full_body.visible = false
 	lower_body.visible = true
 	upper_body.visible = true
 	is_reloading = false
@@ -111,7 +114,50 @@ func update_animation():
 	var mouse_pos = get_global_mouse_position()
 	var looking_left = mouse_pos.x < global_position.x
 	
-	if is_hit or is_dead or is_reloading or is_victory:
+	if is_hit or is_dead or is_victory:
+		return
+	
+	if is_reloading:
+		upper_body.flip_h = looking_left
+		lower_body.flip_h = looking_left
+		if velocity.x != 0:
+			if looking_left:
+				upper_body.position = Vector2(-25, -15)
+				upper_body.offset = Vector2(-45, 0)
+				lower_body.position = Vector2(0, 25)
+			else:
+				upper_body.position = Vector2(75, -20)
+				upper_body.offset = Vector2(-45, 0)
+				lower_body.position = Vector2(0, 25)
+		else:
+			if looking_left:
+				upper_body.position = Vector2(-15, -20)
+				upper_body.offset = Vector2(-45, 0)
+				lower_body.position = Vector2(0, 25)
+			else:
+				upper_body.position = Vector2(45, -20)
+				upper_body.offset = Vector2(-45, 0)
+				lower_body.position = Vector2(0, 25)
+		#if looking_left:
+			#upper_body.position = Vector2(-35, -20)
+			#upper_body.offset = Vector2(-45, 0)  # pivot po prawej
+			#lower_body.position = Vector2(0, 25)
+		#else:
+			#upper_body.position = Vector2(28, -20)
+			#upper_body.offset = Vector2(-45, 0)  # pivot po prawej
+			#lower_body.position = Vector2(0, 25)
+		#upper_body.offset = Vector2(0, 0)
+		#if looking_left:
+			#upper_body.rotation = PI - (mouse_pos - global_position).angle()
+			#upper_body.rotation = -upper_body.rotation
+		#else:
+			#upper_body.rotation = (mouse_pos - global_position).angle()
+		if not is_on_floor():
+			lower_body.play("jump")
+		elif velocity.x != 0:
+			lower_body.play("run")
+		else:
+			lower_body.play("idle")
 		return
 	
 	if GameManager.knife_only_mode:
@@ -301,7 +347,9 @@ func update_animation():
 
 
 func _physics_process(delta):
-
+	
+	hud.update_upgrades()
+	
 	if global_position.y > 1000:
 		die()
 		
@@ -318,13 +366,9 @@ func _physics_process(delta):
 
 	# Jetpack / powerjump
 	if Input.is_action_just_pressed("jetpack") and fuel > 30:
+		play_sfx(sfx_jump)
 		velocity.y = JUMP_VELOCITY * 0.9
 		fuel -= 30.0
-	
-	# Kucnięcie
-	#if Input.is_action_pressed("crouch") and is_on_floor():
-		## Na razie tylko print, dodamy CollisionShape później
-		#print("KUCANIE")
 
 	if is_on_floor():
 		fuel = min(fuel + FUEL_REFILL * delta, FUEL_MAX)
@@ -340,14 +384,7 @@ func _physics_process(delta):
 		current_weapon = (current_weapon + 1) % weapons.size()
 		play_sfx(sfx_weapon_change)
 		
-	# Kucnięcie
-	if Input.is_action_pressed("crouch") and is_on_floor():
-		is_crouching = true
-		stand_shape.disabled = true
-		velocity.x *= 0.5
-	else:
-		is_crouching = false
-		stand_shape.disabled = false
+
 		
 	var player_slide_count = get_slide_collision_count()
 	for i in player_slide_count:
@@ -392,6 +429,7 @@ func _physics_process(delta):
 		hud.update_hp(hp, max_hp)
 		hud.update_fuel(fuel)
 		hud.update_heat(heat)
+		hud.update_upgrades()
 		var current_ammo = ammo.get(weapons[current_weapon], -1)
 		if weapons[current_weapon] == "bolter":
 			hud.update_weapon("bolter", bolter_mode, current_ammo)
@@ -408,20 +446,18 @@ func _physics_process(delta):
 		combo_timer -= delta
 	if combo_timer <= 0 and combo_count > 0:
 		combo_count = 0
+		
+		# Kroki
+	if is_on_floor() and velocity.x != 0 and not is_dead and not is_hit:
+		step_timer -= delta
+		if step_timer <= 0:
+			play_sfx(sfx_step)
+			step_timer = STEP_INTERVAL
+	else:
+		step_timer = 0.0
 			
 	move_and_slide()
 	update_animation()
-	
-
-	#for i in get_slide_collision_count():
-		#var collision = get_slide_collision(i)
-		#if collision == null:
-			#continue
-		#var collider = collision.get_collider()
-		#if collider == null:
-			#continue
-		#if collider.is_in_group("enemy") and not invincible:
-			#take_damage(1)
 			
 func shoot():
 	if not can_shoot:
@@ -471,9 +507,9 @@ func fire_bolter():
 	if bolter_magazine < 3:
 		reload_bolter()
 		return
-	play_sfx(sfx_bolter)
 	can_shoot = false
 	for i in 3:
+		play_sfx(sfx_bolter)
 		bolter_magazine -= 1
 		spawn_bullet(1.0 + GameManager.upgrades["bolter_damage"] * 0.5)
 		await get_tree().create_timer(0.1 - GameManager.upgrades["bolter_fire_rate"] * 0.015).timeout
@@ -567,7 +603,7 @@ func take_damage(amount):
 	lower_body.visible = false
 	upper_body.visible = false
 	full_body.play("hit")
-	#play_sfx(sfx_punch)
+	play_sfx(sfx_punch)
 	if hp <= 0:
 		die()
 		return
