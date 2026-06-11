@@ -23,6 +23,18 @@ func _ready():
 		get_node("Player").visible = false
 		get_node("Player").set_physics_process(false)
 		get_node("Player").set_process_input(false)
+		# Automatyczny checkpoint na starcie poziomu
+		await get_tree().process_frame
+		var player = get_node("Player")
+		GameManager.save_checkpoint(
+			player.global_position,
+			get_tree().current_scene.scene_file_path
+		)
+		GameManager.checkpoint_data["hp"] = player.hp
+		GameManager.checkpoint_data["ammo_bolter"] = player.ammo["bolter"]
+		GameManager.checkpoint_data["ammo_gatling"] = player.ammo.get("gatling", 0)
+		GameManager.checkpoint_data["has_gatling"] = player.has_gatling
+		GameManager._write_save()
 
 func _on_level_completed():
 	await get_tree().create_timer(1.5).timeout

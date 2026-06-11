@@ -110,7 +110,7 @@ func play_sfx(stream: AudioStream):
 	if stream:
 		sfx_player.stream = stream
 		sfx_player.play()
-
+		
 func update_animation():
 	var mouse_pos = get_global_mouse_position()
 	var looking_left = mouse_pos.x < global_position.x
@@ -121,38 +121,27 @@ func update_animation():
 	if is_reloading:
 		upper_body.flip_h = looking_left
 		lower_body.flip_h = looking_left
+		if looking_left:
+			upper_body.rotation = PI - (mouse_pos - global_position).angle()
+			upper_body.rotation = -upper_body.rotation
+			upper_body.offset = Vector2(-45, 0)
+		else:
+			upper_body.rotation = (mouse_pos - global_position).angle()
+			upper_body.offset = Vector2(45, 0)
 		if velocity.x != 0:
 			if looking_left:
 				upper_body.position = Vector2(-25, -15)
-				upper_body.offset = Vector2(-45, 0)
 				lower_body.position = Vector2(0, 25)
 			else:
-				upper_body.position = Vector2(75, -20)
-				upper_body.offset = Vector2(-45, 0)
+				upper_body.position = Vector2(25, -15)
 				lower_body.position = Vector2(0, 25)
 		else:
 			if looking_left:
 				upper_body.position = Vector2(-15, -20)
-				upper_body.offset = Vector2(-45, 0)
 				lower_body.position = Vector2(0, 25)
 			else:
-				upper_body.position = Vector2(45, -20)
-				upper_body.offset = Vector2(-45, 0)
+				upper_body.position = Vector2(15, -20)
 				lower_body.position = Vector2(0, 25)
-		#if looking_left:
-			#upper_body.position = Vector2(-35, -20)
-			#upper_body.offset = Vector2(-45, 0)  # pivot po prawej
-			#lower_body.position = Vector2(0, 25)
-		#else:
-			#upper_body.position = Vector2(28, -20)
-			#upper_body.offset = Vector2(-45, 0)  # pivot po prawej
-			#lower_body.position = Vector2(0, 25)
-		#upper_body.offset = Vector2(0, 0)
-		#if looking_left:
-			#upper_body.rotation = PI - (mouse_pos - global_position).angle()
-			#upper_body.rotation = -upper_body.rotation
-		#else:
-			#upper_body.rotation = (mouse_pos - global_position).angle()
 		if not is_on_floor():
 			lower_body.play("jump")
 		elif velocity.x != 0:
@@ -160,7 +149,7 @@ func update_animation():
 		else:
 			lower_body.play("idle")
 		return
-	
+		
 	if GameManager.knife_only_mode:
 		full_body.visible = false
 		lower_body.visible = true
@@ -201,6 +190,88 @@ func update_animation():
 		else:
 			lower_body.play("idle")
 		return
+
+#func update_animation():
+	#var mouse_pos = get_global_mouse_position()
+	#var looking_left = mouse_pos.x < global_position.x
+	#
+	#if is_hit or is_dead or is_victory:
+		#return
+	
+	#if is_reloading:
+		#upper_body.flip_h = looking_left
+		#lower_body.flip_h = looking_left
+		#if looking_left:
+			#upper_body.rotation = PI - (mouse_pos - global_position).angle()
+			#upper_body.rotation = -upper_body.rotation
+		#else:
+			#upper_body.rotation = (mouse_pos - global_position).angle()
+		#if velocity.x != 0:
+			#if looking_left:
+				#upper_body.position = Vector2(-25, -15)
+				#upper_body.offset = Vector2(-45, 0)
+				#lower_body.position = Vector2(0, 25)
+			#else:
+				#upper_body.position = Vector2(75, -20)
+				#upper_body.offset = Vector2(-45, -20)
+				#lower_body.position = Vector2(0, 25)
+		#else:
+			#if looking_left:
+				#upper_body.position = Vector2(-15, -20)
+				#upper_body.offset = Vector2(-45, 0)
+				#lower_body.position = Vector2(0, 25)
+			#else:
+				#upper_body.position = Vector2(45, -20)
+				#upper_body.offset = Vector2(-45, 0)
+				#lower_body.position = Vector2(0, 25)
+		#if not is_on_floor():
+			#lower_body.play("jump")
+		#elif velocity.x != 0:
+			#lower_body.play("run")
+		#else:
+			#lower_body.play("idle")
+		#return
+	#
+	#if GameManager.knife_only_mode:
+		#full_body.visible = false
+		#lower_body.visible = true
+		#upper_body.visible = true
+		#upper_body.flip_h = looking_left
+		#lower_body.flip_h = looking_left
+	#
+	## Pozycje takie same jak dla knife_idle na innych levelach
+		#if velocity.x != 0:
+			#if looking_left:
+				#upper_body.position = Vector2(-5, -8)
+			#else:
+				#upper_body.position = Vector2(5, -8)
+		#else:
+			#if looking_left:
+				#upper_body.position = Vector2(10, -11)
+			#else:
+				#upper_body.position = Vector2(-10, -11)
+		#lower_body.position = Vector2(0, 25)
+	#
+		#if not can_shoot:
+			#full_body.visible = true
+			#lower_body.visible = false
+			#upper_body.visible = false
+			#full_body.flip_h = looking_left
+			#if is_finishing:
+				#full_body.play("knife_combo")
+				#full_body.position = Vector2(0, -25)
+			#else:
+				#full_body.play("knife_attack")
+				#full_body.position = Vector2(0, -25)
+			#return
+		#upper_body.play("knife_idle")
+		#if not is_on_floor():
+			#lower_body.play("jump")
+		#elif velocity.x != 0:
+			#lower_body.play("run")
+		#else:
+			#lower_body.play("idle")
+		#return
 		
 	
 ## Głowa – statyczna, tylko odbicie lustrzane
@@ -579,16 +650,20 @@ func fire_melee():
 func spawn_bullet(size_mult):
 	var bullet = bullet_scene.instantiate()
 	var shoot_direction = (get_global_mouse_position() - global_position).normalized()
-	bullet.position = global_position + shoot_direction * 30
+	var muzzle_offset = Vector2(20, -10)
+	if get_global_mouse_position().x < global_position.x:
+		muzzle_offset.x = -20
+	bullet.position = global_position + muzzle_offset + shoot_direction * 20
 	bullet.direction = shoot_direction
 	bullet.scale = Vector2(size_mult, size_mult)
 	bullet.collision_layer = 3
-	bullet.collision_mask = 2
+	bullet.set_collision_mask_value(1, true)
+	bullet.set_collision_mask_value(2, true)
 	get_parent().add_child(bullet)
-	if muzzle_flash_scene:
-		var flash = muzzle_flash_scene.instantiate()
-		flash.position = global_position
-		get_parent().add_child(flash)
+	#if muzzle_flash_scene:
+		#var flash = muzzle_flash_scene.instantiate()
+		#flash.position = global_position
+		#get_parent().add_child(flash)
 		
 func take_damage(amount):
 	camera.shake(8.0)
@@ -623,8 +698,22 @@ func die():
 	full_body.play("death")
 	await full_body.animation_finished
 	await get_tree().create_timer(0.5).timeout
-	if GameManager.has_checkpoint() and GameManager.checkpoint_data.has("level"):
-		get_tree().change_scene_to_file(GameManager.checkpoint_data["level"])
+	if GameManager.has_checkpoint() and GameManager.checkpoint_data.has("player_x"):
+			var data = GameManager.checkpoint_data
+			hp = data.get("hp", max_hp)
+			ammo["bolter"] = data.get("ammo_bolter", max_ammo["bolter"])
+			global_position = Vector2(data["player_x"], data["player_y"])
+			is_dead = false
+			is_hit = false
+			is_reloading = false
+			is_victory = false
+			can_shoot = true
+			full_body.visible = false
+			lower_body.visible = true
+			upper_body.visible = true
+			invincible = true
+			await get_tree().create_timer(INVINCIBILITY_TIME).timeout
+			invincible = false
 	else:
 		get_tree().current_scene.get_node("GameOverScreen").show_game_over()
 	

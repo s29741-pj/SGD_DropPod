@@ -3,9 +3,9 @@ extends CharacterBody2D
 const SPEED_PATROL = 40.0
 const SPEED_CHASE = 90.0
 const GRAVITY = 900.0
-const SHOOT_COOLDOWN = 0.4
-const PREFERRED_DISTANCE = 120.0
-var hp = 2
+const SHOOT_COOLDOWN = 0.3
+const PREFERRED_DISTANCE = 250.0
+var hp = 3
 var direction = 1.0
 var just_turned = false
 var can_shoot = true

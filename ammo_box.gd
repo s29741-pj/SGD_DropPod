@@ -2,7 +2,7 @@ extends Area2D
 
 @onready var sfx_player = $SFXPlayer
 @export var sfx_pickup: AudioStream
-var ammo_amount = 10
+var ammo_amount = 60
 
 func _ready():
 	body_entered.connect(_on_body_entered)
