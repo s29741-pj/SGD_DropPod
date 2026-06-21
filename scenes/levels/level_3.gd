@@ -15,8 +15,8 @@ func _input(event):
 
 var wave_configs = [
 	{"enemy": "res://scenes/enemy.tscn", "count": 3},
+	{"enemy": "res://scenes/enemy_shooter.tscn", "count": 3},
 	#{"enemy": "res://scenes/enemy.tscn", "count": 5},
-	#{"enemy": "res://scenes/enemy_shooter.tscn", "count": 3},
 	#{"enemy": "res://scenes/heavy_enemy.tscn", "count": 2},
 	#{"enemy": "res://scenes/enemy.tscn", "count": 8}
 ]

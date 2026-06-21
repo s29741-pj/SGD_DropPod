@@ -1,6 +1,9 @@
 extends Node
 
 signal level_completed
+signal wave_started(wave_number)
+signal wave_completed
+signal all_waves_completed
 
 var enemies_remaining = 0
 var score = 0
@@ -20,13 +23,11 @@ var next_level = "res://scenes/levels/level2.tscn"
 var current_level = 1
 
 var current_wave = 0
-var total_waves = 1
+var total_waves = 2
 var wave_in_progress = false
 var knife_only_mode = false
 
-signal wave_started(wave_number)
-signal wave_completed
-signal all_waves_completed
+
 
 var checkpoint_data = {}
 

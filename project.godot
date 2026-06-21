@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Droppod"
-run/main_scene="uid://by3a8w8kpgvvb"
+run/main_scene="uid://10c2qu5q1qt3"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="uid://bkybseswc76mg"
 config/windows_native_icon="res://assets/sprites/icon/icon.ico"

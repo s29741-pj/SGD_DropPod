@@ -190,98 +190,6 @@ func update_animation():
 		else:
 			lower_body.play("idle")
 		return
-
-#func update_animation():
-	#var mouse_pos = get_global_mouse_position()
-	#var looking_left = mouse_pos.x < global_position.x
-	#
-	#if is_hit or is_dead or is_victory:
-		#return
-	
-	#if is_reloading:
-		#upper_body.flip_h = looking_left
-		#lower_body.flip_h = looking_left
-		#if looking_left:
-			#upper_body.rotation = PI - (mouse_pos - global_position).angle()
-			#upper_body.rotation = -upper_body.rotation
-		#else:
-			#upper_body.rotation = (mouse_pos - global_position).angle()
-		#if velocity.x != 0:
-			#if looking_left:
-				#upper_body.position = Vector2(-25, -15)
-				#upper_body.offset = Vector2(-45, 0)
-				#lower_body.position = Vector2(0, 25)
-			#else:
-				#upper_body.position = Vector2(75, -20)
-				#upper_body.offset = Vector2(-45, -20)
-				#lower_body.position = Vector2(0, 25)
-		#else:
-			#if looking_left:
-				#upper_body.position = Vector2(-15, -20)
-				#upper_body.offset = Vector2(-45, 0)
-				#lower_body.position = Vector2(0, 25)
-			#else:
-				#upper_body.position = Vector2(45, -20)
-				#upper_body.offset = Vector2(-45, 0)
-				#lower_body.position = Vector2(0, 25)
-		#if not is_on_floor():
-			#lower_body.play("jump")
-		#elif velocity.x != 0:
-			#lower_body.play("run")
-		#else:
-			#lower_body.play("idle")
-		#return
-	#
-	#if GameManager.knife_only_mode:
-		#full_body.visible = false
-		#lower_body.visible = true
-		#upper_body.visible = true
-		#upper_body.flip_h = looking_left
-		#lower_body.flip_h = looking_left
-	#
-	## Pozycje takie same jak dla knife_idle na innych levelach
-		#if velocity.x != 0:
-			#if looking_left:
-				#upper_body.position = Vector2(-5, -8)
-			#else:
-				#upper_body.position = Vector2(5, -8)
-		#else:
-			#if looking_left:
-				#upper_body.position = Vector2(10, -11)
-			#else:
-				#upper_body.position = Vector2(-10, -11)
-		#lower_body.position = Vector2(0, 25)
-	#
-		#if not can_shoot:
-			#full_body.visible = true
-			#lower_body.visible = false
-			#upper_body.visible = false
-			#full_body.flip_h = looking_left
-			#if is_finishing:
-				#full_body.play("knife_combo")
-				#full_body.position = Vector2(0, -25)
-			#else:
-				#full_body.play("knife_attack")
-				#full_body.position = Vector2(0, -25)
-			#return
-		#upper_body.play("knife_idle")
-		#if not is_on_floor():
-			#lower_body.play("jump")
-		#elif velocity.x != 0:
-			#lower_body.play("run")
-		#else:
-			#lower_body.play("idle")
-		#return
-		
-	
-## Głowa – statyczna, tylko odbicie lustrzane
-	#upper_body_head.flip_h = looking_left
-	#if not can_shoot and weapons[current_weapon] == "bolter":
-		#upper_body_head.play("bolter_head")
-		#upper_body_head.visible = true
-	#else:
-		#upper_body_head.visible = false
-		# Tryb walki wręcz - całościowy sprite
 		
 	if not can_shoot and weapons[current_weapon] == "knife":
 		full_body.visible = true
@@ -563,7 +471,7 @@ func fire_gatling():
 	gatling_cooldown = true
 	ammo["gatling"] -= 1
 	heat += max(2.0, HEAT_PER_SHOT - GameManager.upgrades["gatling_heat"] * 1.5)
-	spawn_bullet(0.7)
+	spawn_bullet(1)
 	if heat >= max_heat:
 		is_overheated = true
 		heat = max_heat
@@ -582,7 +490,7 @@ func fire_bolter():
 	for i in 3:
 		play_sfx(sfx_bolter)
 		bolter_magazine -= 1
-		spawn_bullet(1.0 + GameManager.upgrades["bolter_damage"] * 0.5)
+		spawn_bullet(1 + GameManager.upgrades["bolter_damage"])
 		await get_tree().create_timer(0.1 - GameManager.upgrades["bolter_fire_rate"] * 0.015).timeout
 	if bolter_magazine == 0:
 		reload_bolter()
@@ -598,7 +506,7 @@ func fire_bolter_auto():
 	play_sfx(sfx_bolter)
 	can_shoot = false
 	bolter_magazine -= 1
-	spawn_bullet(1.0 + GameManager.upgrades["bolter_damage"] * 0.5)
+	spawn_bullet(1 + GameManager.upgrades["bolter_damage"])
 	if bolter_magazine == 0:
 		reload_bolter()
 	await get_tree().create_timer(max(0.05, 0.15 - GameManager.upgrades["bolter_fire_rate"] * 0.02)).timeout
@@ -647,23 +555,20 @@ func fire_melee():
 	is_finishing = false
 	can_shoot = true
 
-func spawn_bullet(size_mult):
+func spawn_bullet(dmg = 1):
 	var bullet = bullet_scene.instantiate()
 	var shoot_direction = (get_global_mouse_position() - global_position).normalized()
-	var muzzle_offset = Vector2(20, -10)
+	var muzzle_offset = Vector2(20, -15)
 	if get_global_mouse_position().x < global_position.x:
 		muzzle_offset.x = -20
 	bullet.position = global_position + muzzle_offset + shoot_direction * 20
 	bullet.direction = shoot_direction
-	bullet.scale = Vector2(size_mult, size_mult)
-	bullet.collision_layer = 3
+	bullet.damage = dmg
 	bullet.set_collision_mask_value(1, true)
 	bullet.set_collision_mask_value(2, true)
+	bullet.collision_layer = 3
 	get_parent().add_child(bullet)
-	#if muzzle_flash_scene:
-		#var flash = muzzle_flash_scene.instantiate()
-		#flash.position = global_position
-		#get_parent().add_child(flash)
+
 		
 func take_damage(amount):
 	camera.shake(8.0)

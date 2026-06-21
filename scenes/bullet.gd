@@ -2,9 +2,9 @@ extends Area2D
 
 const SPEED = 600.0
 var direction = Vector2.ZERO
+var damage = 1
 
 func _ready():
-	print("BULLET MASK: ", collision_mask, " MONITORING: ", monitoring)
 	body_entered.connect(_on_body_entered)
 	monitoring = true
 	monitorable = true
@@ -16,7 +16,6 @@ func _process(delta):
 	position += direction * SPEED * delta
 
 func _on_body_entered(body):
-	print("POCISK TRAFIL: ", body.name)
 	if body.has_method("take_damage"):
-		body.take_damage(1)
+		body.take_damage(damage)
 	queue_free()

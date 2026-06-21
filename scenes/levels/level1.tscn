@@ -173,7 +173,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"droppod_down",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [node name="Main" type="Node2D" unique_id=1137297608]
@@ -215,8 +215,9 @@ position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
 [node name="EnemySpawner" parent="." unique_id=33120619 instance=ExtResource("8_g7tkf")]
-position = Vector2(808, -72)
+position = Vector2(784, -72)
 enemy_scene = ExtResource("9_4fww7")
+spawn_count = 1
 
 [node name="EnemySpawner2" parent="." unique_id=351945456 instance=ExtResource("8_g7tkf")]
 position = Vector2(1120, -184)
@@ -266,9 +267,6 @@ spawn_count = 1
 stream = ExtResource("17_g7tkf")
 autoplay = true
 parameters/looping = true
-
-[node name="AmmoBox" parent="MusicPlayer" unique_id=367895562 instance=ExtResource("10_gvm5i")]
-position = Vector2(-164.3409, 26.026329)
 
 [node name="GatlingPickup" parent="." unique_id=681819917 instance=ExtResource("18_4fww7")]
 position = Vector2(1624, -40)
@@ -325,4 +323,9 @@ rotation = 0.5497787
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_noix2")
 animation = &"droppod_down"
-frame_progress = 0.31632715
+frame_progress = 0.6872039
+
+[node name="EnemySpawner6" parent="." unique_id=2134444491 instance=ExtResource("8_g7tkf")]
+position = Vector2(816, 32)
+enemy_scene = ExtResource("9_4fww7")
+spawn_count = 2
